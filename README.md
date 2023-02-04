@@ -1,8 +1,8 @@
 # Assignment A2: Mesh Generator
 
   - Fiza Sehar [seharf@mcmaster.ca]
-  - Author #2 [email@mcmaster.ca]
-  - Author #3 [email@mcmaster.ca]
+  - Sarim Zia [email@mcmaster.ca]
+  - Hamzah Rawasia [rawash1@mcmaster.ca]
 
 ## How to run the product
 
