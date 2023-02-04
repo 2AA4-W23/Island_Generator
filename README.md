@@ -1,6 +1,6 @@
 # Assignment A2: Mesh Generator
 
-  - Author #1 [email@mcmaster.ca]
+  - Fiza Sehar [seharf@mcmaster.ca]
   - Author #2 [email@mcmaster.ca]
   - Author #3 [email@mcmaster.ca]
 
