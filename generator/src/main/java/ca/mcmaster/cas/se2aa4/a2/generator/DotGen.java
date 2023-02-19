@@ -1,5 +1,6 @@
 package ca.mcmaster.cas.se2aa4.a2.generator;
 
+import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -35,7 +36,7 @@ public class DotGen {
             segments.add(Segment.newBuilder().setV1Idx(i).setV2Idx(i+1).build());
         }
         // Distribute colors randomly. Vertices are immutable, need to enrich them
-        Set<Vertex> verticesWithColors = new HashSet<>();
+        ArrayList<Vertex> verticesWithColors = new ArrayList<>();
         Random bag = new Random();
         for(Vertex v: vertices){
             int red = bag.nextInt(255);
@@ -47,7 +48,7 @@ public class DotGen {
             verticesWithColors.add(colored);
         }
 
-        Set<Segment> segmentsWithColors = new HashSet<>();
+        ArrayList<Segment> segmentsWithColors = new ArrayList<>();
 
         for(Segment s: segments){
             int red = bag.nextInt(255);
@@ -58,11 +59,7 @@ public class DotGen {
             Segment colored = Segment.newBuilder(s).addProperties(color).build();
             segmentsWithColors.add(colored);
         }
-//        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-//        System.out.println(segmentsWithColors.toString());
-//        System.out.println("????????????????????????????");
 
         return Mesh.newBuilder().addAllVertices(verticesWithColors).addAllSegments(segmentsWithColors).build();
     }
-
 }
