@@ -55,14 +55,18 @@ public class DotGen {
 
         ArrayList<Segment> segmentsWithColors = new ArrayList<>();
 
+        int counter = 0;
         for(Segment s: segments){
-            int red = bag.nextInt(255);
-            int green = bag.nextInt(255);
-            int blue = bag.nextInt(255);
+            String[] vertexOne = verticesWithColors.get(counter).getProperties(0).getValue().toString().split(",");
+            String[] vertexTwo = verticesWithColors.get(counter+1).getProperties(0).getValue().toString().split(",");
+            int red = (Integer.valueOf(vertexOne[0])+Integer.valueOf(vertexTwo[0]))/2;
+            int green = (Integer.valueOf(vertexOne[1])+Integer.valueOf(vertexTwo[1]))/2;
+            int blue = (Integer.valueOf(vertexOne[2])+Integer.valueOf(vertexTwo[2]))/2;
             String colorCode = red + "," + green + "," + blue;
             Property color = Property.newBuilder().setKey("rgb_color").setValue(colorCode).build();
             Segment colored = Segment.newBuilder(s).addProperties(color).build();
             segmentsWithColors.add(colored);
+            counter++;
         }
 
         return Mesh.newBuilder().addAllVertices(verticesWithColors).addAllSegments(segmentsWithColors).build();
