@@ -28,13 +28,18 @@ public class DotGen {
             for (int y = 0; y < height; y += square_size) {
                 vertices.add(Vertex.newBuilder().setX((double) x).setY((double) y).build());
                 vertices.add(Vertex.newBuilder().setX((double) x + square_size).setY((double) y).build());
-                vertices.add(Vertex.newBuilder().setX((double) x).setY((double) y + square_size).build());
                 vertices.add(Vertex.newBuilder().setX((double) x + square_size).setY((double) y + square_size).build());
+                vertices.add(Vertex.newBuilder().setX((double) x).setY((double) y + square_size).build());
+
             }
         }
-        for(int i = 0; i < vertices.size() - 1; i++) {
+        for(int i = 0; i < vertices.size() - 1; i+=1) {
             segments.add(Segment.newBuilder().setV1Idx(i).setV2Idx(i+1).build());
+           // segments.add(Segment.newBuilder().setV1Idx(i).setV2Idx(i+1).build());
         }
+//        for(int i = 0; i < vertices.size() - 1; i++){
+//            segments.add(Segment.newBuilder().setV1Idx(i).setV2Idx(i+1).build());
+//        }
         // Distribute colors randomly. Vertices are immutable, need to enrich them
         ArrayList<Vertex> verticesWithColors = new ArrayList<>();
         Random bag = new Random();

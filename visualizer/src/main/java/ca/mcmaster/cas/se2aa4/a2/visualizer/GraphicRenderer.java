@@ -36,8 +36,10 @@ public class GraphicRenderer {
             canvas.setColor(extractColor(s.getPropertiesList()));
             Line2D line = new Line2D.Double(aMesh.getVerticesList().get(s.getV1Idx()).getX(),aMesh.getVerticesList().get(s.getV1Idx()).getY(),aMesh.getVerticesList().get(s.getV2Idx()).getX(),aMesh.getVerticesList().get(s.getV2Idx()).getY());
             canvas.setStroke(new BasicStroke(3));
-            canvas.draw(line);
-            canvas.setColor(old);
+            if(line.getY2() != 0) {
+                canvas.draw(line);
+                canvas.setColor(old);
+            }
         }
     }
 
