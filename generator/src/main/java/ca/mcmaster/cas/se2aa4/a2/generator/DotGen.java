@@ -11,6 +11,7 @@ import ca.mcmaster.cas.se2aa4.a2.io.Structs.Vertex;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Property;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Mesh;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Segment;
+import ca.mcmaster.cas.se2aa4.a2.customMesh.customVertex;
 
 
 public class DotGen {
@@ -30,7 +31,6 @@ public class DotGen {
                 vertices.add(Vertex.newBuilder().setX((double) x + square_size).setY((double) y).build());
                 vertices.add(Vertex.newBuilder().setX((double) x + square_size).setY((double) y + square_size).build());
                 vertices.add(Vertex.newBuilder().setX((double) x).setY((double) y + square_size).build());
-
             }
         }
         for(int i = 0; i < vertices.size() - 1; i+=1) {
