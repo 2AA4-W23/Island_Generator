@@ -20,10 +20,12 @@ public class DotGen {
     private final int height = 500;
     private final int square_size = 20;
 
+
     public Mesh generate() {
-       // Set<Vertex> vertices = new HashSet<>();
+
         ArrayList<Vertex> vertices = new ArrayList<>();
         ArrayList<Segment> segments = new ArrayList<>();
+
         // Create all the vertices
         for(int x = 0; x < width; x += square_size) {
             for (int y = 0; y < height; y += square_size) {
