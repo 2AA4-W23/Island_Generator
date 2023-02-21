@@ -22,7 +22,7 @@ public class DotGen {
 
 
     public Mesh generate() {
-
+//TEST
         ArrayList<Vertex> vertices = new ArrayList<>();
         ArrayList<Segment> segments = new ArrayList<>();
 
