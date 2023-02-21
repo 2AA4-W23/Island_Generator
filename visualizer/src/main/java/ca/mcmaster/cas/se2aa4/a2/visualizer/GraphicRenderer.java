@@ -22,7 +22,6 @@ public class GraphicRenderer {
         Stroke stroke = new BasicStroke(0.5f);
         canvas.setStroke(stroke);
         for (Vertex v: aMesh.getVerticesList()) {
-            System.out.println("hi***********************************");
             double centre_x = v.getX() - (THICKNESS/2.0d);
             double centre_y = v.getY() - (THICKNESS/2.0d);
             Color old = canvas.getColor();
