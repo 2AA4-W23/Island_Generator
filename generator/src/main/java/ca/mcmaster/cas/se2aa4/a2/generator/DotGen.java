@@ -22,13 +22,14 @@ public class DotGen {
     private final int square_size = 20;
 
 
-    public CustomMesh generate() {
+    public Mesh generate() {
 
         CustomMesh newMesh = new CustomMesh();
         newMesh.addAllVertices(width, height, square_size);
         newMesh.addAllSegments();
+        Mesh finalMesh = newMesh.finalizeMesh();
         
-        return newMesh;
+        return finalMesh;
 
 
     }

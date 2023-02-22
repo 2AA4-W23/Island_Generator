@@ -3,6 +3,8 @@ package ca.mcmaster.cas.se2aa4.a2.customMesh;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Vertex;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Segment;
+import ca.mcmaster.cas.se2aa4.a2.io.Structs.Polygon;
+import ca.mcmaster.cas.se2aa4.a2.io.Structs.Mesh;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -13,7 +15,9 @@ public class CustomMesh extends MeshADT{
 
     private ArrayList<Vertex> vertexList;
     private ArrayList<Segment> segmentList;
-    private ArrayList<customPolygon> polygonList;
+    private ArrayList<Polygon> polygonList;
+
+    private Mesh finalMesh;
 
     private static final DecimalFormat df = new DecimalFormat("0.00");
 
@@ -80,8 +84,8 @@ public class CustomMesh extends MeshADT{
     }
 
     @Override
-    public void addAllPolygons(ArrayList<customPolygon> list) {
-        this.polygonList = list;
+    public void addAllPolygons(ArrayList<Polygon> list) {
+
     }
 
     @Override
@@ -95,7 +99,7 @@ public class CustomMesh extends MeshADT{
     }
 
     @Override
-    public void addPolygon(customPolygon polygon) {
+    public void addPolygon(Polygon polygon) {
         this.polygonList.add(polygon);
     }
 
@@ -110,7 +114,12 @@ public class CustomMesh extends MeshADT{
     }
 
     @Override
-    public ArrayList<customPolygon> getPolygons() {
+    public ArrayList<Polygon> getPolygons() {
         return this.polygonList;
+    }
+
+    @Override
+    public Mesh finalizeMesh() {
+        return Mesh.newBuilder(finalMesh).addAllVertices(vertexList).addAllSegments(segmentList).addAllPolygons(polygonList).build();
     }
 }
