@@ -30,16 +30,14 @@ public class CustomMesh extends MeshADT{
 
     @Override
     public void createVertices(int width, int height, int square_size) {
-        for(int x = 0; x < width; x += square_size) {
-            for (int y = 0; y < height; y += square_size) {
+        int y = 0;
+        while(y < height) {
+            for (int x = 0; x < width; x += square_size) {
                 addVertex(Vertex.newBuilder().setX(Float.parseFloat(df.format(x))).setY(Float.parseFloat(df.format(y))).build());
-                addVertex(Vertex.newBuilder().setX(Float.parseFloat(df.format(x+square_size))).setY(Float.parseFloat(df.format(y))).build());
-                addVertex(Vertex.newBuilder().setX(Float.parseFloat(df.format(x+square_size))).setY(Float.parseFloat(df.format(y+square_size))).build());
-                addVertex(Vertex.newBuilder().setX(Float.parseFloat(df.format(x))).setY(Float.parseFloat(df.format(y+square_size))).build());
-                }
             }
+            y += square_size;
+        }
         addVertexColour();
-
     }
 
     @Override
@@ -67,9 +65,9 @@ public class CustomMesh extends MeshADT{
 
     @Override
     public void createSegments() {
-        for(int i = 0; i < vertexList.size() - 1; i++){
-            if(vertexList.get(i+1).getY() !=0) {
-                segmentList.add(Structs.Segment.newBuilder().setV1Idx(i).setV2Idx(i + 1).build());
+        for(int i = 0; i < vertexList.size() - 2; i+=2){
+            if(vertexList.get(i+2).getY() !=0) {
+                segmentList.add(Structs.Segment.newBuilder().setV1Idx(i).setV2Idx(i + 2).build());
             }
         }
         addSegmentColour();

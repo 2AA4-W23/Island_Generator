@@ -31,17 +31,17 @@ public class GraphicRenderer {
             canvas.fill(point);
             canvas.setColor(old);
        }
-        for (Segment s: aMesh.getSegmentsList()) {
-            Color old = canvas.getColor();
-            System.out.println(s.getPropertiesList());
-            canvas.setColor(extractColor(s.getPropertiesList()));
-            Line2D line = new Line2D.Double(aMesh.getVerticesList().get(s.getV1Idx()).getX(),aMesh.getVerticesList().get(s.getV1Idx()).getY(),aMesh.getVerticesList().get(s.getV2Idx()).getX(),aMesh.getVerticesList().get(s.getV2Idx()).getY());
-            canvas.setStroke(new BasicStroke(3));
-            if(line.getY2() != 0) {
-                canvas.draw(line);
-                canvas.setColor(old);
-            }
-        }
+//        for (Segment s: aMesh.getSegmentsList()) {
+//            Color old = canvas.getColor();
+//            System.out.println(s.getPropertiesList());
+//            canvas.setColor(extractColor(s.getPropertiesList()));
+//            Line2D line = new Line2D.Double(aMesh.getVerticesList().get(s.getV1Idx()).getX(),aMesh.getVerticesList().get(s.getV1Idx()).getY(),aMesh.getVerticesList().get(s.getV2Idx()).getX(),aMesh.getVerticesList().get(s.getV2Idx()).getY());
+//            canvas.setStroke(new BasicStroke(3));
+//            if(line.getY2() != 0) {
+//                canvas.draw(line);
+//                canvas.setColor(old);
+//            }
+//        }
     }
 
     private Color extractColor(List<Property> properties) {
