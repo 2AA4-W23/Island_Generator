@@ -74,39 +74,51 @@ public class CustomMesh extends MeshADT{
 
     @Override
     public void createSegments() {
+        boolean firstSquare = true;
+        int counter = 0;
+        System.out.println(vertexList.size() + "??????????????????");
+        for(int i = 0; i < vertexList.size() - ((width/square_size)*2) -1; i+=2) {
 
-        for(int i = 0; i < vertexList.size()/2; i+=2){
+            if ((i + 1) % (width / square_size) == 0) {
+                i += width / square_size + 1;
+                firstSquare = true;
+            }
+         //   System.out.println(i + "      !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 
                 //top left to top middle
                 segmentList.add(Structs.Segment.newBuilder().setV1Idx(i).setV2Idx(i + 1).build());
                 //top middle to top right
-               // segmentList.add(Structs.Segment.newBuilder().setV1Idx(i+1).setV2Idx(i + 2).build());
+                segmentList.add(Structs.Segment.newBuilder().setV1Idx(i + 1).setV2Idx(i + 2).build());
                 //top right to right middle
-                segmentList.add(Structs.Segment.newBuilder().setV1Idx(i+2).setV2Idx(i + 2 + (this.width/this.square_size)).build());
+                segmentList.add(Structs.Segment.newBuilder().setV1Idx(i + 2).setV2Idx(i + 2 + (this.width / this.square_size)).build());
                 //right middle to right bottom
-                segmentList.add(Structs.Segment.newBuilder().setV1Idx(i + 2 + (this.width/this.square_size)).setV2Idx(i + 2 + (2*(this.width/this.square_size))).build());
+                segmentList.add(Structs.Segment.newBuilder().setV1Idx(i + 2 + (this.width / this.square_size)).setV2Idx(i + 2 + (2 * (this.width / this.square_size))).build());
                 //right bottom to middle bottom
-                segmentList.add(Structs.Segment.newBuilder().setV1Idx(i + 2 + (2*(this.width/this.square_size))).setV2Idx(i + 1 + (2*(this.width/this.square_size))).build());
+                segmentList.add(Structs.Segment.newBuilder().setV1Idx(i + 2 + (2 * (this.width / this.square_size))).setV2Idx(i + 1 + (2 * (this.width / this.square_size))).build());
                 //middle bottom to left bottom
-                segmentList.add(Structs.Segment.newBuilder().setV1Idx(i + 1 + (2*(this.width/this.square_size))).setV2Idx(i + (2*(this.width/this.square_size))).build());
+                segmentList.add(Structs.Segment.newBuilder().setV1Idx(i + 1 + (2 * (this.width / this.square_size))).setV2Idx(i + (2 * (this.width / this.square_size))).build());
+            if (firstSquare) {
                 //left bottom to left middle
-                segmentList.add(Structs.Segment.newBuilder().setV1Idx(i +(2*(this.width/this.square_size))).setV2Idx(i + (this.width/this.square_size)).build());
+                segmentList.add(Structs.Segment.newBuilder().setV1Idx(i + (2 * (this.width / this.square_size))).setV2Idx(i + (this.width / this.square_size)).build());
                 //left middle to top left
-                segmentList.add(Structs.Segment.newBuilder().setV1Idx(i + (this.width/this.square_size)).setV2Idx(i).build());
+                segmentList.add(Structs.Segment.newBuilder().setV1Idx(i + (this.width / this.square_size)).setV2Idx(i).build());
+                firstSquare = false;
 
+            }
+            counter++;
         }
-
+        System.out.println(counter + "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~`");
         addSegmentColour();
     }
 
     @Override
     public void addSegmentColour() {
-        int counter = 0;
+       // int counter = 0;
         ArrayList<Segment> finalSegments = new ArrayList<>();
-        for(Segment s: segmentList){
-            if(counter < vertexList.size()/2 -1) {
-                String[] vertexOne = vertexList.get(counter).getProperties(0).getValue().toString().split(",");
-                String[] vertexTwo = vertexList.get(counter + 1).getProperties(0).getValue().toString().split(",");
+        for (Segment s: segmentList) {
+            System.out.println(s.getV2Idx() + "!!!!!!!!!!!!!!!!!!!!");
+                String[] vertexOne = vertexList.get(s.getV1Idx()).getProperties(0).getValue().toString().split(",");
+                String[] vertexTwo = vertexList.get(s.getV2Idx()).getProperties(0).getValue().toString().split(",");
                 int red = (Integer.valueOf(vertexOne[0]) + Integer.valueOf(vertexTwo[0])) / 2;
                 int green = (Integer.valueOf(vertexOne[1]) + Integer.valueOf(vertexTwo[1])) / 2;
                 int blue = (Integer.valueOf(vertexOne[2]) + Integer.valueOf(vertexTwo[2])) / 2;
@@ -114,12 +126,15 @@ public class CustomMesh extends MeshADT{
                 Structs.Property color = Structs.Property.newBuilder().setKey("rgb_color").setValue(colorCode).build();
                 Segment colored = Segment.newBuilder(s).addProperties(color).build();
                 finalSegments.add(colored);
-                counter++;
-            }
         }
 
         addAllSegments(finalSegments);
-        System.out.println(segmentList.toString());
+//        for (Segment s : segmentList) {
+//            System.out.println("!!!!!!!!!!!!!!!!!!!!!!!1");
+//            System.out.println(vertexList.get(s.getV1Idx()).getX() + ", " + vertexList.get(s.getV1Idx()).getY());
+//            System.out.println(vertexList.get(s.getV2Idx()).getX() + ", " + vertexList.get(s.getV2Idx()).getY());
+//            System.out.println("??????????????????????????/");
+//        }
     }
 
     @Override

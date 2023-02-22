@@ -17,9 +17,9 @@ import ca.mcmaster.cas.se2aa4.a2.customMesh.customVertex;
 
 public class DotGen {
 
-    private final int width = 500;
-    private final int height = 500;
-    private final int square_size = 20;
+    private final int width = 550;
+    private final int height = 550;
+    private final int square_size = 50;
 
 
     public Mesh generate() {
