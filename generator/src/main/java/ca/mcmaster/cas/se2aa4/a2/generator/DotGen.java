@@ -25,8 +25,8 @@ public class DotGen {
     public Mesh generate() {
 
         CustomMesh newMesh = new CustomMesh();
-        newMesh.addAllVertices(width, height, square_size);
-        newMesh.addAllSegments();
+        newMesh.createVertices(width, height, square_size);
+        newMesh.createSegments();
         Mesh finalMesh = newMesh.finalizeMesh();
         
         return finalMesh;

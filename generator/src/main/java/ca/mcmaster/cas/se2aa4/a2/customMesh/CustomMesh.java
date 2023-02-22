@@ -29,10 +29,9 @@ public class CustomMesh extends MeshADT{
 
 
     @Override
-    public void addAllVertices(int width, int height, int square_size) {
+    public void createVertices(int width, int height, int square_size) {
         for(int x = 0; x < width; x += square_size) {
             for (int y = 0; y < height; y += square_size) {
-
                 addVertex(Vertex.newBuilder().setX(Float.parseFloat(df.format(x))).setY(Float.parseFloat(df.format(y))).build());
                 addVertex(Vertex.newBuilder().setX(Float.parseFloat(df.format(x+square_size))).setY(Float.parseFloat(df.format(y))).build());
                 addVertex(Vertex.newBuilder().setX(Float.parseFloat(df.format(x+square_size))).setY(Float.parseFloat(df.format(y+square_size))).build());
@@ -45,20 +44,30 @@ public class CustomMesh extends MeshADT{
 
     @Override
     public void addVertexColour() {
+        ArrayList<Vertex> finalVertices = new ArrayList<>();
         for(Vertex v: vertexList){
         Random bag = new Random();
         int red = bag.nextInt(255);
         int green = bag.nextInt(255);
         int blue = bag.nextInt(255);
         String colorCode = red + "," + green + "," + blue;
-        Vertex.newBuilder(v).addProperties(Structs.Property.newBuilder().setKey("rgb_color").setValue(colorCode).build()).build();
+        Vertex coloured = Vertex.newBuilder(v).addProperties(Structs.Property.newBuilder().setKey("rgb_color").setValue(colorCode).build()).build();
+        finalVertices.add(coloured);
+    //    System.out.println(coloured.getPropertiesList().toString());
         }
 
+        addAllVertices(finalVertices);
+        System.out.println(this.vertexList.toString());
     }
 
     @Override
-    public void addAllSegments() {
-        for(int i = 0; i < vertexList.size(); i++){
+    public void addAllVertices(ArrayList<Vertex> vertices) {
+        this.vertexList = vertices;
+    }
+
+    @Override
+    public void createSegments() {
+        for(int i = 0; i < vertexList.size() - 1; i++){
             if(vertexList.get(i+1).getY() !=0) {
                 segmentList.add(Structs.Segment.newBuilder().setV1Idx(i).setV2Idx(i + 1).build());
             }
@@ -69,6 +78,7 @@ public class CustomMesh extends MeshADT{
     @Override
     public void addSegmentColour() {
         int counter = 0;
+        ArrayList<Segment> finalSegments = new ArrayList<>();
         for(Segment s: segmentList){
             String[] vertexOne = vertexList.get(counter).getProperties(0).getValue().toString().split(",");
             String[] vertexTwo = vertexList.get(counter+1).getProperties(0).getValue().toString().split(",");
@@ -78,9 +88,20 @@ public class CustomMesh extends MeshADT{
             String colorCode = red + "," + green + "," + blue;
             Structs.Property color = Structs.Property.newBuilder().setKey("rgb_color").setValue(colorCode).build();
             Segment colored = Segment.newBuilder(s).addProperties(color).build();
-            segmentList.add(colored);
+            finalSegments.add(colored);
             counter++;
         }
+        addAllSegments(finalSegments);
+    }
+
+    @Override
+    public void addAllSegments(ArrayList<Segment> segments) {
+        this.segmentList = segments;
+    }
+
+    @Override
+    public void createPolygons() {
+
     }
 
     @Override
@@ -120,6 +141,6 @@ public class CustomMesh extends MeshADT{
 
     @Override
     public Mesh finalizeMesh() {
-        return Mesh.newBuilder(finalMesh).addAllVertices(vertexList).addAllSegments(segmentList).addAllPolygons(polygonList).build();
+        return Mesh.newBuilder().addAllVertices(this.vertexList).addAllSegments(this.segmentList).build();
     }
 }

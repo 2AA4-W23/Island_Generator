@@ -11,14 +11,18 @@ import ca.mcmaster.cas.se2aa4.a2.io.Structs.Polygon;
 abstract class MeshADT {
 
 
-    public abstract void addAllVertices(int width, int height, int square);
+    public abstract void createVertices(int width, int height, int square);
     public abstract void addVertexColour();
 
+    public abstract void addAllVertices(ArrayList<Vertex> vertices);
 
-    public abstract void addAllSegments();
+
+    public abstract void createSegments();
 
     public abstract void addSegmentColour();
+    public abstract void addAllSegments(ArrayList<Segment> segments);
 
+    public abstract void createPolygons();
     public abstract void addAllPolygons(ArrayList<Polygon> list);
     public abstract void addVertex(Vertex vertex);
     public abstract void addSegment(Segment segment);
