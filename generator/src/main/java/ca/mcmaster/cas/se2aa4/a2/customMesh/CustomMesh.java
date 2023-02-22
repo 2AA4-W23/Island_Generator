@@ -18,6 +18,9 @@ public class CustomMesh extends MeshADT{
     private ArrayList<Polygon> polygonList;
 
     private Mesh finalMesh;
+    private int width;
+    private int height;
+    private int square_size;
 
     private static final DecimalFormat df = new DecimalFormat("0.00");
 
@@ -25,17 +28,23 @@ public class CustomMesh extends MeshADT{
         vertexList = new ArrayList<>();
         segmentList = new ArrayList<>();
         polygonList = new ArrayList<>();
+        width = 0;
+        height = 0;
+        square_size = 0;
     }
 
 
     @Override
-    public void createVertices(int width, int height, int square_size) {
+    public void createVertices(int newWidth, int newHeight, int newSquare_size) {
+        this.width = newWidth;
+        this.height = newHeight;
+        this.square_size = newSquare_size;
         int y = 0;
-        while(y < height) {
-            for (int x = 0; x < width; x += square_size) {
+        while(y < this.height) {
+            for (int x = 0; x < this.width; x += this.square_size) {
                 addVertex(Vertex.newBuilder().setX(Float.parseFloat(df.format(x))).setY(Float.parseFloat(df.format(y))).build());
             }
-            y += square_size;
+            y += this.square_size;
         }
         addVertexColour();
     }
@@ -65,11 +74,28 @@ public class CustomMesh extends MeshADT{
 
     @Override
     public void createSegments() {
-        for(int i = 0; i < vertexList.size() - 2; i+=2){
-            if(vertexList.get(i+2).getY() !=0) {
-                segmentList.add(Structs.Segment.newBuilder().setV1Idx(i).setV2Idx(i + 2).build());
-            }
+
+        for(int i = 0; i < vertexList.size()/2; i+=2){
+
+                //top left to top middle
+                segmentList.add(Structs.Segment.newBuilder().setV1Idx(i).setV2Idx(i + 1).build());
+                //top middle to top right
+               // segmentList.add(Structs.Segment.newBuilder().setV1Idx(i+1).setV2Idx(i + 2).build());
+                //top right to right middle
+                segmentList.add(Structs.Segment.newBuilder().setV1Idx(i+2).setV2Idx(i + 2 + (this.width/this.square_size)).build());
+                //right middle to right bottom
+                segmentList.add(Structs.Segment.newBuilder().setV1Idx(i + 2 + (this.width/this.square_size)).setV2Idx(i + 2 + (2*(this.width/this.square_size))).build());
+                //right bottom to middle bottom
+                segmentList.add(Structs.Segment.newBuilder().setV1Idx(i + 2 + (2*(this.width/this.square_size))).setV2Idx(i + 1 + (2*(this.width/this.square_size))).build());
+                //middle bottom to left bottom
+                segmentList.add(Structs.Segment.newBuilder().setV1Idx(i + 1 + (2*(this.width/this.square_size))).setV2Idx(i + (2*(this.width/this.square_size))).build());
+                //left bottom to left middle
+                segmentList.add(Structs.Segment.newBuilder().setV1Idx(i +(2*(this.width/this.square_size))).setV2Idx(i + (this.width/this.square_size)).build());
+                //left middle to top left
+                segmentList.add(Structs.Segment.newBuilder().setV1Idx(i + (this.width/this.square_size)).setV2Idx(i).build());
+
         }
+
         addSegmentColour();
     }
 
@@ -78,18 +104,22 @@ public class CustomMesh extends MeshADT{
         int counter = 0;
         ArrayList<Segment> finalSegments = new ArrayList<>();
         for(Segment s: segmentList){
-            String[] vertexOne = vertexList.get(counter).getProperties(0).getValue().toString().split(",");
-            String[] vertexTwo = vertexList.get(counter+1).getProperties(0).getValue().toString().split(",");
-            int red = (Integer.valueOf(vertexOne[0])+Integer.valueOf(vertexTwo[0]))/2;
-            int green = (Integer.valueOf(vertexOne[1])+Integer.valueOf(vertexTwo[1]))/2;
-            int blue = (Integer.valueOf(vertexOne[2])+Integer.valueOf(vertexTwo[2]))/2;
-            String colorCode = red + "," + green + "," + blue;
-            Structs.Property color = Structs.Property.newBuilder().setKey("rgb_color").setValue(colorCode).build();
-            Segment colored = Segment.newBuilder(s).addProperties(color).build();
-            finalSegments.add(colored);
-            counter++;
+            if(counter < vertexList.size()/2 -1) {
+                String[] vertexOne = vertexList.get(counter).getProperties(0).getValue().toString().split(",");
+                String[] vertexTwo = vertexList.get(counter + 1).getProperties(0).getValue().toString().split(",");
+                int red = (Integer.valueOf(vertexOne[0]) + Integer.valueOf(vertexTwo[0])) / 2;
+                int green = (Integer.valueOf(vertexOne[1]) + Integer.valueOf(vertexTwo[1])) / 2;
+                int blue = (Integer.valueOf(vertexOne[2]) + Integer.valueOf(vertexTwo[2])) / 2;
+                String colorCode = red + "," + green + "," + blue;
+                Structs.Property color = Structs.Property.newBuilder().setKey("rgb_color").setValue(colorCode).build();
+                Segment colored = Segment.newBuilder(s).addProperties(color).build();
+                finalSegments.add(colored);
+                counter++;
+            }
         }
+
         addAllSegments(finalSegments);
+        System.out.println(segmentList.toString());
     }
 
     @Override
