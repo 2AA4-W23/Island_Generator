@@ -75,39 +75,103 @@ public class CustomMesh extends MeshADT{
     @Override
     public void createSegments() {
         boolean firstSquare = true;
+        boolean firstRow = true;
         int counter = 0;
+        int topLeft;
+        int topMiddle;
+        int topRight;
+        int middleRight;
+        int bottomRight;
+        int bottomMiddle;
+        int bottomLeft;
+        int middleLeft;
+
+        int squareCounter = 0;
+        int rowCounter = 0;
+        ArrayList<Integer> polygonSegments = new ArrayList<>();
+
         System.out.println(vertexList.size() + "??????????????????");
         for(int i = 0; i < vertexList.size() - ((width/square_size)*2) -1; i+=2) {
 
             if ((i + 1) % (width / square_size) == 0) {
                 i += width / square_size + 1;
                 firstSquare = true;
+                firstRow = false;
+                squareCounter = 0;
+                rowCounter+=1;
             }
-         //   System.out.println(i + "      !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+            topLeft = i;
+            topMiddle = i + 1;
+            topRight = i+2;
+            middleRight = i + 2 + (this.width / this.square_size);
+            bottomRight = i + 2 + (2 * (this.width / this.square_size));
+            bottomMiddle = i + 1 + (2 * (this.width / this.square_size));
+            bottomLeft = i + (2 * (this.width / this.square_size));
+            middleLeft = i + (this.width / this.square_size);
 
+            polygonSegments.clear();
+            if(firstRow) {
                 //top left to top middle
-                segmentList.add(Structs.Segment.newBuilder().setV1Idx(i).setV2Idx(i + 1).build());
+                segmentList.add(Structs.Segment.newBuilder().setV1Idx(topLeft).setV2Idx(topMiddle).build());
+                polygonSegments.add(counter);
+                counter++;
                 //top middle to top right
-                segmentList.add(Structs.Segment.newBuilder().setV1Idx(i + 1).setV2Idx(i + 2).build());
-                //top right to right middle
-                segmentList.add(Structs.Segment.newBuilder().setV1Idx(i + 2).setV2Idx(i + 2 + (this.width / this.square_size)).build());
-                //right middle to right bottom
-                segmentList.add(Structs.Segment.newBuilder().setV1Idx(i + 2 + (this.width / this.square_size)).setV2Idx(i + 2 + (2 * (this.width / this.square_size))).build());
-                //right bottom to middle bottom
-                segmentList.add(Structs.Segment.newBuilder().setV1Idx(i + 2 + (2 * (this.width / this.square_size))).setV2Idx(i + 1 + (2 * (this.width / this.square_size))).build());
-                //middle bottom to left bottom
-                segmentList.add(Structs.Segment.newBuilder().setV1Idx(i + 1 + (2 * (this.width / this.square_size))).setV2Idx(i + (2 * (this.width / this.square_size))).build());
-            if (firstSquare) {
-                //left bottom to left middle
-                segmentList.add(Structs.Segment.newBuilder().setV1Idx(i + (2 * (this.width / this.square_size))).setV2Idx(i + (this.width / this.square_size)).build());
-                //left middle to top left
-                segmentList.add(Structs.Segment.newBuilder().setV1Idx(i + (this.width / this.square_size)).setV2Idx(i).build());
-                firstSquare = false;
+                segmentList.add(Structs.Segment.newBuilder().setV1Idx(topMiddle).setV2Idx(topRight).build());
+                polygonSegments.add(counter);
+                counter++;
+            }   else if(rowCounter == 1){
+                System.out.println("password");
+                polygonSegments.add((counter - (8 + (((((width/square_size)-1)/2)-1)*6))));
+                polygonSegments.add((counter - (8 + (((((width/square_size)-1)/2)-1)*6)))+1);
+            }
+            else{
+                polygonSegments.add((counter - (8 + (((((width/square_size)-1)/2)-1)*4))));
+                polygonSegments.add((counter - (8 + (((((width/square_size)-1)/2)-1)*4)))+1);
 
             }
-            counter++;
+
+
+
+                //top right to right middle
+                segmentList.add(Structs.Segment.newBuilder().setV1Idx(topRight).setV2Idx(middleRight).build());
+                polygonSegments.add(counter);
+                counter++;
+                //right middle to right bottom
+                segmentList.add(Structs.Segment.newBuilder().setV1Idx(middleRight).setV2Idx(bottomRight).build());
+                polygonSegments.add(counter);
+                counter++;
+                //right bottom to middle bottom
+                segmentList.add(Structs.Segment.newBuilder().setV1Idx(bottomRight).setV2Idx(bottomMiddle).build());
+                 polygonSegments.add(counter);
+                 counter++;
+                //middle bottom to left bottom
+                segmentList.add(Structs.Segment.newBuilder().setV1Idx(bottomMiddle).setV2Idx(bottomLeft).build());
+                polygonSegments.add(counter);
+                counter++;
+                if (firstSquare) {
+                //left bottom to left middle
+                segmentList.add(Structs.Segment.newBuilder().setV1Idx(bottomLeft).setV2Idx(middleLeft).build());
+                    polygonSegments.add(counter);
+                    counter++;
+                //left middle to top left
+                segmentList.add(Structs.Segment.newBuilder().setV1Idx(middleLeft).setV2Idx(topLeft).build());
+                    polygonSegments.add(counter);
+                    counter++;
+                firstSquare = false;
+            }else if(squareCounter == 1){
+
+                    polygonSegments.add(counter-12);
+                    polygonSegments.add(counter-11);
+                }
+                else{
+                    polygonSegments.add(counter-10);
+                    polygonSegments.add(counter - 9);
+                }
+            addPolygon(Polygon.newBuilder().addAllSegmentIdxs(polygonSegments).build());
+                squareCounter++;
+
         }
-        System.out.println(counter + "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~`");
+        System.out.println(polygonList.toString()+"   I LOVE HAMZAHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa");
         addSegmentColour();
     }
 
