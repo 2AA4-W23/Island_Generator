@@ -119,18 +119,29 @@ public class CustomMesh extends MeshADT{
                 segmentList.add(Structs.Segment.newBuilder().setV1Idx(topMiddle).setV2Idx(topRight).build());
                 polygonSegments.add(counter);
                 counter++;
-            }   else if(rowCounter == 1){
-                System.out.println("password");
-                polygonSegments.add((counter - (8 + (((((width/square_size)-1)/2)-1)*6))));
-                polygonSegments.add((counter - (8 + (((((width/square_size)-1)/2)-1)*6)))+1);
             }
+            // if we are in 2nd row, first square
+            else if(rowCounter == 1 && firstSquare){
+                System.out.println("password");
+                polygonSegments.add((counter - (8 + (((((width/square_size)-1)/2)-1)*6)))+5);
+                polygonSegments.add((counter - (8 + (((((width/square_size)-1)/2)-1)*6)))+4);
+            }
+            // 2nd row, 2nd square
+            else if(rowCounter == 1 && squareCounter == 1){
+                polygonSegments.add((counter - (8 + (((((width/square_size)-1)/2)-1)*6)))+7);
+                polygonSegments.add((counter - (8 + (((((width/square_size)-1)/2)-1)*6)))+6);
+            }
+            // 2nd row, not 2nd square
+            else if(rowCounter == 1 && squareCounter > 1){
+                polygonSegments.add((counter - (8 + (((((width/square_size)-1)/2)-1)*6)))+9);
+                polygonSegments.add((counter - (8 + (((((width/square_size)-1)/2)-1)*6)))+8);
+            }
+
             else{
                 polygonSegments.add((counter - (8 + (((((width/square_size)-1)/2)-1)*4))));
                 polygonSegments.add((counter - (8 + (((((width/square_size)-1)/2)-1)*4)))+1);
 
             }
-
-
 
                 //top right to right middle
                 segmentList.add(Structs.Segment.newBuilder().setV1Idx(topRight).setV2Idx(middleRight).build());
