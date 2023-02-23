@@ -1,9 +1,9 @@
 package ca.mcmaster.cas.se2aa4.a2.customMesh;
-
+import java.awt.Color;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Segment;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Property;
-import java.text.DecimalFormat;
+
 import java.util.Random;
 public class CustomSegment {
 
@@ -21,7 +21,6 @@ public class CustomSegment {
     public Property getColor(){
         return this.segment.getProperties(0);
     }
-
     public void setV1Idx(int newV1IDX){
         Segment.newBuilder(this.segment).setV1Idx(newV1IDX).build();
     }
@@ -36,10 +35,14 @@ public class CustomSegment {
         int red = (Integer.valueOf(v1[0])+Integer.valueOf(v2[0]))/2;
         int green = (Integer.valueOf(v1[1])+Integer.valueOf(v2[1]))/2;
         int blue = (Integer.valueOf(v1[2])+Integer.valueOf(v2[2]))/2;
-        String colorCode = red + "," + green + "," + blue;
-        Property color = Property.newBuilder().setKey("rgb_color").setValue(colorCode).build();
-
+        int alpha = (Integer.valueOf(v1[3])+Integer.valueOf(v2[3]))/2;
+        String colorCode = red + "," + green + "," + blue + "," + alpha;
+        Property color = Property.newBuilder().setKey("rgba_color").setValue(colorCode).build();
     }
+
+
+
+
 }
 
 

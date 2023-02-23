@@ -38,9 +38,11 @@ public class customVertex {
         int red = bag.nextInt(255);
         int green = bag.nextInt(255);
         int blue = bag.nextInt(255);
-        String colorCode = red + "," + green + "," + blue;
-        Vertex.newBuilder(this.vertex).addProperties(Property.newBuilder().setKey("rgb_color").setValue(colorCode).build()).build();
+        int alpha = bag.nextInt(255);
+        String colorCode = red + "," + green + "," + blue + "," + alpha;
+        Vertex.newBuilder(this.vertex).addProperties(Property.newBuilder().setKey("rgba_color").setValue(colorCode).build()).build();
     }
+
 
 
 

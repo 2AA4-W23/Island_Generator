@@ -6,6 +6,7 @@ import ca.mcmaster.cas.se2aa4.a2.io.Structs.Segment;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Polygon;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Mesh;
 
+import java.awt.Color;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Random;
@@ -33,7 +34,6 @@ public class CustomMesh extends MeshADT{
         square_size = 0;
     }
 
-
     @Override
     public void createVertices(int newWidth, int newHeight, int newSquare_size) {
         this.width = newWidth;
@@ -53,13 +53,14 @@ public class CustomMesh extends MeshADT{
     public void addVertexColour() {
         ArrayList<Vertex> finalVertices = new ArrayList<>();
         for(Vertex v: vertexList){
-        Random bag = new Random();
-        int red = bag.nextInt(255);
-        int green = bag.nextInt(255);
-        int blue = bag.nextInt(255);
-        String colorCode = red + "," + green + "," + blue;
-        Vertex coloured = Vertex.newBuilder(v).addProperties(Structs.Property.newBuilder().setKey("rgb_color").setValue(colorCode).build()).build();
-        finalVertices.add(coloured);
+            Random bag = new Random();
+            int red = bag.nextInt(255);
+            int green = bag.nextInt(255);
+            int blue = bag.nextInt(255);
+            int alpha = bag.nextInt(255);
+            String colorCode = red + "," + green + "," + blue + "," + alpha;
+            Vertex coloured = Vertex.newBuilder(v).addProperties(Structs.Property.newBuilder().setKey("rgba_color").setValue(colorCode).build()).build();
+            finalVertices.add(coloured);
     //    System.out.println(coloured.getPropertiesList().toString());
         }
 
@@ -188,7 +189,6 @@ public class CustomMesh extends MeshADT{
 
     @Override
     public void addSegmentColour() {
-       // int counter = 0;
         ArrayList<Segment> finalSegments = new ArrayList<>();
         for (Segment s: segmentList) {
             System.out.println(s.getV2Idx() + "!!!!!!!!!!!!!!!!!!!!");
@@ -197,8 +197,9 @@ public class CustomMesh extends MeshADT{
                 int red = (Integer.valueOf(vertexOne[0]) + Integer.valueOf(vertexTwo[0])) / 2;
                 int green = (Integer.valueOf(vertexOne[1]) + Integer.valueOf(vertexTwo[1])) / 2;
                 int blue = (Integer.valueOf(vertexOne[2]) + Integer.valueOf(vertexTwo[2])) / 2;
-                String colorCode = red + "," + green + "," + blue;
-                Structs.Property color = Structs.Property.newBuilder().setKey("rgb_color").setValue(colorCode).build();
+                int alpha = (Integer.valueOf(vertexOne[3])+Integer.valueOf(vertexTwo[3]))/2;
+                String colorCode = red + "," + green + "," + blue + "," + alpha;
+                Structs.Property color = Structs.Property.newBuilder().setKey("rgba_color").setValue(colorCode).build();
                 Segment colored = Segment.newBuilder(s).addProperties(color).build();
                 finalSegments.add(colored);
         }
