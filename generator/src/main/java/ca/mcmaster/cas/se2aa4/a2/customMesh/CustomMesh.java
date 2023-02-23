@@ -87,15 +87,12 @@ public class CustomMesh extends MeshADT{
         int rowCounter = 0;
         ArrayList<Integer> polygonSegments = new ArrayList<>();
 
-        System.out.println(vertexList.size() + "??????????????????");
-        for(int i = 0; i < vertexList.size() - ((width/square_size)*2) -1; i++) {
+        for(int i = 0; i < vertexList.size() - ((width/square_size)) -1; i++) {
             ArrayList<Segment> centroids = new ArrayList<>();
-
             if ((i + 1) % (width / square_size) == 0) {
                 i +=1;
                 firstSquare = true;
                 firstRow = false;
-                squareCounter = 0;
                 rowCounter+=1;
             }
             topLeft = i;
@@ -104,20 +101,34 @@ public class CustomMesh extends MeshADT{
             bottomLeft = i + (this.width / this.square_size);
 
             polygonSegments.clear();
-
-            if(firstRow) {
+            if(rowCounter == 0) {
                 // top left to top right
                 segmentList.add(Structs.Segment.newBuilder().setV1Idx(topLeft).setV2Idx(topRight).build());
+                polygonSegments.add(counter);
+                counter++;
+            }
+            else if (rowCounter > 0) {
+                polygonSegments.add(polygonList.get(squareCounter - (width/square_size)+1).getSegmentIdxs(2));
             }
             // top right to bottom right
             segmentList.add(Structs.Segment.newBuilder().setV1Idx(topRight).setV2Idx(bottomRight).build());
+            polygonSegments.add(counter);
+            counter++;
             // bottom right to bottom left
             segmentList.add(Structs.Segment.newBuilder().setV1Idx(bottomRight).setV2Idx(bottomLeft).build());
+            polygonSegments.add(counter);
+            counter++;
             if(firstSquare) {
                 // bottom left to top left
                 segmentList.add(Structs.Segment.newBuilder().setV1Idx(bottomLeft).setV2Idx(topLeft).build());
+                polygonSegments.add(counter);
+                counter++;
                 firstSquare = false;
             }
+            else if(!firstSquare){
+                polygonSegments.add(polygonList.get(squareCounter - 1).getSegmentIdxs(1));
+            }
+
 
 
             addPolygon(Polygon.newBuilder().addAllSegmentIdxs(polygonSegments).build());
@@ -132,7 +143,7 @@ public class CustomMesh extends MeshADT{
     public void addSegmentColour() {
         ArrayList<Segment> finalSegments = new ArrayList<>();
         for (Segment s: segmentList) {
-            System.out.println(s.getV2Idx() + "!!!!!!!!!!!!!!!!!!!!");
+
                 String[] vertexOne = vertexList.get(s.getV1Idx()).getProperties(0).getValue().toString().split(",");
                 String[] vertexTwo = vertexList.get(s.getV2Idx()).getProperties(0).getValue().toString().split(",");
                 int red = (Integer.valueOf(vertexOne[0]) + Integer.valueOf(vertexTwo[0])) / 2;
