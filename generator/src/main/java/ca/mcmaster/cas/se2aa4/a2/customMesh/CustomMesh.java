@@ -110,7 +110,7 @@ public class CustomMesh extends MeshADT{
                 counter++;
             }
             else if (rowCounter > 0) {
-                polygonSegments.add(polygonList.get(squareCounter - (width/square_size)+2).getSegmentIdxs(2));
+                polygonSegments.add(polygonList.get(squareCounter - (width/square_size)).getSegmentIdxs(2));
             }
             // top right to bottom right
             segmentList.add(Structs.Segment.newBuilder().setV1Idx(topRight).setV2Idx(bottomRight).build());
@@ -133,21 +133,20 @@ public class CustomMesh extends MeshADT{
 
             addPolygon(Polygon.newBuilder().addAllSegmentIdxs(polygonSegments).build());
                 squareCounter++;
-            System.out.println(counter + " dscdscdscsssssssssssssssssssssssssssssssss");
         }
-        //  System.out.println(polygonList.toString()+"   I LOVE HAMZAHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa");
 
 
         addSegmentColour();
         addNeighbours();
         int polygonCounter = 0;
         ArrayList<ArrayList<Integer>> neighboursList = addNeighbours();
-//        for(Polygon p: polygonList){
-//            Polygon.newBuilder(p).addAllNeighborIdxs(neighboursList.get(polygonCounter));
-//            polygonCounter++;
-//        }
-//        System.out.println(polygonList.toString()+"   I LOVE HAMZAHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa");
+        ArrayList<Polygon> temp = new ArrayList<>();
+        for(Polygon p: polygonList){
 
+           temp.add(Polygon.newBuilder(p).addAllNeighborIdxs(neighboursList.get(polygonCounter)).build());
+            polygonCounter++;
+        }
+        polygonList = temp;
     }
 
     @Override
@@ -211,25 +210,35 @@ public class CustomMesh extends MeshADT{
         ArrayList<ArrayList<Integer>> list = new ArrayList<>();
         int squareCounter = 0;
         int rowCounter = 0;
-        for(int i = 0; i < (polygonList.size()-1); i++){
-         //   System.out.println(rowCounter + ", " + squareCounter + " %%%%%%%%%%%%%%%%%%%%");
-            ArrayList<Integer> neighbours = new ArrayList<>();
+        ArrayList<Integer> neighbours;
+        for(int i = 0; i < (polygonList.size()); i++){
+            list.add(new ArrayList<>());
+            neighbours = new ArrayList<>();
+
+
             if(rowCounter == 0){
+
                 if(squareCounter == 0){
+                    list.get(i).add(i+1);
                     neighbours.add(i+1);
-                    neighbours.add(i+ (width/square_size));
+                    list.get(i).add(i+((width/square_size)+1));
+                    neighbours.add(i+((width/square_size)+1));
                     squareCounter++;
                 }
-                else if (squareCounter < (width/square_size - 1)){
+                else if (squareCounter < (width/square_size)-1){
+                    list.get(i).add(i-1);
                     neighbours.add(i-1);
+                    list.get(i).add(i+1);
                     neighbours.add(i+1);
-                    neighbours.add(i+ (width/square_size));
+                    list.get(i).add(i+((width/square_size)+1));
+                    neighbours.add(i+ ((width/square_size)+1));
                     squareCounter++;
                 }
-                else if(squareCounter == ((width/square_size) - 1)){
-             //       System.out.println("last rowwwwwwwwwwwwwwwwwwwwwwwwwww");
+                else if(squareCounter == ((width/square_size)-1)){
+                    list.get(i).add(i-1);
                     neighbours.add(i - 1);
-                    neighbours.add(i+ (width/square_size));
+                    list.get(i).add(i+((width/square_size)+1));
+                    neighbours.add(i+ ((width/square_size)+1));
                     rowCounter++;
                     squareCounter = 0;
 
@@ -237,24 +246,34 @@ public class CustomMesh extends MeshADT{
             }
 
             else if(rowCounter != ((width/square_size)-1)){
+
                 if(squareCounter == 0){
-                    neighbours.add(i- (width/square_size));
+                    list.get(i).add(i- ((width/square_size)+1));
+                    neighbours.add(i- ((width/square_size)+1));
+                    list.get(i).add(i+1);
                     neighbours.add(i+1);
-                    neighbours.add(i+ (width/square_size));
+                    list.get(i).add(i+((width/square_size)+1));
+                    neighbours.add(i+ ((width/square_size)+1));
                     squareCounter++;
                 }
-                else if(squareCounter < (width/square_size - 1)){
+                else if(squareCounter < (width/square_size)-1){
+                    list.get(i).add(i- ((width/square_size)+1));
                     neighbours.add(i- (width/square_size));
+                    list.get(i).add(i-1);
                     neighbours.add(i-1);
+                    list.get(i).add(i+1);
                     neighbours.add(i+1);
-                    neighbours.add(i+ (width/square_size));
+                    list.get(i).add(i+((width/square_size)+1));
+                    neighbours.add(i+ ((width/square_size)+1));
                     squareCounter++;
                 }
                 else{
-             //       System.out.println("last rowwwwwwwwwwwwwwwwwwwwwwwwwww");
-                    neighbours.add(i- (width/square_size));
+                    list.get(i).add(i- ((width/square_size)+1));
+                    neighbours.add(i- ((width/square_size)+1));
+                    list.get(i).add(i-1);
                     neighbours.add(i-1);
-                    neighbours.add(i+ (width/square_size));
+                    list.get(i).add(i+((width/square_size)+1));
+                    neighbours.add(i+ ((width/square_size)+1));
 
                     squareCounter = 0;
                     rowCounter++;
@@ -262,27 +281,34 @@ public class CustomMesh extends MeshADT{
             }
             else{
                 if(squareCounter == 0){
-                    neighbours.add(i- (width/square_size));
+                    list.get(i).add(i- ((width/square_size)+1));
+                    neighbours.add(i- ((width/square_size)+1));
+                    list.get(i).add(i+1);
                     neighbours.add(i+1);
                     squareCounter++;
                 }
-                else if(squareCounter < (width/square_size - 1)){
-                    neighbours.add(i- (width/square_size));
+                else if(squareCounter < ((width/square_size)-1)){
+                    list.get(i).add(i- ((width/square_size)+1));
+                    neighbours.add(i- ((width/square_size)+1));
+                    list.get(i).add(i-1);
                     neighbours.add(i-1);
+                    list.get(i).add(i+1);
                     neighbours.add(i+1);
                     squareCounter++;
                 }
                 else{
-                    neighbours.add(i- (width/square_size));
+                    list.get(i).add(i- ((width/square_size)+1));
+                    neighbours.add(i- ((width/square_size)+1));
+                    list.get(i).add(i-1);
                     neighbours.add(i-1);
                     squareCounter = 0;
                 }
 
             }
-            list.add(neighbours);
+
+
+
             neighbours.clear();
-
-
         }
         return list;
     }
