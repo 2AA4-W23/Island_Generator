@@ -77,6 +77,7 @@ public class CustomMesh extends MeshADT{
     public void createSegments() {
         boolean firstSquare = true;
         boolean firstRow = true;
+        ArrayList<Integer> neighbours = new ArrayList<>();
         int counter = 0;
         int topLeft;
         int topRight;
@@ -132,11 +133,15 @@ public class CustomMesh extends MeshADT{
 
 
             addPolygon(Polygon.newBuilder().addAllSegmentIdxs(polygonSegments).build());
+
                 squareCounter++;
 
         }
+
         System.out.println(polygonList.toString()+"   I LOVE HAMZAHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa");
+
         addSegmentColour();
+        addNeighbours();
     }
 
     @Override
@@ -193,6 +198,84 @@ public class CustomMesh extends MeshADT{
     @Override
     public void addPolygon(Polygon polygon) {
         this.polygonList.add(polygon);
+    }
+
+    @Override
+    public  ArrayList<ArrayList<Integer>> addNeighbours() {
+        ArrayList<ArrayList<Integer>> list = new ArrayList<>();
+        int squareCounter = 0;
+        int rowCounter = 0;
+        for(int i = 0; i < polygonList.size()-1; i++){
+            ArrayList<Integer> neighbours = new ArrayList<>();
+            if(rowCounter == 0){
+                if(squareCounter == 0){
+                    neighbours.add(i+1);
+                    neighbours.add(i+ (width/square_size));
+                    squareCounter++;
+                }
+                else if (squareCounter < width/square_size - 1){
+                    neighbours.add(i-1);
+                    neighbours.add(i+1);
+                    neighbours.add(i+ (width/square_size));
+                    squareCounter++;
+                }
+                else if(squareCounter == ((width/square_size) - 1)){
+                    neighbours.add(i - 1);
+                    neighbours.add(i+ (width/square_size));
+                    rowCounter++;
+                    squareCounter = 0;
+
+                }
+            }
+
+            else if(rowCounter != ((width/square_size)-1)){
+                if(squareCounter == 0){
+                    neighbours.add(i- (width/square_size));
+                    neighbours.add(i+1);
+                    neighbours.add(i+ (width/square_size));
+                    squareCounter++;
+                }
+                else if(squareCounter < width/square_size - 1){
+                    neighbours.add(i- (width/square_size));
+                    neighbours.add(i-1);
+                    neighbours.add(i+1);
+                    neighbours.add(i+ (width/square_size));
+                    squareCounter++;
+                }
+                else{
+                    neighbours.add(i- (width/square_size));
+                    neighbours.add(i-1);
+                    neighbours.add(i+ (width/square_size));
+
+                    squareCounter = 0;
+                    rowCounter++;
+                }
+            }
+            else{
+                if(squareCounter == 0){
+                    neighbours.add(i- (width/square_size));
+                    neighbours.add(i+1);
+                    squareCounter++;
+                }
+                else if(squareCounter < width/square_size - 1){
+                    neighbours.add(i- (width/square_size));
+                    neighbours.add(i-1);
+                    neighbours.add(i+1);
+                    squareCounter++;
+                }
+                else{
+                    neighbours.add(i- (width/square_size));
+                    neighbours.add(i-1);
+                    squareCounter = 0;
+                }
+
+            }
+            list.add(neighbours);
+            neighbours.clear();
+
+
+        }
+        return list;
     }
 
     @Override

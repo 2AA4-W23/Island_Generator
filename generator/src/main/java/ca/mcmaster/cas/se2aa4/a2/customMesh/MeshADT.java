@@ -27,12 +27,14 @@ abstract class MeshADT {
     public abstract void addVertex(Vertex vertex);
     public abstract void addSegment(Segment segment);
     public abstract void addPolygon(Polygon polygon);
+    public abstract ArrayList<ArrayList<Integer>> addNeighbours();
 
 
     public abstract ArrayList<Segment> getSegments();
 
     public abstract ArrayList<Vertex> getVertices();
     public abstract ArrayList<Polygon> getPolygons();
+
 
     public abstract Mesh finalizeMesh();
 
