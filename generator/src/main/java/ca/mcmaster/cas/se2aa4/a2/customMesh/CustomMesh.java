@@ -135,18 +135,34 @@ public class CustomMesh extends MeshADT{
                 squareCounter++;
         }
 
-
         addSegmentColour();
         addNeighbours();
         int polygonCounter = 0;
         ArrayList<ArrayList<Integer>> neighboursList = addNeighbours();
         ArrayList<Polygon> temp = new ArrayList<>();
-        for(Polygon p: polygonList){
 
+        for(Polygon p: polygonList){
            temp.add(Polygon.newBuilder(p).addAllNeighborIdxs(neighboursList.get(polygonCounter)).build());
             polygonCounter++;
         }
+
+
         polygonList = temp;
+        ArrayList<Polygon> temp1 = new ArrayList<>();
+
+        ArrayList<Integer> currentSegments = new ArrayList<>();
+
+        for(Polygon p: polygonList){
+            for(int i =0; i < p.getSegmentIdxsCount(); i++){
+                currentSegments.add(p.getSegmentIdxs(i));
+            }
+            vertexList.add(setCentroid(currentSegments));
+            temp1.add(Polygon.newBuilder(p).setCentroidIdx(vertexList.size()-1).build());
+            currentSegments.clear();
+            System.out.println(temp1.size() + "xxxxxxxxxxxxxxxxxxxxxxxx");
+        }
+        polygonList = temp1;
+        System.out.println(vertexList.get(polygonList.get(24).getCentroidIdx()).getX() +", " + vertexList.get(polygonList.get(24).getCentroidIdx()).getY() + "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM");
     }
 
     @Override
@@ -326,6 +342,24 @@ public class CustomMesh extends MeshADT{
     @Override
     public ArrayList<Polygon> getPolygons() {
         return this.polygonList;
+    }
+
+    @Override
+    public Vertex setCentroid(ArrayList<Integer> segments) {
+        double x0 = (vertexList.get(segmentList.get(segments.get(0)).getV1Idx()).getX() + vertexList.get(segmentList.get(segments.get(0)).getV2Idx()).getX())/2.0;
+        double x1 = (vertexList.get(segmentList.get(segments.get(1)).getV1Idx()).getX() + vertexList.get(segmentList.get(segments.get(1)).getV2Idx()).getX())/2.0;
+        double x2 = (vertexList.get(segmentList.get(segments.get(2)).getV1Idx()).getX() + vertexList.get(segmentList.get(segments.get(2)).getV2Idx()).getX())/2.0;
+        double x3 = (vertexList.get(segmentList.get(segments.get(3)).getV1Idx()).getX() + vertexList.get(segmentList.get(segments.get(3)).getV2Idx()).getX())/2.0;
+
+        double y0 = (vertexList.get(segmentList.get(segments.get(0)).getV1Idx()).getY() + vertexList.get(segmentList.get(segments.get(0)).getV2Idx()).getY())/2.0;
+        double y1 = (vertexList.get(segmentList.get(segments.get(1)).getV1Idx()).getY() + vertexList.get(segmentList.get(segments.get(1)).getV2Idx()).getY())/2.0;
+        double y2 = (vertexList.get(segmentList.get(segments.get(2)).getV1Idx()).getY() + vertexList.get(segmentList.get(segments.get(2)).getV2Idx()).getY())/2.0;
+        double y3 = (vertexList.get(segmentList.get(segments.get(3)).getV1Idx()).getY() + vertexList.get(segmentList.get(segments.get(3)).getV2Idx()).getY())/2.0;
+
+        double x = (x0 + x1 + x2 + x3) / 4;
+        double y = (y0 + y1 + y2 + y3) / 4;
+
+        return Vertex.newBuilder().setX(x).setY(y).build();
     }
 
     @Override

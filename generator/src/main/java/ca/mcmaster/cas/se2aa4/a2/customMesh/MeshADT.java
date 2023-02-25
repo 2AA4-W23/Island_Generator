@@ -35,6 +35,8 @@ abstract class MeshADT {
     public abstract ArrayList<Vertex> getVertices();
     public abstract ArrayList<Polygon> getPolygons();
 
+    public abstract Vertex setCentroid(ArrayList<Integer> segments);
+
 
     public abstract Mesh finalizeMesh();
 
