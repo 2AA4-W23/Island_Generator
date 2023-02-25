@@ -1,21 +1,22 @@
 package ca.mcmaster.cas.se2aa4.a2.visualizer;
 
+import ca.mcmaster.cas.se2aa4.a2.io.Structs;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Mesh;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Vertex;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Property;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Segment;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.Stroke;
-import java.awt.BasicStroke;
+import java.awt.*;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.Path2D;
+import java.awt.geom.Rectangle2D;
 import java.util.List;
 import java.awt.geom.Line2D;
 
 public class GraphicRenderer {
 
-    private static final int THICKNESS = 3;
+    private static final int VERTEX_THICKNESS = 4;
+    private static final int SEGMENT_THICKNESS = 3;
 
     public void render(Mesh aMesh, Graphics2D canvas) {
         canvas.setColor(Color.BLACK);
@@ -23,12 +24,11 @@ public class GraphicRenderer {
         canvas.setStroke(stroke);
 
         for (Vertex v : aMesh.getVerticesList()) {
-            double centre_x = v.getX() - (THICKNESS / 2.0d);
-            double centre_y = v.getY() - (THICKNESS / 2.0d);
+            double centre_x = v.getX() - (VERTEX_THICKNESS / 2.0d);
+            double centre_y = v.getY() - (VERTEX_THICKNESS / 2.0d);
             Color old = canvas.getColor();
-            //   System.out.println(v.getPropertiesList());
             canvas.setColor(extractColor(v.getPropertiesList()));
-            Ellipse2D point = new Ellipse2D.Double(centre_x, centre_y, THICKNESS, THICKNESS);
+            Ellipse2D point = new Ellipse2D.Double(centre_x, centre_y, VERTEX_THICKNESS, VERTEX_THICKNESS);
             canvas.fill(point);
             canvas.setColor(old);
         }
@@ -36,13 +36,19 @@ public class GraphicRenderer {
             Color old = canvas.getColor();
             canvas.setColor(extractColor(s.getPropertiesList()));
             Line2D line = new Line2D.Double(aMesh.getVerticesList().get(s.getV1Idx()).getX(), aMesh.getVerticesList().get(s.getV1Idx()).getY(), aMesh.getVerticesList().get(s.getV2Idx()).getX(), aMesh.getVerticesList().get(s.getV2Idx()).getY());
-            canvas.setStroke(new BasicStroke(3));
+            canvas.setStroke(new BasicStroke(SEGMENT_THICKNESS));
             canvas.draw(line);
             canvas.setColor(old);
+        }
+        for (Structs.Polygon p : aMesh.getPolygonsList()) {
+            Color old = canvas.getColor();
+            canvas.setColor(extractColor(p.getPropertiesList()));
+            
+            canvas.setColor(old);
+
 
         }
     }
-
     private Color extractColor(List<Property> properties) {
         String val = null;
         for(Property p: properties) {

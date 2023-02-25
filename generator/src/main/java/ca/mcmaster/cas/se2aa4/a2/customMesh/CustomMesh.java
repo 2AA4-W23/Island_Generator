@@ -65,8 +65,9 @@ public class CustomMesh extends MeshADT{
     //    System.out.println(coloured.getPropertiesList().toString());
         }
         addAllVertices(finalVertices);
-        System.out.println(this.vertexList.toString());
+        //System.out.println(this.vertexList.toString());
     }
+
 
     @Override
     public void addAllVertices(ArrayList<Vertex> vertices) {
@@ -136,6 +137,7 @@ public class CustomMesh extends MeshADT{
 
         addSegmentColour();
         addNeighbours();
+        addPolygonColour();
         int polygonCounter = 0;
         ArrayList<ArrayList<Integer>> neighboursList = addNeighbours();
         ArrayList<Polygon> temp = new ArrayList<>();
@@ -158,10 +160,9 @@ public class CustomMesh extends MeshADT{
             vertexList.add(setCentroid(currentSegments));
             temp1.add(Polygon.newBuilder(p).setCentroidIdx(vertexList.size()-1).build());
             currentSegments.clear();
-            System.out.println(temp1.size() + "xxxxxxxxxxxxxxxxxxxxxxxx");
         }
         polygonList = temp1;
-        System.out.println(vertexList.get(polygonList.get(24).getCentroidIdx()).getX() +", " + vertexList.get(polygonList.get(24).getCentroidIdx()).getY() + "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM");
+        //System.out.println(vertexList.get(polygonList.get(24).getCentroidIdx()).getX() +", " + vertexList.get(polygonList.get(24).getCentroidIdx()).getY() + "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM");
     }
 
     @Override
@@ -179,9 +180,7 @@ public class CustomMesh extends MeshADT{
                 Segment colored = Segment.newBuilder(s).addProperties(color).build();
                 finalSegments.add(colored);
         }
-
         addAllSegments(finalSegments);
-
     }
 
     @Override
@@ -196,6 +195,7 @@ public class CustomMesh extends MeshADT{
 
     @Override
     public void addAllPolygons(ArrayList<Polygon> list) {
+        this.polygonList= list;
 
     }
 
@@ -253,9 +253,7 @@ public class CustomMesh extends MeshADT{
 
                 }
             }
-
             else if(rowCounter != ((width/square_size)-1)){
-
                 if(squareCounter == 0){
                     list.get(i).add(i- ((width/square_size)+1));
                     neighbours.add(i- ((width/square_size)+1));
@@ -315,8 +313,6 @@ public class CustomMesh extends MeshADT{
 
             }
 
-
-
             neighbours.clear();
         }
         return list;
@@ -338,6 +334,25 @@ public class CustomMesh extends MeshADT{
     }
 
     @Override
+    public void addPolygonColour() {
+        ArrayList<Polygon> finalPolygon = new ArrayList<>();
+        for(Polygon p: polygonList){
+            Random bag2 = new Random();
+            int red = bag2.nextInt(255);
+            int green = bag2.nextInt(255);
+            int blue = bag2.nextInt(255);
+            int alpha = bag2.nextInt(255);;
+            String colorCode = red + "," + green + "," + blue + "," + alpha;
+            Structs.Property color = Structs.Property.newBuilder().setKey("rgba_color").setValue(colorCode).build();
+            Polygon colored = Polygon.newBuilder(p).addProperties(color).build();
+            finalPolygon.add(colored);
+
+        }
+
+        addAllPolygons(finalPolygon);
+
+    }
+    @Override
     public Vertex setCentroid(ArrayList<Integer> segments) {
         double x0 = (vertexList.get(segmentList.get(segments.get(0)).getV1Idx()).getX() + vertexList.get(segmentList.get(segments.get(0)).getV2Idx()).getX())/2.0;
         double x1 = (vertexList.get(segmentList.get(segments.get(1)).getV1Idx()).getX() + vertexList.get(segmentList.get(segments.get(1)).getV2Idx()).getX())/2.0;
@@ -357,6 +372,6 @@ public class CustomMesh extends MeshADT{
 
     @Override
     public Mesh finalizeMesh() {
-        return Mesh.newBuilder().addAllVertices(this.vertexList).addAllSegments(this.segmentList).build();
+        return Mesh.newBuilder().addAllVertices(this.vertexList).addAllSegments(this.segmentList).addAllPolygons(this.polygonList).build();
     }
 }
