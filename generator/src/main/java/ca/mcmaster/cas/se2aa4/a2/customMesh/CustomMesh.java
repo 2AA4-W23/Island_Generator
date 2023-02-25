@@ -64,7 +64,6 @@ public class CustomMesh extends MeshADT{
             finalVertices.add(coloured);
     //    System.out.println(coloured.getPropertiesList().toString());
         }
-
         addAllVertices(finalVertices);
         System.out.println(this.vertexList.toString());
     }
@@ -169,7 +168,6 @@ public class CustomMesh extends MeshADT{
     public void addSegmentColour() {
         ArrayList<Segment> finalSegments = new ArrayList<>();
         for (Segment s: segmentList) {
-
                 String[] vertexOne = vertexList.get(s.getV1Idx()).getProperties(0).getValue().toString().split(",");
                 String[] vertexTwo = vertexList.get(s.getV2Idx()).getProperties(0).getValue().toString().split(",");
                 int red = (Integer.valueOf(vertexOne[0]) + Integer.valueOf(vertexTwo[0])) / 2;
@@ -183,12 +181,7 @@ public class CustomMesh extends MeshADT{
         }
 
         addAllSegments(finalSegments);
-//        for (Segment s : segmentList) {
-//            System.out.println("!!!!!!!!!!!!!!!!!!!!!!!1");
-//            System.out.println(vertexList.get(s.getV1Idx()).getX() + ", " + vertexList.get(s.getV1Idx()).getY());
-//            System.out.println(vertexList.get(s.getV2Idx()).getX() + ", " + vertexList.get(s.getV2Idx()).getY());
-//            System.out.println("??????????????????????????/");
-//        }
+
     }
 
     @Override

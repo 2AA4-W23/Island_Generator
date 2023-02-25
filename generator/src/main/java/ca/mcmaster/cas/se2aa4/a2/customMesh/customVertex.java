@@ -42,8 +42,4 @@ public class customVertex {
         String colorCode = red + "," + green + "," + blue + "," + alpha;
         Vertex.newBuilder(this.vertex).addProperties(Property.newBuilder().setKey("rgba_color").setValue(colorCode).build()).build();
     }
-
-
-
-
 }

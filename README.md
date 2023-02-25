@@ -65,7 +65,10 @@ When you develop features and enrich the product, remember that you have first t
 
 | Id | Feature title | Who? | Start | End | Status |
 |:--:|---------------|------|-------|-----|--------|
-|  F01  |   Created segments, connected verticies and displayed them |  Hamzah,Sarim,Fiza     | 16th Feb  |  19th Feb   |    D    |
-|  F02  |  used mesh adt to display polygon grid  |  Hamzah,Sarim,Fiza     | 19th Feb  |  19th Feb   |    P    |
+|  F01  |  Created segments, connected verticies and displayed them |  Hamzah,Sarim,Fiza     | 16th Feb  |  19th Feb   |    D    |
+|  F02  |  Used mesh adt to display polygon grid  |  Hamzah,Sarim,Fiza     | 19th Feb  |  19th Feb   |    D    |
+|  F03  |  Displayed mesh with colors, thickness and transparency information |  Fiza     | 21th Feb  |   |    S    |
+|  F04  |  Added and displayed centroid location for polygon  |  Hamzah,Sarim     | 24th Feb  |  24th Feb   |    D    |
+|  F05  |  Added debug mode to change display  |  Hamzah,Sarim,Fiza     | 24th Feb  |   |    P    |
 
 
