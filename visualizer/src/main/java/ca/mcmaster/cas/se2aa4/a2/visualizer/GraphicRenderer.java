@@ -43,10 +43,16 @@ public class GraphicRenderer {
         for (Structs.Polygon p : aMesh.getPolygonsList()) {
             Color old = canvas.getColor();
             canvas.setColor(extractColor(p.getPropertiesList()));
-            
+            Path2D path = new Path2D.Double();
+
+            path.moveTo(aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(0)).getV1Idx()).getX(), aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(0)).getV1Idx()).getY());
+            path.lineTo(aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(0)).getV2Idx()).getX(),aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(0)).getV2Idx()).getY());
+            path.lineTo( aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(1)).getV2Idx()).getX(),aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(1)).getV2Idx()).getY());
+            path.lineTo( aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(2)).getV2Idx()).getX(),aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(2)).getV2Idx()).getY());
+            path.closePath();
+
+            canvas.fill(path);
             canvas.setColor(old);
-
-
         }
     }
     private Color extractColor(List<Property> properties) {
