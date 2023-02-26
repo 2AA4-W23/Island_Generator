@@ -103,33 +103,37 @@ public class CustomMesh extends MeshADT{
             bottomLeft = i + ((this.width / this.square_size)+1);
 
             polygonSegments.clear();
+
+            // top right to top left
             if(rowCounter == 0) {
-                // top left to top right
-                segmentList.add(Structs.Segment.newBuilder().setV1Idx(topLeft).setV2Idx(topRight).build());
+                segmentList.add(Structs.Segment.newBuilder().setV1Idx(topRight).setV2Idx(topLeft).build());
                 polygonSegments.add(counter);
                 counter++;
             }
-            else if (rowCounter > 0) {
+            else{
                 polygonSegments.add(polygonList.get(squareCounter - (width/square_size)).getSegmentIdxs(2));
             }
-            // top right to bottom right
-            segmentList.add(Structs.Segment.newBuilder().setV1Idx(topRight).setV2Idx(bottomRight).build());
-            polygonSegments.add(counter);
-            counter++;
-            // bottom right to bottom left
-            segmentList.add(Structs.Segment.newBuilder().setV1Idx(bottomRight).setV2Idx(bottomLeft).build());
-            polygonSegments.add(counter);
-            counter++;
+
+            // top left to bottom left
             if(firstSquare) {
                 // bottom left to top left
-                segmentList.add(Structs.Segment.newBuilder().setV1Idx(bottomLeft).setV2Idx(topLeft).build());
+                segmentList.add(Structs.Segment.newBuilder().setV1Idx(topLeft).setV2Idx(bottomLeft).build());
                 polygonSegments.add(counter);
                 counter++;
                 firstSquare = false;
             }
             else if(!firstSquare){
-                polygonSegments.add(polygonList.get(squareCounter - 1).getSegmentIdxs(1));
+                polygonSegments.add(polygonList.get(squareCounter - 1).getSegmentIdxs(3));
             }
+            // bottom left to bottom right
+            segmentList.add(Structs.Segment.newBuilder().setV1Idx(bottomLeft).setV2Idx(bottomRight).build());
+            polygonSegments.add(counter);
+            counter++;
+
+            // bottom right to top right
+            segmentList.add(Structs.Segment.newBuilder().setV1Idx(bottomRight).setV2Idx(topRight).build());
+            polygonSegments.add(counter);
+            counter++;
 
             addPolygon(Polygon.newBuilder().addAllSegmentIdxs(polygonSegments).build());
                 squareCounter++;
@@ -162,6 +166,7 @@ public class CustomMesh extends MeshADT{
             currentSegments.clear();
         }
         polygonList = temp1;
+        System.out.println(polygonList.get(26) + "KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK");
         //System.out.println(vertexList.get(polygonList.get(24).getCentroidIdx()).getX() +", " + vertexList.get(polygonList.get(24).getCentroidIdx()).getY() + "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM");
     }
 

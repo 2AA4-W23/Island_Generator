@@ -49,7 +49,10 @@ public class GraphicRenderer {
             path.lineTo(aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(0)).getV2Idx()).getX(),aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(0)).getV2Idx()).getY());
             path.lineTo( aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(1)).getV2Idx()).getX(),aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(1)).getV2Idx()).getY());
             path.lineTo( aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(2)).getV2Idx()).getX(),aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(2)).getV2Idx()).getY());
+            path.lineTo( aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(3)).getV2Idx()).getX(),aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(3)).getV2Idx()).getY());
+
             path.closePath();
+           // path.reset();
 
             canvas.fill(path);
             canvas.setColor(old);
