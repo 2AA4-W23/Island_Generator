@@ -29,7 +29,6 @@ abstract class MeshADT {
     public abstract void addPolygon(Polygon polygon);
     public abstract ArrayList<ArrayList<Integer>> addNeighbours();
 
-
     public abstract ArrayList<Segment> getSegments();
 
     public abstract ArrayList<Vertex> getVertices();
