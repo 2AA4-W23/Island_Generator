@@ -16,13 +16,13 @@ public class Main {
         // Extracting command line parameters
         String input = args[0];
         String output = args[1];
-        boolean debug = false;
+        boolean debugMode = false;
         if(args[2].equals("-X")){
-            debug = true;
+            debugMode = true;
 
         }
         else{
-            debug = false;
+            debugMode = false;
         }
         // Getting width and height for the canvas
         Structs.Mesh aMesh = new MeshFactory().read(input);
@@ -36,7 +36,7 @@ public class Main {
         Graphics2D canvas = SVGCanvas.build((int) Math.ceil(max_x), (int) Math.ceil(max_y));
         GraphicRenderer renderer = new GraphicRenderer();
         // Painting the mesh on the canvas
-        renderer.render(aMesh, canvas, debug);
+        renderer.render(aMesh, canvas, debugMode);
         // Storing the result in an SVG file
         SVGCanvas.write(canvas, output);
         // Dump the mesh to stdout

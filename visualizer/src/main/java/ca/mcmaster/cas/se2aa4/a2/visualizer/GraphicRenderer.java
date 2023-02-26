@@ -20,13 +20,13 @@ public class GraphicRenderer {
 
 
 
-    public void render(Mesh aMesh, Graphics2D canvas, boolean debug) {
+    public void render(Mesh aMesh, Graphics2D canvas, boolean debugMode) {
         canvas.setColor(Color.BLACK);
         Stroke stroke = new BasicStroke(0.5f);
         canvas.setStroke(stroke);
 
 
-        if (debug = false) {
+        if (debugMode==false) {
             for (Vertex v : aMesh.getVerticesList()) {
                 double centre_x = v.getX() - (VERTEX_THICKNESS / 2.0d);
                 double centre_y = v.getY() - (VERTEX_THICKNESS / 2.0d);
@@ -113,14 +113,6 @@ public class GraphicRenderer {
                 canvas.fill(path);
                 canvas.setColor(old);
             }
-
-
-
-
-
-
-
-
         }
     }
 
