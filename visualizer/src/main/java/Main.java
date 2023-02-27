@@ -1,6 +1,7 @@
 import ca.mcmaster.cas.se2aa4.a2.io.MeshFactory;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs;
 import ca.mcmaster.cas.se2aa4.a2.visualizer.GraphicRenderer;
+import ca.mcmaster.cas.se2aa4.a2.visualizer.IrregularGraphicRenderer;
 import ca.mcmaster.cas.se2aa4.a2.visualizer.MeshDump;
 import ca.mcmaster.cas.se2aa4.a2.visualizer.SVGCanvas;
 
@@ -17,11 +18,18 @@ public class Main {
         String input = args[0];
         String output = args[1];
         boolean debugMode = false;
-        if(args[2].equals("-X")){
-            debugMode = true;
-        }
-        else{
-            debugMode = false;
+        boolean irregular = true;
+        if(args.length >= 3) {
+            if (args[2].equals("-X")) {
+                debugMode = true;
+            } else {
+                debugMode = false;
+            }
+            if(args.length == 4){
+                if(args[3].equals("Irregular")){
+                 irregular = true;
+                }
+            }
         }
         // Getting width and height for the canvas
         Structs.Mesh aMesh = new MeshFactory().read(input);
@@ -33,9 +41,17 @@ public class Main {
         }
         // Creating the Canvas to draw the mesh
         Graphics2D canvas = SVGCanvas.build((int) Math.ceil(max_x), (int) Math.ceil(max_y));
+
         GraphicRenderer renderer = new GraphicRenderer();
+        IrregularGraphicRenderer irregularRenderer = new IrregularGraphicRenderer();
+
         // Painting the mesh on the canvas
-        renderer.render(aMesh, canvas, debugMode);
+        if(!irregular) {
+            renderer.render(aMesh, canvas, debugMode);
+        }
+        else{
+            irregularRenderer.render(aMesh, canvas, debugMode);
+        }
         // Storing the result in an SVG file
         SVGCanvas.write(canvas, output);
         // Dump the mesh to stdout
