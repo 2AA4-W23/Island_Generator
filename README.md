@@ -59,7 +59,7 @@ When you develop features and enrich the product, remember that you have first t
 
 ### Definition of Done
 
-The step successfully complies, executes and prints desired output while all previous steps still run
+A feature is considered done when it is tested
 
 ### Product Backlog
 
