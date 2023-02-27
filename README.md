@@ -59,7 +59,7 @@ When you develop features and enrich the product, remember that you have first t
 
 ### Definition of Done
 
--- Insert here your definition of done for your features --
+The step successfully complies, executes and prints desired output while all previous steps still run
 
 ### Product Backlog
 
@@ -69,5 +69,5 @@ When you develop features and enrich the product, remember that you have first t
 |  F02  |  Used mesh adt to display polygon grid  |  Hamzah,Sarim,Fiza     | 19th Feb  |  19th Feb   |    D    |
 |  F03  |  Displayed mesh with colors, thickness and transparency information |  Fiza     | 21th Feb  | 25th Feb  |    D    |
 |  F04  |  Added and displayed centroid location for polygon  |  Hamzah,Sarim     | 24th Feb  |  24th Feb   |    D    |
-|  F05  |  Added debug mode to change display  |  Hamzah,Sarim,Fiza     | 24th Feb  |   |    P    |
+|  F05  |  Added debug mode to change display  |  Hamzah,Sarim,Fiza     | 24th Feb  |   |    S    |
 

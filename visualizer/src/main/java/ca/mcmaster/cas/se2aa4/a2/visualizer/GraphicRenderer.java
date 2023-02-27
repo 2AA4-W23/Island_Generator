@@ -6,7 +6,6 @@ import ca.mcmaster.cas.se2aa4.a2.io.Structs.Vertex;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Property;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Segment;
 
-import org.apache.commons.cli.*;
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Path2D;
@@ -114,8 +113,19 @@ public class GraphicRenderer {
                 canvas.setColor(old);
             }
         }
-    }
+        for (Structs.Polygon p : aMesh.getPolygonsList()) {
+            Vertex v = aMesh.getVertices(p.getCentroidIdx());
+            for(int i =0; i<p.getNeighborIdxsList().size();i++){
+                Vertex v2 = aMesh.getVerticesList().get(aMesh.getPolygonsList().get(p.getNeighborIdxs(i)).getCentroidIdx());
+                Line2D line = new Line2D.Double(v.getX(),v.getY(),v2.getX(),v2.getY());
 
+            }
+
+
+
+
+        }
+    }
     private Color extractColor(List<Property> properties) {
         String val = null;
         for(Property p: properties) {

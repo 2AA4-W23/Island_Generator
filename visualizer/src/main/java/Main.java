@@ -19,7 +19,6 @@ public class Main {
         boolean debugMode = false;
         if(args[2].equals("-X")){
             debugMode = true;
-
         }
         else{
             debugMode = false;
