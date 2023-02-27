@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.Random;
 
+import ca.mcmaster.cas.se2aa4.a2.customMesh.CustomIrregularMesh;
 import ca.mcmaster.cas.se2aa4.a2.customMesh.CustomMesh;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Vertex;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Property;
@@ -24,9 +25,13 @@ public class DotGen {
 
     public Mesh generate() {
 
-        CustomMesh newMesh = new CustomMesh();
-        newMesh.createVertices(width, height, square_size);
-        newMesh.createSegments();
+//        CustomMesh newMesh = new CustomMesh();
+//        newMesh.createVertices(width, height, square_size);
+//        newMesh.createSegments();
+//        Mesh finalMesh = newMesh.finalizeMesh();
+
+        CustomIrregularMesh newMesh = new CustomIrregularMesh();
+        newMesh.generateRandomPoint(width,height);
         Mesh finalMesh = newMesh.finalizeMesh();
         
         return finalMesh;
