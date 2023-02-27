@@ -6,9 +6,11 @@ import ca.mcmaster.cas.se2aa4.a2.io.Structs.Segment;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Polygon;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Mesh;
 import org.locationtech.jts.*;
-import org.locationtech.jts.geom.PrecisionModel;
+import org.locationtech.jts.geom.*;
+import org.locationtech.jts.triangulate.VoronoiDiagramBuilder;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Random;
 
 public class CustomIrregularMesh {
@@ -50,6 +52,29 @@ public class CustomIrregularMesh {
             vertexList.add(random);
         }
         addVertexColour();
+        createSegments();
+
+    }
+    public void createSegments(){
+       VoronoiDiagramBuilder voronoi = new VoronoiDiagramBuilder();
+
+        GeometryFactory factory = new GeometryFactory();
+        Collection collection = new ArrayList<>();
+        Coordinate cord;
+        for(Vertex v: vertexList){
+            cord = new Coordinate();
+            cord.setX(v.getX());
+            cord.setY(v.getY());
+
+
+           collection.add(cord);
+
+        }
+
+        voronoi.setSites(collection);
+        System.out.println(voronoi.getSubdivision().getVertices(false));
+
+
 
     }
     public void addVertexColour() {

@@ -21,20 +21,33 @@ public class DotGen {
     private final int width = 500;
     private final int height = 500;
     private final int square_size = 20;
+    private boolean irregular = false;
+    private boolean debug = false;
+    Mesh finalMesh;
 
+    public DotGen(boolean newIrregular, boolean newDebug){
+        this.irregular = newIrregular;
+        this.debug = newDebug;
+    }
 
     public Mesh generate() {
+        if(!irregular){
+            CustomMesh newMesh = new CustomMesh();
+        newMesh.createVertices(width, height, square_size);
+        newMesh.createSegments();
+        this.finalMesh = newMesh.finalizeMesh();
+        }
+        else{
+            CustomIrregularMesh newMesh = new CustomIrregularMesh();
+            newMesh.generateRandomPoint(width,height);
+            this.finalMesh = newMesh.finalizeMesh();
+        }
 
-//        CustomMesh newMesh = new CustomMesh();
-//        newMesh.createVertices(width, height, square_size);
-//        newMesh.createSegments();
-//        Mesh finalMesh = newMesh.finalizeMesh();
 
-        CustomIrregularMesh newMesh = new CustomIrregularMesh();
-        newMesh.generateRandomPoint(width,height);
-        Mesh finalMesh = newMesh.finalizeMesh();
+
+
         
-        return finalMesh;
+        return this.finalMesh;
 
 
 

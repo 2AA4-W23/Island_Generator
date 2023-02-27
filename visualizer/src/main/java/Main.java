@@ -14,9 +14,11 @@ import java.io.IOException;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        // Extracting command line parameters
+
         String input = args[0];
         String output = args[1];
+
+        // Extracting command line parameters
         boolean debugMode = false;
         boolean irregular = true;
         if(args.length >= 3) {
@@ -30,7 +32,7 @@ public class Main {
                  irregular = true;
                 }
             }
-        }
+       }
         // Getting width and height for the canvas
         Structs.Mesh aMesh = new MeshFactory().read(input);
         double max_x = Double.MIN_VALUE;
@@ -42,16 +44,17 @@ public class Main {
         // Creating the Canvas to draw the mesh
         Graphics2D canvas = SVGCanvas.build((int) Math.ceil(max_x), (int) Math.ceil(max_y));
 
-        GraphicRenderer renderer = new GraphicRenderer();
+       GraphicRenderer renderer = new GraphicRenderer();
         IrregularGraphicRenderer irregularRenderer = new IrregularGraphicRenderer();
 
+        irregularRenderer.render(aMesh, canvas, debugMode);
         // Painting the mesh on the canvas
-        if(!irregular) {
-            renderer.render(aMesh, canvas, debugMode);
-        }
-        else{
-            irregularRenderer.render(aMesh, canvas, debugMode);
-        }
+//        if(!irregular) {
+//
+//        }
+//        else{
+//            irregularRenderer.render(aMesh, canvas, debugMode);
+//        }
         // Storing the result in an SVG file
         SVGCanvas.write(canvas, output);
         // Dump the mesh to stdout
