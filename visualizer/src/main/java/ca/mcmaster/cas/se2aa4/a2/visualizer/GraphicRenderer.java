@@ -9,6 +9,7 @@ import ca.mcmaster.cas.se2aa4.a2.io.Structs.Segment;
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Path2D;
+import java.util.ArrayList;
 import java.util.List;
 import java.awt.geom.Line2D;
 
@@ -16,6 +17,7 @@ public class GraphicRenderer {
 
     private static final int VERTEX_THICKNESS = 4;
     private static final int SEGMENT_THICKNESS = 3;
+    private static final int NEIGHBOUR_THICKNESS = 1;
 
 
 
@@ -90,41 +92,22 @@ public class GraphicRenderer {
 
             }
 
-            Double yTemp = aMesh.getVerticesList().get(aMesh.getPolygonsList().get(0).getCentroidIdx()).getY();
-            for (Structs.Polygon p : aMesh.getPolygonsList()) {
-                Color old = canvas.getColor();
-                canvas.setColor(extractColor(p.getPropertiesList()));
-                Path2D path = new Path2D.Double();
 
-                if (aMesh.getVerticesList().get(p.getCentroidIdx()).getY() == yTemp) {
-                    path.moveTo(aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(0)).getV1Idx()).getX(), aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(0)).getV1Idx()).getY());
-                    path.lineTo(aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(0)).getV2Idx()).getX(), aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(0)).getV2Idx()).getY());
-                    path.lineTo(aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(2)).getV1Idx()).getX(), aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(2)).getV1Idx()).getY());
-                    path.lineTo(aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(2)).getV2Idx()).getX(), aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(2)).getV2Idx()).getY());
-
-                } else {
-                    path.moveTo(aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(0)).getV2Idx()).getX(), aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(0)).getV2Idx()).getY());
-                    path.lineTo(aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(0)).getV1Idx()).getX(), aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(0)).getV1Idx()).getY());
-                    path.lineTo(aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(2)).getV1Idx()).getX(), aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(2)).getV1Idx()).getY());
-                    path.lineTo(aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(2)).getV2Idx()).getX(), aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(2)).getV2Idx()).getY());
-                }
-                path.closePath();
-                canvas.fill(path);
-                canvas.setColor(old);
-            }
         }
-//        for (Structs.Polygon p : aMesh.getPolygonsList()) {
-//            Vertex v = aMesh.getVertices(p.getCentroidIdx());
-//            for(int i =0; i<p.getNeighborIdxsList().size();i++){
-//                Vertex v2 = aMesh.getVerticesList().get(aMesh.getPolygonsList().get(p.getNeighborIdxs(i)).getCentroidIdx());
-//                Line2D line = new Line2D.Double(v.getX(),v.getY(),v2.getX(),v2.getY());
-//
-//            }
-//
-//
-//
-//
-//        }
+            ArrayList<Line2D> addNeighbours = new ArrayList<>() ;
+            for (Structs.Polygon p : aMesh.getPolygonsList()) {
+            Vertex v = aMesh.getVertices(p.getCentroidIdx());
+            for(int i =0; i<p.getNeighborIdxsList().size();i++){
+                Vertex v2 = aMesh.getVerticesList().get(aMesh.getPolygonsList().get(p.getNeighborIdxs(i)).getCentroidIdx());
+                Line2D line = new Line2D.Double(v.getX(),v.getY(),v2.getX(),v2.getY());
+                canvas.setStroke(new BasicStroke(NEIGHBOUR_THICKNESS));
+
+                addNeighbours.add(line);
+                canvas.draw(line);
+                canvas.setColor(Color.DARK_GRAY);
+            }
+
+        }
     }
     private Color extractColor(List<Property> properties) {
         String val = null;
