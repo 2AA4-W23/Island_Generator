@@ -23,7 +23,7 @@ abstract class MeshADT {
     public abstract void addAllSegments(ArrayList<Segment> segments);
 
     public abstract void createPolygons();
-    public abstract void addAllPolygons(ArrayList<Polygon> list);
+    public abstract void addAllPolygons();
     public abstract void addVertex(Vertex vertex);
     public abstract void addSegment(Segment segment);
     public abstract void addPolygon(Polygon polygon);
@@ -34,7 +34,7 @@ abstract class MeshADT {
     public abstract ArrayList<Vertex> getVertices();
     public abstract ArrayList<Polygon> getPolygons();
 
-    public abstract void addPolygonColour();
+    public abstract ArrayList<Polygon> addPolygonColour();
 
     public abstract Vertex setCentroid(ArrayList<Integer> segments);
 

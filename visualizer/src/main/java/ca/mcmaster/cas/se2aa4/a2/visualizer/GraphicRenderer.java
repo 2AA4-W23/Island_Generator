@@ -113,18 +113,18 @@ public class GraphicRenderer {
                 canvas.setColor(old);
             }
         }
-        for (Structs.Polygon p : aMesh.getPolygonsList()) {
-            Vertex v = aMesh.getVertices(p.getCentroidIdx());
-            for(int i =0; i<p.getNeighborIdxsList().size();i++){
-                Vertex v2 = aMesh.getVerticesList().get(aMesh.getPolygonsList().get(p.getNeighborIdxs(i)).getCentroidIdx());
-                Line2D line = new Line2D.Double(v.getX(),v.getY(),v2.getX(),v2.getY());
-
-            }
-
-
-
-
-        }
+//        for (Structs.Polygon p : aMesh.getPolygonsList()) {
+//            Vertex v = aMesh.getVertices(p.getCentroidIdx());
+//            for(int i =0; i<p.getNeighborIdxsList().size();i++){
+//                Vertex v2 = aMesh.getVerticesList().get(aMesh.getPolygonsList().get(p.getNeighborIdxs(i)).getCentroidIdx());
+//                Line2D line = new Line2D.Double(v.getX(),v.getY(),v2.getX(),v2.getY());
+//
+//            }
+//
+//
+//
+//
+//        }
     }
     private Color extractColor(List<Property> properties) {
         String val = null;

@@ -31,19 +31,22 @@ public class DotGen {
     }
 
     public Mesh generate() {
-        if(!irregular){
-            CustomMesh newMesh = new CustomMesh();
+//        if(!irregular){
+//            CustomMesh newMesh = new CustomMesh();
+//        newMesh.createVertices(width, height, square_size);
+//        newMesh.createSegments();
+//        this.finalMesh = newMesh.finalizeMesh();
+//        }
+//        else{
+//            CustomIrregularMesh newMesh = new CustomIrregularMesh();
+//            newMesh.generateRandomPoint(width,height);
+//            this.finalMesh = newMesh.finalizeMesh();
+//        }
+
+        CustomMesh newMesh = new CustomMesh();
         newMesh.createVertices(width, height, square_size);
         newMesh.createSegments();
         this.finalMesh = newMesh.finalizeMesh();
-        }
-        else{
-            CustomIrregularMesh newMesh = new CustomIrregularMesh();
-            newMesh.generateRandomPoint(width,height);
-            this.finalMesh = newMesh.finalizeMesh();
-        }
-
-
 
 
         
