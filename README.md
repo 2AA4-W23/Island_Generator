@@ -69,7 +69,7 @@ A feature is considered done when it is tested
 |  F02  |  Used mesh adt to display polygon grid  |  Hamzah,Sarim,Fiza     | 19th Feb  |  19th Feb   |    D    |
 |  F03  |  Displayed mesh with colors, thickness and transparency information |  Fiza     | 21th Feb  | 25th Feb  |    D    |
 |  F04  |  Added and displayed centroid location for polygon  |  Hamzah,Sarim     | 24th Feb  |  24th Feb   |    D    |
-|  F05  |  Added debug mode to change display  |  Hamzah,Sarim,Fiza     | 24th Feb  |   |    S    |
+|  F05  |  Added debug mode to change display  |  Fiza     | 24th Feb  |   |    D    |
 |  F06  |  Add irregular mesh class, and generate and display random points  |  Hamzah | 26th Feb  | 27th Feb  |    D    |
 
 
