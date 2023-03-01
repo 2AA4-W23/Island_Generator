@@ -104,10 +104,12 @@ public class CustomIrregularMesh {
         voronoi.setSites(collection);
 
 
-        Geometry g = voronoi.getDiagram(factory);
-
-
+        Geometry gUncropped = voronoi.getDiagram(factory);
+        Geometry g = gUncropped.intersection(new GeometryFactory().toGeometry(envelope));
         collection1.add(g);
+
+
+
         factory.buildGeometry(collection1);
         makeVertices(g);
         Coordinate[] c = g.getGeometryN(5).getCoordinates();

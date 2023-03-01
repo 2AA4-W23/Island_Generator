@@ -71,5 +71,8 @@ A feature is considered done when it is tested
 |  F04  |  Added and displayed centroid location for polygon  |  Hamzah,Sarim     | 24th Feb  |  24th Feb   |    D    |
 |  F05  |  Added debug mode to change display  |  Fiza     | 24th Feb  | 28th Feb  |    D    |
 |  F06  |  Add irregular mesh class, and generate and display random points  |  Hamzah | 26th Feb  | 27th Feb  |    D    |
+|  F07  |  Generated and displayed voronoi diagram  |  Hamzah, Sarim | Feb 28th  | March 1st  |    D    |
+|  F08  |  Applied Lloyd relaxation, and visualized the relaxed mesh  |  Hamzah,Sarim | March 1st  | March 1st  |    D    |
+|  F09  | Cropped the mesh to adjust visualization to fit within the grid dimensions  |  Fiza | March 1st | March 1st  |    D    |
 
 
