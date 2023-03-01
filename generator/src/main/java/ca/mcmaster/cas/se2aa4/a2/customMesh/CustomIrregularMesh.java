@@ -53,10 +53,10 @@ public class CustomIrregularMesh {
             vertexList.add(random);
         }
         addVertexColour();
-        createSegments();
+        createVoronoi();
 
     }
-    public void createSegments(){
+    public void createVoronoi(){
        VoronoiDiagramBuilder voronoi = new VoronoiDiagramBuilder();
 
 
@@ -83,8 +83,9 @@ public class CustomIrregularMesh {
         Geometry g = voronoi.getDiagram(factory);
         collection1.add(g);
         factory.buildGeometry(collection1);
-
-        System.out.println(g);
+       // makeVertices();
+        Coordinate[] c = g.getGeometryN(5).getCoordinates();
+        System.out.println(c[0].getX()+"fffff"+c[0].getY());
 
       //  System.out.println(factory.toString());
       //  System.out.println(voronoi.getSubdivision().getVertices(true));
@@ -107,7 +108,11 @@ public class CustomIrregularMesh {
         }
         addAllVertices(finalVertices);
     }
+    public void makeVertices(){
+
+    }
     public void addAllVertices(ArrayList<Vertex> vertices) {
+
         this.vertexList = vertices;
     }
 
