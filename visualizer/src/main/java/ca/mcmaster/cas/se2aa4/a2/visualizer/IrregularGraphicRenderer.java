@@ -14,6 +14,7 @@ import java.awt.geom.Line2D;
 
 public class IrregularGraphicRenderer {
     private static final int VERTEX_THICKNESS = 4;
+    private static final int SEGMENT_THICKNESS = 3;
     public void render(Mesh aMesh, Graphics2D canvas, boolean debugMode) {
         canvas.setColor(Color.BLACK);
         Stroke stroke = new BasicStroke(0.5f);
@@ -28,6 +29,27 @@ public class IrregularGraphicRenderer {
             canvas.fill(point);
             canvas.setColor(old);
         }
+        for (Segment s : aMesh.getSegmentsList()) {
+            Color old = canvas.getColor();
+            canvas.setColor(extractColor(s.getPropertiesList()));
+            Line2D line = new Line2D.Double(aMesh.getVerticesList().get(s.getV1Idx()).getX(), aMesh.getVerticesList().get(s.getV1Idx()).getY(), aMesh.getVerticesList().get(s.getV2Idx()).getX(), aMesh.getVerticesList().get(s.getV2Idx()).getY());
+            canvas.setStroke(new BasicStroke(SEGMENT_THICKNESS));
+            canvas.draw(line);
+            canvas.setColor(old);
+        }
+//        for (Structs.Polygon p : aMesh.getPolygonsList()) {
+//
+//            Color old = canvas.getColor();
+//            canvas.setColor(extractColor(p.getPropertiesList()));
+//            Path2D path = new Path2D.Double();
+//                path.moveTo(aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(0)).getV1Idx()).getX(), aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(0)).getV1Idx()).getY());
+//                path.lineTo(aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(0)).getV2Idx()).getX(), aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(0)).getV2Idx()).getY());
+//                path.lineTo(aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(2)).getV1Idx()).getX(), aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(2)).getV1Idx()).getY());
+//                path.lineTo(aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(2)).getV2Idx()).getX(), aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(2)).getV2Idx()).getY());
+//            path.closePath();
+//            canvas.fill(path);
+//            canvas.setColor(old);
+//        }
 
     }
     private Color extractColor(List<Property> properties) {
