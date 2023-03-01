@@ -19,7 +19,7 @@ public class Main {
         String output = args[1];
 
         // Extracting command line parameters
-        boolean debugMode = true;
+        boolean debugMode = false;
         boolean irregular = true;
         if(args.length >= 3) {
             if (args[2].equals("-X")) {
@@ -47,7 +47,7 @@ public class Main {
        GraphicRenderer renderer = new GraphicRenderer();
         IrregularGraphicRenderer irregularRenderer = new IrregularGraphicRenderer();
 
-        renderer.render(aMesh, canvas, debugMode);
+        irregularRenderer.render(aMesh, canvas, debugMode);
         // Painting the mesh on the canvas
 //        if(!irregular) {
 //

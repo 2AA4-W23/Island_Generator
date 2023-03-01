@@ -7,6 +7,7 @@ import ca.mcmaster.cas.se2aa4.a2.io.Structs.Polygon;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Mesh;
 import org.locationtech.jts.*;
 import org.locationtech.jts.geom.*;
+import org.locationtech.jts.geom.impl.CoordinateArraySequenceFactory;
 import org.locationtech.jts.triangulate.VoronoiDiagramBuilder;
 
 import java.util.ArrayList;
@@ -28,14 +29,14 @@ public class CustomIrregularMesh {
 
     double precision = 5.5;
 
-    PrecisionModel p = new PrecisionModel(precision);
+    PrecisionModel p = new PrecisionModel();
 
     public CustomIrregularMesh(){
         vertexList = new ArrayList<>();
         segmentList = new ArrayList<>();
         polygonList = new ArrayList<>();
-        width = 500;
-        height = 500;
+        this.width = 500;
+        this.height = 500;
         square_size = 20;
     }
 
@@ -58,8 +59,14 @@ public class CustomIrregularMesh {
     public void createSegments(){
        VoronoiDiagramBuilder voronoi = new VoronoiDiagramBuilder();
 
-        GeometryFactory factory = new GeometryFactory();
+
+        GeometryFactory factory = new GeometryFactory(p);
         Collection collection = new ArrayList<>();
+        Collection collection1 = new ArrayList<>();
+        Envelope envelope = new Envelope(0,this.width,0,this.height);
+        voronoi.setClipEnvelope(envelope);
+        Coordinate[] coords;
+        //collection.toArray();
         Coordinate cord;
         for(Vertex v: vertexList){
             cord = new Coordinate();
@@ -69,10 +76,19 @@ public class CustomIrregularMesh {
 
            collection.add(cord);
 
+        //  factory.createPoint(cord);
         }
-
         voronoi.setSites(collection);
-        System.out.println(voronoi.getSubdivision().getVertices(false));
+
+        Geometry g = voronoi.getDiagram(factory);
+        collection1.add(g);
+        factory.buildGeometry(collection1);
+
+        System.out.println(g);
+
+      //  System.out.println(factory.toString());
+      //  System.out.println(voronoi.getSubdivision().getVertices(true));
+
 
 
 

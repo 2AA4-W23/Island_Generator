@@ -21,7 +21,7 @@ public class DotGen {
     private final int width = 500;
     private final int height = 500;
     private final int square_size = 20;
-    private boolean irregular = false;
+    private boolean irregular = true;
     private boolean debug = false;
     Mesh finalMesh;
 
@@ -43,9 +43,10 @@ public class DotGen {
 //            this.finalMesh = newMesh.finalizeMesh();
 //        }
 
-        CustomMesh newMesh = new CustomMesh();
-        newMesh.createVertices(width, height, square_size);
-        newMesh.createSegments();
+        CustomIrregularMesh newMesh = new CustomIrregularMesh();
+       // newMesh.createVertices(width, height, square_size);
+       // newMesh.createSegments();
+        newMesh.generateRandomPoint(width,height);
         this.finalMesh = newMesh.finalizeMesh();
 
 
