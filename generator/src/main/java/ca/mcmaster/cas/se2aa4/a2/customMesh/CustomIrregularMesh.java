@@ -29,7 +29,9 @@ public class CustomIrregularMesh {
 
     double precision = 5.5;
 
-    private boolean lloydRelaxation = false;
+   // private boolean lloydRelaxation = false;
+    private int lloydRelaxationCounter = 0;
+
 
     PrecisionModel p = new PrecisionModel();
 
@@ -48,7 +50,7 @@ public class CustomIrregularMesh {
         float x, y;
         Random rd = new Random();
         Vertex random = null;
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < 150; i++) {
             do {
                 random = Vertex.newBuilder().setX(rd.nextFloat() * width).setY(rd.nextFloat() * height).build();
             } while (vertexList.contains(random));
@@ -61,15 +63,18 @@ public class CustomIrregularMesh {
         ArrayList<Vertex> tempList = new ArrayList<>();
         double x = 0;
         double y = 0;
-        lloydRelaxation = true;
 
+        lloydRelaxationCounter += 1;
         for(Polygon p: polygonList){
+            x = 0;
+            y = 0;
             for(int i =0;i < p.getSegmentIdxsCount();i++ ){
               x += vertexList.get(segmentList.get(p.getSegmentIdxs(i)).getV1Idx()).getX();
               y += vertexList.get(segmentList.get(p.getSegmentIdxs(i)).getV1Idx()).getY();
             }
             tempList.add(Vertex.newBuilder().setX(x/p.getSegmentIdxsCount()).setY(y/p.getSegmentIdxsCount()).build());
         }
+        System.out.println(tempList.toString());
         vertexList = tempList;
         addVertexColour();
         createVoronoi();
@@ -77,7 +82,6 @@ public class CustomIrregularMesh {
 
     public void createVoronoi() {
         VoronoiDiagramBuilder voronoi = new VoronoiDiagramBuilder();
-
 
         GeometryFactory factory = new GeometryFactory(p);
         Collection collection = new ArrayList<>();
@@ -102,16 +106,20 @@ public class CustomIrregularMesh {
 
         Geometry g = voronoi.getDiagram(factory);
 
+
         collection1.add(g);
         factory.buildGeometry(collection1);
         makeVertices(g);
         Coordinate[] c = g.getGeometryN(5).getCoordinates();
+        System.out.println(g.getArea() +" LLLLLLLLLLLLLLLLLLLLLLLLLLLLLL");
 
         //  System.out.println(factory.toString());
         //  System.out.println(voronoi.getSubdivision().getVertices(true));
     }
 
     public void makeVertices(Geometry g) {
+        segmentList.clear();
+        polygonList.clear();
         int counter = 0;
         Coordinate[] c = null;
         ArrayList<Integer> polygonSegments = new ArrayList<>();
@@ -131,7 +139,7 @@ public class CustomIrregularMesh {
 
             addPolygon(Polygon.newBuilder().addAllSegmentIdxs(polygonSegments).build());
         }
-        if(!lloydRelaxation) {
+        if(lloydRelaxationCounter < 6) {
             lloydRelaxation();
         }
 
