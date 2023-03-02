@@ -8,6 +8,7 @@ import ca.mcmaster.cas.se2aa4.a2.io.Structs.Mesh;
 import org.locationtech.jts.*;
 import org.locationtech.jts.geom.*;
 import org.locationtech.jts.geom.impl.CoordinateArraySequenceFactory;
+import org.locationtech.jts.triangulate.DelaunayTriangulationBuilder;
 import org.locationtech.jts.triangulate.VoronoiDiagramBuilder;
 
 import java.util.ArrayList;
@@ -29,8 +30,9 @@ public class CustomIrregularMesh {
 
     double precision = 5.5;
 
-   // private boolean lloydRelaxation = false;
+    private boolean lloydRelaxation = false;
     private int lloydRelaxationCounter = 0;
+    private int delaunayCounter = 0;
 
 
     PrecisionModel p = new PrecisionModel();
@@ -140,7 +142,7 @@ public class CustomIrregularMesh {
                 }
             }
             addPolygon(Polygon.newBuilder().addAllSegmentIdxs(polygonSegments).setCentroidIdx(i).build());
-            System.out.println(vertexList.get(polygonList.get(i).getCentroidIdx()).getX() +", "+vertexList.get(polygonList.get(i).getCentroidIdx()).getY()+"<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+           // System.out.println(vertexList.get(polygonList.get(i).getCentroidIdx()).getX() +", "+vertexList.get(polygonList.get(i).getCentroidIdx()).getY()+"<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
         }
 //        int geoCounter = 0;
 //        for(int k = 0; k < g.getNumGeometries(); k++){
@@ -153,10 +155,41 @@ public class CustomIrregularMesh {
       //  System.out.println(vertexList);
    //     System.out.println(vertexList.get(polygonList.get(0).getCentroidIdx()).getX() + ", "+vertexList.get(polygonList.get(0).getCentroidIdx()).getY());
         if(lloydRelaxationCounter < 6) {
+            System.out.println("hi");
             lloydRelaxation();
         }
 
-      //  System.out.println(vertexList + "!!!!!!!!!!!!!!!!!!");
+        delaunayCounter++;
+        if(delaunayCounter == 1){
+            delaunay(g);
+
+        }
+
+
+    }
+    public void delaunay(Geometry g){
+        ArrayList<Polygon> neighbours = new ArrayList<>();
+        GeometryFactory geo = new GeometryFactory(p);
+        DelaunayTriangulationBuilder d = new DelaunayTriangulationBuilder();
+        Collection centeroids = new ArrayList<>();
+        Coordinate cord;
+        for(int i = 0; i < g.getNumGeometries(); i++){
+            cord = new Coordinate();
+            cord.setX(g.getGeometryN(i).getCentroid().getX());
+            cord.setY(g.getGeometryN(i).getCentroid().getY());
+            centeroids.add(cord);
+        }
+        System.out.println(centeroids);
+        d.setSites(centeroids);
+
+
+         Geometry f = d.getTriangles(geo);
+
+        Coordinate[] r = f.getGeometryN(3).getCoordinates();
+        for(int i =0; i < r.length; i++){
+            System.out.println(r[i]);
+        }
+
     }
 
     public void addPolygon(Polygon p) {
