@@ -50,7 +50,7 @@ public class CustomIrregularMesh {
         float x, y;
         Random rd = new Random();
         Vertex random = null;
-        for (int i = 0; i < 150; i++) {
+        for (int i = 0; i < 25; i++) {
             do {
                 random = Vertex.newBuilder().setX(rd.nextFloat() * width).setY(rd.nextFloat() * height).build();
             } while (vertexList.contains(random));
@@ -61,6 +61,7 @@ public class CustomIrregularMesh {
     }
     public void lloydRelaxation(){
         ArrayList<Vertex> tempList = new ArrayList<>();
+     //   vertexList.clear();
         double x = 0;
         double y = 0;
 
@@ -74,8 +75,10 @@ public class CustomIrregularMesh {
             }
             tempList.add(Vertex.newBuilder().setX(x/p.getSegmentIdxsCount()).setY(y/p.getSegmentIdxsCount()).build());
         }
-        System.out.println(tempList.toString());
+     //   System.out.println(tempList.toString());
+        System.out.println(tempList+"&&&&&&&&&&&&&&&&&&&&&&");
         vertexList = tempList;
+        System.out.println(vertexList + "????????????");
         addVertexColour();
         createVoronoi();
     }
@@ -111,12 +114,10 @@ public class CustomIrregularMesh {
 
 
         factory.buildGeometry(collection1);
+        System.out.println(g.getGeometryN(1).getCentroid() + "#########################");
         makeVertices(g);
         Coordinate[] c = g.getGeometryN(5).getCoordinates();
-        System.out.println(g.getArea() +" LLLLLLLLLLLLLLLLLLLLLLLLLLLLLL");
 
-        //  System.out.println(factory.toString());
-        //  System.out.println(voronoi.getSubdivision().getVertices(true));
     }
 
     public void makeVertices(Geometry g) {
@@ -138,13 +139,24 @@ public class CustomIrregularMesh {
 
                 }
             }
-
-            addPolygon(Polygon.newBuilder().addAllSegmentIdxs(polygonSegments).build());
+            addPolygon(Polygon.newBuilder().addAllSegmentIdxs(polygonSegments).setCentroidIdx(i).build());
+            System.out.println(vertexList.get(polygonList.get(i).getCentroidIdx()).getX() +", "+vertexList.get(polygonList.get(i).getCentroidIdx()).getY()+"<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
         }
+//        int geoCounter = 0;
+//        for(int k = 0; k < g.getNumGeometries(); k++){
+//            if(vertexList.get(k).getX() == g.getGeometryN(geoCounter).getCentroid().getX() && vertexList.get(k).getY() == g.getGeometryN(geoCounter).getCentroid().getY()){
+//                System.out.println("hiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
+//                addPolygon(Polygon.newBuilder().addAllSegmentIdxs(polygonSegments).setCentroidIdx(k).build());
+//                geoCounter++;
+//            }
+//        }
+      //  System.out.println(vertexList);
+   //     System.out.println(vertexList.get(polygonList.get(0).getCentroidIdx()).getX() + ", "+vertexList.get(polygonList.get(0).getCentroidIdx()).getY());
         if(lloydRelaxationCounter < 6) {
             lloydRelaxation();
         }
 
+      //  System.out.println(vertexList + "!!!!!!!!!!!!!!!!!!");
     }
 
     public void addPolygon(Polygon p) {
