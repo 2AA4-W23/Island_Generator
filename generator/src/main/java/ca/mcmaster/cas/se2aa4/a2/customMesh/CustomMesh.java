@@ -47,7 +47,6 @@ public class CustomMesh extends MeshADT{
             y += this.square_size;
         }
         addVertexColour();
-       // System.out.println(vertexList.size() + "@@@@@@@@@@@@@@@@@@@@@@@@@@@");
     }
 
     @Override

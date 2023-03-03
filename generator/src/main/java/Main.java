@@ -20,6 +20,7 @@ public class Main {
         options.addOption("d", false, "debug");
         options.addOption("p", true, "polygon");
         options.addOption("r", true, "relaxation");
+        options.addOption("dim", true, "dimension");
         options.addOption("help", false, "help");
 
         CommandLineParser cml = new DefaultParser();
@@ -46,7 +47,6 @@ public class Main {
             if (parser.hasOption("d")) {
                 debug = Boolean.parseBoolean(parser.getOptionValue("p"));
             }
-
         }
         else{
             if (parser.hasOption("dim")) {
@@ -63,9 +63,9 @@ public class Main {
 
         if(parser.hasOption("help")){
             System.out.println("-t irregular grid" );
-            System.out.println("-p the number of polygons ");
-            System.out.println("-r the number of relaxation");
-            System.out.println("-dim the dimensions");
+            System.out.println("-p the number of polygons / if you dont use it just uses default values ");
+            System.out.println("-r the number of relaxation / if you dont use it just uses default relaxation");
+            System.out.println("-dim the dimensions(what you want) / if you dont use it just uses default dimensions");
         }
 
         MeshFactory factory = new MeshFactory();

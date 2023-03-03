@@ -20,11 +20,12 @@ public class Main {
 
         // Extracting command line parameters
         boolean debugMode = false;
-        boolean irregular = true;
 
         Options options = new Options();
         options.addOption("t", false, "mesh type (grid or irregular)");
         options.addOption("d", false, "debug");
+        options.addOption("help", false, "help");
+
 
         CommandLineParser cml = new DefaultParser();
         CommandLine parser = cml.parse(options, args);
@@ -42,27 +43,32 @@ public class Main {
         // Creating the Canvas to draw the mesh
         Graphics2D canvas = SVGCanvas.build((int) Math.ceil(max_x), (int) Math.ceil(max_y));
 
-        // Painting the mesh on the canvas
-//        if(!irregular) {
-//
-//        }
-//        else{
-//            irregularRenderer.render(aMesh, canvas, debugMode);
-//        }
-        Structs.Mesh myMesh;
-        if(parser.hasOption("t")) {
-            grid = Boolean.parseBoolean(parser.getOptionValue("t"));
-        }
-        if (parser.hasOption("d")) {
-            debugMode = true;
-        }
-        GraphicRenderer renderer = new GraphicRenderer();
-        renderer.render(aMesh, canvas, debugMode,grid );
 
-        // Storing the result in an SVG file
-        SVGCanvas.write(canvas, output);
-        // Dump the mesh to stdout
-        MeshDump dumper = new MeshDump();
-        dumper.dump(aMesh);
+        Structs.Mesh myMesh;
+
+        if(parser.hasOption("help")){
+            System.out.println("-t irregular mesh, only use it when trying to view an irregular mesh" );
+            System.out.println("-d debugMode");
+        }else {
+            if (parser.hasOption("t")) {
+                grid = true;
+                if (parser.hasOption("d")) {
+                    debugMode = true;
+                }
+            } else {
+                if (parser.hasOption("d")) {
+                    debugMode = true;
+                }
+            }
+
+            GraphicRenderer renderer = new GraphicRenderer();
+            renderer.render(aMesh, canvas, debugMode, grid);
+
+            // Storing the result in an SVG file
+            SVGCanvas.write(canvas, output);
+            // Dump the mesh to stdout
+            MeshDump dumper = new MeshDump();
+            dumper.dump(aMesh);
+        }
     }
 }

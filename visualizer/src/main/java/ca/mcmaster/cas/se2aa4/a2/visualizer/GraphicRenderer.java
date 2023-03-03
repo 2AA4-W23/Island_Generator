@@ -21,10 +21,12 @@ public class GraphicRenderer {
 
 
 
-    public void render(Mesh aMesh, Graphics2D canvas, boolean debugMode, boolean regularGrid) {
+    public void render(Mesh aMesh, Graphics2D canvas, boolean debugMode, boolean irregularGrid) {
         canvas.setColor(Color.BLACK);
         Stroke stroke = new BasicStroke(0.5f);
         canvas.setStroke(stroke);
+
+        System.out.println(irregularGrid + "LLLLLLLLLLLLLLLLLLLLL");
 
 
         if (debugMode==false) {
@@ -45,7 +47,7 @@ public class GraphicRenderer {
                 canvas.draw(line);
                 canvas.setColor(old);
             }
-            if (regularGrid) {
+            if (!irregularGrid) {
                 Double yTemp = aMesh.getVerticesList().get(aMesh.getPolygonsList().get(0).getCentroidIdx()).getY();
                 for (Structs.Polygon p : aMesh.getPolygonsList()) {
                     Color old = canvas.getColor();
@@ -72,7 +74,7 @@ public class GraphicRenderer {
             }
         }else{
 
-            if(regularGrid){
+            if(!irregularGrid){
                 Double yTemp = aMesh.getVerticesList().get(aMesh.getPolygonsList().get(0).getCentroidIdx()).getY();
                 for (Structs.Polygon p : aMesh.getPolygonsList()) {
                     Color old = canvas.getColor();
