@@ -7,6 +7,8 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.Random;
 
+
+
 import ca.mcmaster.cas.se2aa4.a2.customMesh.CustomIrregularMesh;
 import ca.mcmaster.cas.se2aa4.a2.customMesh.CustomMesh;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Vertex;
@@ -21,39 +23,23 @@ public class DotGen {
     private final int width = 500;
     private final int height = 500;
     private final int square_size = 20;
-    private boolean irregular = true;
     private boolean debug = false;
+    private int dimension = 500;
     Mesh finalMesh;
 
-    public DotGen(boolean newIrregular, boolean newDebug){
-        this.irregular = newIrregular;
-        this.debug = newDebug;
+    public DotGen(boolean debug, int dimension){
+        this.debug=debug;
+        this.dimension=dimension;
     }
-
     public Mesh generate() {
-//        if(!irregular){
-//            CustomMesh newMesh = new CustomMesh();
-//        newMesh.createVertices(width, height, square_size);
-//        newMesh.createSegments();
-//        this.finalMesh = newMesh.finalizeMesh();
-//        }
-//        else{
-//            CustomIrregularMesh newMesh = new CustomIrregularMesh();
-//            newMesh.generateRandomPoint(width,height);
-//            this.finalMesh = newMesh.finalizeMesh();
-//        }
 
-        CustomIrregularMesh newMesh = new CustomIrregularMesh();
-       // newMesh.createVertices(width, height, square_size);
-       // newMesh.createSegments();
-        newMesh.generateRandomPoint(width,height);
+
+        CustomMesh newMesh = new CustomMesh();
+        newMesh.createVertices(dimension, dimension, square_size);
+        newMesh.createSegments();
+
         this.finalMesh = newMesh.finalizeMesh();
-
-
-        
         return this.finalMesh;
-
-
 
     }
 }

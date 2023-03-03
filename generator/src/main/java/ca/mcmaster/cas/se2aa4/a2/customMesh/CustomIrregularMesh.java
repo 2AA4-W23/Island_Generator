@@ -35,27 +35,33 @@ public class CustomIrregularMesh {
 
     private boolean lloydRelaxation = false;
     private int lloydRelaxationCounter = 0;
+
+    private int relaxationNum = 2;
     private int delaunayCounter = 0;
+
+    private int polygon = 50;
 
 
     PrecisionModel p = new PrecisionModel();
 
-    public CustomIrregularMesh() {
+    public CustomIrregularMesh(int relaxationNum, int polygon) {
         vertexList = new ArrayList<>();
         segmentList = new ArrayList<>();
         polygonList = new ArrayList<>();
         this.width = 500;
         this.height = 500;
         square_size = 20;
+        this.relaxationNum=relaxationNum;
+        this.polygon=polygon;
     }
 
-    public void generateRandomPoint(int width, int height) {
+    public void generateRandomPoint(int width, int height, int polygon) {
         this.width = width;
         this.height = height;
         float x, y;
         Random rd = new Random();
         Vertex random = null;
-        for (int i = 0; i < 25; i++) {
+        for (int i = 0; i < polygon; i++) {
             do {
                 random = Vertex.newBuilder().setX(rd.nextFloat() * width).setY(rd.nextFloat() * height).build();
             } while (vertexList.contains(random));
@@ -135,7 +141,7 @@ public class CustomIrregularMesh {
             }
             addPolygon(Polygon.newBuilder().addAllSegmentIdxs(polygonSegments).setCentroidIdx(i).build());
         }
-        if(lloydRelaxationCounter < 2) {
+        if(lloydRelaxationCounter < relaxationNum) {
             lloydRelaxation();
         }
         delaunayCounter++;
@@ -240,6 +246,26 @@ public class CustomIrregularMesh {
         }
         addAllVertices(finalVertices);
     }
+    public ArrayList<Polygon> addPolygonColour() {
+        ArrayList<Polygon> finalPolygon = new ArrayList<>();
+        for(Polygon p: polygonList){
+            Random bag2 = new Random();
+            int red = bag2.nextInt(255);
+            int green = bag2.nextInt(255);
+            int blue = bag2.nextInt(255);
+            int alpha = bag2.nextInt(255);;
+            String colorCode = red + "," + green + "," + blue + "," + alpha;
+            Structs.Property color = Structs.Property.newBuilder().setKey("rgba_color").setValue(colorCode).build();
+            Polygon colored = Polygon.newBuilder(p).addProperties(color).build();
+            finalPolygon.add(colored);
+        }
+        return finalPolygon;
+    }
+
+
+
+
+
     public void addAllVertices(ArrayList<Vertex> vertices) {
 
         this.vertexList = vertices;

@@ -74,5 +74,6 @@ A feature is considered done when it is tested
 |  F07  |  Generated and displayed voronoi diagram  |  Hamzah, Sarim | Feb 28th  | March 1st  |    D    |
 |  F08  |  Applied Lloyd relaxation, and visualized the relaxed mesh  |  Hamzah,Sarim | March 1st  | March 1st  |    D    |
 |  F09  | Cropped the mesh to adjust visualization to fit within the grid dimensions  |  Fiza | March 1st | March 1st  |    D    |
+|  F10  |             |  Fiza | March 1st | March 1st  |    D    |
 
 

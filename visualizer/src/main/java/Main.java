@@ -45,9 +45,9 @@ public class Main {
         Graphics2D canvas = SVGCanvas.build((int) Math.ceil(max_x), (int) Math.ceil(max_y));
 
        GraphicRenderer renderer = new GraphicRenderer();
-        IrregularGraphicRenderer irregularRenderer = new IrregularGraphicRenderer();
+        //IrregularGraphicRenderer irregularRenderer = new IrregularGraphicRenderer();
 
-        irregularRenderer.render(aMesh, canvas, debugMode);
+        renderer.render(aMesh, canvas, debugMode);
         // Painting the mesh on the canvas
 //        if(!irregular) {
 //

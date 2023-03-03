@@ -94,7 +94,6 @@ public class GraphicRenderer {
                 canvas.setColor(Color.pink);
             }
 
-
         }
             ArrayList<Line2D> addNeighbours = new ArrayList<>() ;
             for (Structs.Polygon p : aMesh.getPolygonsList()) {
@@ -108,8 +107,6 @@ public class GraphicRenderer {
                 canvas.draw(line);
                 canvas.setColor(Color.DARK_GRAY);
             }
-
-
         }
         for (int i =0, j = 0 ; i<aMesh.getVerticesList().size(); i++) {
             Vertex v = aMesh.getVertices(i);
@@ -131,8 +128,6 @@ public class GraphicRenderer {
             canvas.setStroke(new BasicStroke(SEGMENT_THICKNESS));
             canvas.draw(line);
             canvas.setColor(Color.BLACK);
-
-
         }
     }
     private Color extractColor(List<Property> properties) {
