@@ -38,10 +38,7 @@ abstract class MeshADT {
 
     public abstract Vertex setCentroid(ArrayList<Integer> segments);
 
-
     public abstract Mesh finalizeMesh();
-
-
 
 
 }

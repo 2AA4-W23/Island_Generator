@@ -6,11 +6,14 @@ import ca.mcmaster.cas.se2aa4.a2.io.Structs.Segment;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Polygon;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Mesh;
 import org.locationtech.jts.*;
+import org.locationtech.jts.algorithm.ConvexHull;
+
 import org.locationtech.jts.geom.*;
 import org.locationtech.jts.geom.impl.CoordinateArraySequenceFactory;
 import org.locationtech.jts.triangulate.DelaunayTriangulationBuilder;
 import org.locationtech.jts.triangulate.VoronoiDiagramBuilder;
 
+import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Random;
@@ -77,10 +80,7 @@ public class CustomIrregularMesh {
             }
             tempList.add(Vertex.newBuilder().setX(x/p.getSegmentIdxsCount()).setY(y/p.getSegmentIdxsCount()).build());
         }
-     //   System.out.println(tempList.toString());
-        System.out.println(tempList+"&&&&&&&&&&&&&&&&&&&&&&");
         vertexList = tempList;
-        System.out.println(vertexList + "????????????");
         addVertexColour();
         createVoronoi();
     }
@@ -94,32 +94,23 @@ public class CustomIrregularMesh {
         Envelope envelope = new Envelope(0, this.width, 0, this.height);
         voronoi.setClipEnvelope(envelope);
         Coordinate[] coords;
-        //collection.toArray();
         Coordinate cord;
         for (Vertex v : vertexList) {
             cord = new Coordinate();
             cord.setX(v.getX());
             cord.setY(v.getY());
 
-
             collection.add(cord);
 
-            //  factory.createPoint(cord);
         }
         voronoi.setSites(collection);
-
 
         Geometry gUncropped = voronoi.getDiagram(factory);
         Geometry g = gUncropped.intersection(new GeometryFactory().toGeometry(envelope));
         collection1.add(g);
 
-
-
         factory.buildGeometry(collection1);
-        System.out.println(g.getGeometryN(1).getCentroid() + "#########################");
         makeVertices(g);
-        Coordinate[] c = g.getGeometryN(5).getCoordinates();
-
     }
 
     public void makeVertices(Geometry g) {
@@ -127,9 +118,12 @@ public class CustomIrregularMesh {
         polygonList.clear();
         int counter = 0;
         Coordinate[] c = null;
+        ConvexHull convexHull;
         ArrayList<Integer> polygonSegments = new ArrayList<>();
         for (int i = 0; i < g.getNumGeometries(); i++) {
-            c = g.getGeometryN(i).getCoordinates();
+            convexHull = new ConvexHull(g.getGeometryN(i));
+            Geometry conHull = convexHull.getConvexHull();
+            c = conHull.getGeometryN(i).getCoordinates();
             polygonSegments.clear();
             for (int j = 0; j < c.length; j++) {
                 vertexList.add(Vertex.newBuilder().setX(c[j].getX()).setY(c[j].getY()).build());
@@ -137,65 +131,101 @@ public class CustomIrregularMesh {
                     segmentList.add(Segment.newBuilder().setV1Idx(vertexList.size() - 1).setV2Idx(vertexList.size() - 2).build());
                     polygonSegments.add(counter);
                     counter++;
-
-
                 }
             }
             addPolygon(Polygon.newBuilder().addAllSegmentIdxs(polygonSegments).setCentroidIdx(i).build());
-           // System.out.println(vertexList.get(polygonList.get(i).getCentroidIdx()).getX() +", "+vertexList.get(polygonList.get(i).getCentroidIdx()).getY()+"<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
         }
-//        int geoCounter = 0;
-//        for(int k = 0; k < g.getNumGeometries(); k++){
-//            if(vertexList.get(k).getX() == g.getGeometryN(geoCounter).getCentroid().getX() && vertexList.get(k).getY() == g.getGeometryN(geoCounter).getCentroid().getY()){
-//                System.out.println("hiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
-//                addPolygon(Polygon.newBuilder().addAllSegmentIdxs(polygonSegments).setCentroidIdx(k).build());
-//                geoCounter++;
-//            }
-//        }
-      //  System.out.println(vertexList);
-   //     System.out.println(vertexList.get(polygonList.get(0).getCentroidIdx()).getX() + ", "+vertexList.get(polygonList.get(0).getCentroidIdx()).getY());
-        if(lloydRelaxationCounter < 6) {
-            System.out.println("hi");
+        if(lloydRelaxationCounter < 2) {
             lloydRelaxation();
         }
-
         delaunayCounter++;
         if(delaunayCounter == 1){
             delaunay(g);
-
         }
-
-
     }
+
     public void delaunay(Geometry g){
         ArrayList<Polygon> neighbours = new ArrayList<>();
         GeometryFactory geo = new GeometryFactory(p);
         DelaunayTriangulationBuilder d = new DelaunayTriangulationBuilder();
-        Collection centeroids = new ArrayList<>();
+        Collection centroids = new ArrayList<>();
         Coordinate cord;
-        for(int i = 0; i < g.getNumGeometries(); i++){
+        int num = 0;
+        for(Polygon p: polygonList){
             cord = new Coordinate();
-            cord.setX(g.getGeometryN(i).getCentroid().getX());
-            cord.setY(g.getGeometryN(i).getCentroid().getY());
-            centeroids.add(cord);
+            cord.setX(vertexList.get(p.getCentroidIdx()).getX());
+            cord.setY(vertexList.get(p.getCentroidIdx()).getY());
+            centroids.add(cord);
+            num++;
         }
-        System.out.println(centeroids);
-        d.setSites(centeroids);
+        d.setSites(centroids);
+        Geometry f = d.getTriangles(geo);
+        ArrayList<ArrayList<Integer>> neighboursList = new ArrayList<>();
+        int count = 0;
+        for(Polygon p: polygonList){
+            neighboursList.add(new ArrayList<>());
+            for(int c = 0; c < f.getNumGeometries(); c++){
+                Coordinate[] r = f.getGeometryN(c).getCoordinates();
 
+                if(vertexList.get(p.getCentroidIdx()).getX() == r[0].getX() && vertexList.get(p.getCentroidIdx()).getY() == r[0].getY()){
+                    for(Polygon p2: polygonList){
+                        if(vertexList.get(p2.getCentroidIdx()).getX() == r[1].getX() && vertexList.get(p2.getCentroidIdx()).getY() == r[1].getY()){
+                            if(!(neighboursList.get(count).contains(polygonList.indexOf(p2)))) {
+                                neighboursList.get(count).add(polygonList.indexOf(p2));
+                            }
+                        }
+                        if(vertexList.get(p2.getCentroidIdx()).getX() == r[2].getX() && vertexList.get(p2.getCentroidIdx()).getY() == r[2].getY()){
+                            if(!(neighboursList.get(count).contains(polygonList.indexOf(p2)))) {
+                                neighboursList.get(count).add(polygonList.indexOf(p2));
+                            }
+                        }
+                    }
+                }
+                else if(vertexList.get(p.getCentroidIdx()).getX() == r[1].getX() && vertexList.get(p.getCentroidIdx()).getY() == r[1].getY()){
+                    for(Polygon p2: polygonList){
+                        if(vertexList.get(p2.getCentroidIdx()).getX() == r[0].getX() && vertexList.get(p2.getCentroidIdx()).getY() == r[0].getY()){
+                            if(!(neighboursList.get(count).contains(polygonList.indexOf(p2)))) {
+                                neighboursList.get(count).add(polygonList.indexOf(p2));
+                            }
+                        }
+                        if(vertexList.get(p2.getCentroidIdx()).getX() == r[2].getX() && vertexList.get(p2.getCentroidIdx()).getY() == r[2].getY()){
+                            if(!(neighboursList.get(count).contains(polygonList.indexOf(p2)))) {
+                                neighboursList.get(count).add(polygonList.indexOf(p2));
+                            }
+                        }
+                    }
+                }
+                else if(vertexList.get(p.getCentroidIdx()).getX() == r[2].getX() && vertexList.get(p.getCentroidIdx()).getY() == r[2].getY()){
+                    for(Polygon p2: polygonList){
+                        if(vertexList.get(p2.getCentroidIdx()).getX() == r[0].getX() && vertexList.get(p2.getCentroidIdx()).getY() == r[0].getY()){
+                            if(!(neighboursList.get(count).contains(polygonList.indexOf(p2)))) {
+                                neighboursList.get(count).add(polygonList.indexOf(p2));
+                            }
+                        }
+                        if(vertexList.get(p2.getCentroidIdx()).getX() == r[1].getX() && vertexList.get(p2.getCentroidIdx()).getY() == r[1].getY()){
+                            if(!(neighboursList.get(count).contains(polygonList.indexOf(p2)))) {
+                                neighboursList.get(count).add(polygonList.indexOf(p2));
+                            }
+                        }
+                    }
+                }
 
-         Geometry f = d.getTriangles(geo);
-
-        Coordinate[] r = f.getGeometryN(3).getCoordinates();
-        for(int i =0; i < r.length; i++){
-            System.out.println(r[i]);
+            }
+            count++;
         }
 
+        ArrayList<Polygon> temp = new ArrayList<>();
+        int polygonCounter = 0;
+
+        for(Polygon p: polygonList){
+            temp.add(Polygon.newBuilder(p).addAllNeighborIdxs(neighboursList.get(polygonCounter)).build());
+            polygonCounter++;
+        }
+        polygonList = temp;
     }
-
     public void addPolygon(Polygon p) {
         polygonList.add(p);
     }
-
     public void addVertexColour() {
         ArrayList<Vertex> finalVertices = new ArrayList<>();
         for (Vertex v : vertexList) {
@@ -210,14 +240,11 @@ public class CustomIrregularMesh {
         }
         addAllVertices(finalVertices);
     }
-
     public void addAllVertices(ArrayList<Vertex> vertices) {
 
         this.vertexList = vertices;
     }
-
     public Mesh finalizeMesh() {
         return Mesh.newBuilder().addAllVertices(this.vertexList).addAllSegments(this.segmentList).addAllPolygons(this.polygonList).build();
     }
-
 }
