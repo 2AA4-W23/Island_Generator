@@ -123,7 +123,7 @@ public class CustomIrregularMesh {
         factory.buildGeometry(collection1);
         makeVertices(g);
     }
-
+//creates the verticies and the segments and orders them based on the convex hull.
     public void makeVertices(Geometry g) {
         segmentList.clear();
         polygonList.clear();
@@ -146,6 +146,7 @@ public class CustomIrregularMesh {
             }
             addPolygon(Polygon.newBuilder().addAllSegmentIdxs(polygonSegments).setCentroidIdx(i).build());
         }
+        //calls lloyd relaxation based on relaxation number
         if(lloydRelaxationCounter < relaxationNum) {
             lloydRelaxation();
         }

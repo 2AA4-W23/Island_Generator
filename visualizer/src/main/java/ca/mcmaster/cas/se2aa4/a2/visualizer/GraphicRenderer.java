@@ -26,8 +26,6 @@ public class GraphicRenderer {
         Stroke stroke = new BasicStroke(0.5f);
         canvas.setStroke(stroke);
 
-        System.out.println(irregularGrid + "LLLLLLLLLLLLLLLLLLLLL");
-
 
         if (debugMode==false) {
             for (Vertex v : aMesh.getVerticesList()) {

@@ -6,7 +6,25 @@
 
 ## How to run the product
 
-_This section needs to be edited to reflect how the user can interact with thefeature released in your project_
+_Command line args:
+
+Generator:
+-t: Generate Irregular Mesh
+-p: Enter Number of Polygons to be made (Only if you have chosen Irregular Mesh)
+-r: Choose amount of times to perform relaxation on mesh (Only if you have chosen Irregular Mesh)
+-dim: Choose the dimensions of the grid (Only if you have chosen Grid Mesh)
+
+Example uses:
+java -jar generator.jar sample.mesh -t -p 25 -r 5    -> Generates an irregular mesh with 25 polygons, and performs 5 relaxations
+java -jar generator.jar sample.mesh -dim 100  -> Generates a grid mesh with grid dimensions of 100x100
+
+Visualizer:
+-t: Choose if you are generating an Irregular Mesh
+-d: Generate the mesh in debug mode
+
+Example uses:
+java -jar visualizer.jar ../generator/sample.mesh sample.svg  -t   -> Use if you want to visualize an irregular mesh, without debug mode
+java -jar visualizer.jar ../generator/sample.mesh sample.svg -d   -> Use if you want to visualize a grid mesh in debug mode
 
 ### Installation instructions
 
@@ -75,6 +93,6 @@ A feature is considered done when it is tested
 |  F08  |  Applied Lloyd relaxation, and visualized the relaxed mesh  |  Hamzah,Sarim | March 1st  | March 1st  |    D    |
 |  F09  | Cropped the mesh to adjust visualization to fit within the grid dimensions  |  Fiza | March 1st | March 1st  |    D    |
 |  F10  | Compute neighbourhood relationship using delauney triangulation  and displayed it | Sarim, Fiza | March 1st | March 2nd  |    D    |
-|  F11  |  reorderd segments using convex hull and displayed them | Fiza | March 2nd | March 2nd  |    D    |
+|  F11  |  Reorderd segments using convex hull and displayed them | Fiza | March 2nd | March 2nd  |    D    |
 |  F12  |  Added command line arguments customizations | Fiza | March 2nd | March 3rd  |    D    |
 |  F13 |  Atempted bonus and created an obj file | Hamzah | March 2nd | March 2nd  |    D    |
