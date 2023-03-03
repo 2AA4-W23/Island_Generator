@@ -1,12 +1,7 @@
 package ca.mcmaster.cas.se2aa4.a2.generator;
 
 import ca.mcmaster.cas.se2aa4.a2.customMesh.CustomIrregularMesh;
-import ca.mcmaster.cas.se2aa4.a2.customMesh.CustomMesh;
-import ca.mcmaster.cas.se2aa4.a2.io.Structs.Vertex;
-import ca.mcmaster.cas.se2aa4.a2.io.Structs.Property;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Mesh;
-import ca.mcmaster.cas.se2aa4.a2.io.Structs.Segment;
-import ca.mcmaster.cas.se2aa4.a2.customMesh.customVertex;
 
 public class IrregularDotGen {
     private final int width = 500;

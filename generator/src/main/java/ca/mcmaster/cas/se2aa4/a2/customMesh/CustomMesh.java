@@ -33,7 +33,7 @@ public class CustomMesh extends MeshADT{
         height = 0;
         square_size = 0;
     }
-
+//creating verticies using width, height and square size (one row at a time).
     @Override
     public void createVertices(int newWidth, int newHeight, int newSquare_size) {
         this.width = newWidth;
@@ -48,7 +48,7 @@ public class CustomMesh extends MeshADT{
         }
         addVertexColour();
     }
-
+//adds color to verticies using a randomizer and stored it into vertex properties.
     @Override
     public void addVertexColour() {
         ArrayList<Vertex> finalVertices = new ArrayList<>();
@@ -65,12 +65,12 @@ public class CustomMesh extends MeshADT{
         addAllVertices(finalVertices);
     }
 
-
+//adding all the verticies to the vertex array list.
     @Override
     public void addAllVertices(ArrayList<Vertex> vertices) {
         this.vertexList = vertices;
     }
-
+//creates segments using all the 4 verticies.
     @Override
     public void createSegments() {
         boolean firstSquare = true;
@@ -139,7 +139,7 @@ public class CustomMesh extends MeshADT{
         addSegmentColour();
         addAllPolygons();
     }
-
+// gets color average values for verticies that the segment is connecting and stores it.
     @Override
     public void addSegmentColour() {
         ArrayList<Segment> finalSegments = new ArrayList<>();
@@ -167,7 +167,7 @@ public class CustomMesh extends MeshADT{
     public void createPolygons() {
 
     }
-
+//adds the neighbours and the polygon
     @Override
     public void addAllPolygons() {
         addNeighbours();
@@ -212,7 +212,7 @@ public class CustomMesh extends MeshADT{
     public void addPolygon(Polygon polygon) {
         this.polygonList.add(polygon);
     }
-
+// cross refrenced the polygon list and checked the adjacent polygon
     @Override
     public  ArrayList<ArrayList<Integer>> addNeighbours() {
         ArrayList<ArrayList<Integer>> list = new ArrayList<>();
@@ -220,7 +220,7 @@ public class CustomMesh extends MeshADT{
         int rowCounter = 0;
         for(int i = 0; i < (polygonList.size()); i++){
             list.add(new ArrayList<>());
-
+//condition for first row
             if(rowCounter == 0){
 
                 if(squareCounter == 0){
@@ -241,7 +241,7 @@ public class CustomMesh extends MeshADT{
                     squareCounter = 0;
 
                 }
-            }
+            }//condition for middle rows
             else if(rowCounter != ((width/square_size)-1)){
                 if(squareCounter == 0){
                     list.get(i).add(i- ((width/square_size)));
@@ -264,7 +264,7 @@ public class CustomMesh extends MeshADT{
                     squareCounter = 0;
                     rowCounter++;
                 }
-            }
+            }//condition for last row
             else{
                 if(squareCounter == 0){
                     list.get(i).add(i- ((width/square_size)));
@@ -303,7 +303,7 @@ public class CustomMesh extends MeshADT{
     public ArrayList<Polygon> getPolygons() {
         return this.polygonList;
     }
-
+//adds polygon color using a randomizer
     @Override
     public ArrayList<Polygon> addPolygonColour() {
         ArrayList<Polygon> finalPolygon = new ArrayList<>();
@@ -321,6 +321,7 @@ public class CustomMesh extends MeshADT{
         }
         return finalPolygon;
     }
+    //sets centroid verticies of each polygon by getting the avg cooordinate of all the segments
     @Override
     public Vertex setCentroid(ArrayList<Integer> segments) {
         double x0 = (vertexList.get(segmentList.get(segments.get(0)).getV1Idx()).getX() + vertexList.get(segmentList.get(segments.get(0)).getV2Idx()).getX())/2.0;

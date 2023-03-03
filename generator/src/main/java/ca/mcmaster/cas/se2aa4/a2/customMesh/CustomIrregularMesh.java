@@ -13,6 +13,7 @@ import org.locationtech.jts.geom.impl.CoordinateArraySequenceFactory;
 import org.locationtech.jts.triangulate.DelaunayTriangulationBuilder;
 import org.locationtech.jts.triangulate.VoronoiDiagramBuilder;
 
+import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -44,6 +45,10 @@ public class CustomIrregularMesh {
 
     PrecisionModel p = new PrecisionModel();
 
+    private static final DecimalFormat df = new DecimalFormat("0.00");
+
+
+//constructor for the irregular mesh
     public CustomIrregularMesh(int relaxationNum, int polygon) {
         vertexList = new ArrayList<>();
         segmentList = new ArrayList<>();
@@ -54,7 +59,7 @@ public class CustomIrregularMesh {
         this.relaxationNum=relaxationNum;
         this.polygon=polygon;
     }
-
+//generates a random point, one for each polygon
     public void generateRandomPoint(int width, int height, int polygon) {
         this.width = width;
         this.height = height;
@@ -63,20 +68,20 @@ public class CustomIrregularMesh {
         Vertex random = null;
         for (int i = 0; i < polygon; i++) {
             do {
-                random = Vertex.newBuilder().setX(rd.nextFloat() * width).setY(rd.nextFloat() * height).build();
+                random = Vertex.newBuilder().setX(Double.parseDouble(df.format(rd.nextFloat() * width))).setY(Double.parseDouble(df.format(rd.nextFloat() * height))).build();
             } while (vertexList.contains(random));
             vertexList.add(random);
         }
         createVoronoi();
-
     }
+
     public void lloydRelaxation(){
         ArrayList<Vertex> tempList = new ArrayList<>();
-     //   vertexList.clear();
         double x = 0;
         double y = 0;
 
         lloydRelaxationCounter += 1;
+        //moves initial point to polygon's centroid by getting average points.
         for(Polygon p: polygonList){
             x = 0;
             y = 0;
@@ -84,7 +89,7 @@ public class CustomIrregularMesh {
               x += vertexList.get(segmentList.get(p.getSegmentIdxs(i)).getV1Idx()).getX();
               y += vertexList.get(segmentList.get(p.getSegmentIdxs(i)).getV1Idx()).getY();
             }
-            tempList.add(Vertex.newBuilder().setX(x/p.getSegmentIdxsCount()).setY(y/p.getSegmentIdxsCount()).build());
+            tempList.add(Vertex.newBuilder().setX(Double.parseDouble(df.format(x/p.getSegmentIdxsCount()))).setY(Double.parseDouble(df.format(y/p.getSegmentIdxsCount()))).build());
         }
         vertexList = tempList;
         addVertexColour();
@@ -93,7 +98,7 @@ public class CustomIrregularMesh {
 
     public void createVoronoi() {
         VoronoiDiagramBuilder voronoi = new VoronoiDiagramBuilder();
-
+//create the necessary
         GeometryFactory factory = new GeometryFactory(p);
         Collection collection = new ArrayList<>();
         Collection collection1 = new ArrayList<>();
