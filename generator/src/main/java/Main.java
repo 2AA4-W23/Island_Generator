@@ -5,9 +5,6 @@ import ca.mcmaster.cas.se2aa4.a2.io.MeshFactory;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Mesh;
 
 import org.apache.commons.cli.*;
-
-
-
 import java.io.FileWriter;
 import java.io.IOException;
 

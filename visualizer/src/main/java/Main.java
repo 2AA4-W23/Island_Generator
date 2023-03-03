@@ -13,7 +13,7 @@ import java.io.IOException;
 
 public class Main {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, ParseException {
 
         String input = args[0];
         String output = args[1];
@@ -21,18 +21,16 @@ public class Main {
         // Extracting command line parameters
         boolean debugMode = false;
         boolean irregular = true;
-        if(args.length >= 3) {
-            if (args[2].equals("-X")) {
-                debugMode = true;
-            } else {
-                debugMode = false;
-            }
-            if(args.length == 4){
-                if(args[3].equals("Irregular")){
-                 irregular = true;
-                }
-            }
-       }
+
+        Options options = new Options();
+        options.addOption("t", false, "mesh type (grid or irregular)");
+        options.addOption("d", false, "debug");
+
+        CommandLineParser cml = new DefaultParser();
+        CommandLine parser = cml.parse(options, args);
+
+        boolean grid = false;
+
         // Getting width and height for the canvas
         Structs.Mesh aMesh = new MeshFactory().read(input);
         double max_x = Double.MIN_VALUE;
@@ -44,10 +42,6 @@ public class Main {
         // Creating the Canvas to draw the mesh
         Graphics2D canvas = SVGCanvas.build((int) Math.ceil(max_x), (int) Math.ceil(max_y));
 
-       GraphicRenderer renderer = new GraphicRenderer();
-        //IrregularGraphicRenderer irregularRenderer = new IrregularGraphicRenderer();
-
-        renderer.render(aMesh, canvas, debugMode);
         // Painting the mesh on the canvas
 //        if(!irregular) {
 //
@@ -55,6 +49,18 @@ public class Main {
 //        else{
 //            irregularRenderer.render(aMesh, canvas, debugMode);
 //        }
+        Structs.Mesh myMesh;
+        if(parser.hasOption("t")) {
+            grid = Boolean.parseBoolean(parser.getOptionValue("t"));
+            if (parser.hasOption("d")) {
+                debugMode = true;
+            }
+            GraphicRenderer renderer = new GraphicRenderer();
+            renderer.render(aMesh, canvas, debugMode,grid );
+
+
+        }
+
         // Storing the result in an SVG file
         SVGCanvas.write(canvas, output);
         // Dump the mesh to stdout

@@ -24,6 +24,7 @@ public class IrregularDotGen {
     public Mesh irregularGenerate() {
         CustomIrregularMesh newMesh = new CustomIrregularMesh(relaxation,polygon);
         newMesh.generateRandomPoint(width, height,polygon);
+        newMesh.addVertexColour();
         this.finalMesh = newMesh.finalizeMesh();
 
 

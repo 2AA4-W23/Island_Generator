@@ -21,7 +21,7 @@ public class GraphicRenderer {
 
 
 
-    public void render(Mesh aMesh, Graphics2D canvas, boolean debugMode) {
+    public void render(Mesh aMesh, Graphics2D canvas, boolean debugMode, boolean regularGrid) {
         canvas.setColor(Color.BLACK);
         Stroke stroke = new BasicStroke(0.5f);
         canvas.setStroke(stroke);
@@ -45,90 +45,96 @@ public class GraphicRenderer {
                 canvas.draw(line);
                 canvas.setColor(old);
             }
-            Double yTemp = aMesh.getVerticesList().get(aMesh.getPolygonsList().get(0).getCentroidIdx()).getY();
-            for (Structs.Polygon p : aMesh.getPolygonsList()) {
-                Color old = canvas.getColor();
-                canvas.setColor(extractColor(p.getPropertiesList()));
-                Path2D path = new Path2D.Double();
+            if (regularGrid) {
+                Double yTemp = aMesh.getVerticesList().get(aMesh.getPolygonsList().get(0).getCentroidIdx()).getY();
+                for (Structs.Polygon p : aMesh.getPolygonsList()) {
+                    Color old = canvas.getColor();
+                    canvas.setColor(extractColor(p.getPropertiesList()));
+                    Path2D path = new Path2D.Double();
 
-                if (aMesh.getVerticesList().get(p.getCentroidIdx()).getY() == yTemp) {
-                    path.moveTo(aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(0)).getV1Idx()).getX(), aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(0)).getV1Idx()).getY());
-                    path.lineTo(aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(0)).getV2Idx()).getX(), aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(0)).getV2Idx()).getY());
-                    path.lineTo(aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(2)).getV1Idx()).getX(), aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(2)).getV1Idx()).getY());
-                    path.lineTo(aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(2)).getV2Idx()).getX(), aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(2)).getV2Idx()).getY());
+                    if (aMesh.getVerticesList().get(p.getCentroidIdx()).getY() == yTemp) {
+                        path.moveTo(aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(0)).getV1Idx()).getX(), aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(0)).getV1Idx()).getY());
+                        path.lineTo(aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(0)).getV2Idx()).getX(), aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(0)).getV2Idx()).getY());
+                        path.lineTo(aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(2)).getV1Idx()).getX(), aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(2)).getV1Idx()).getY());
+                        path.lineTo(aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(2)).getV2Idx()).getX(), aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(2)).getV2Idx()).getY());
 
-                } else {
-                    path.moveTo(aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(0)).getV2Idx()).getX(), aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(0)).getV2Idx()).getY());
-                    path.lineTo(aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(0)).getV1Idx()).getX(), aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(0)).getV1Idx()).getY());
-                    path.lineTo(aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(2)).getV1Idx()).getX(), aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(2)).getV1Idx()).getY());
-                    path.lineTo(aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(2)).getV2Idx()).getX(), aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(2)).getV2Idx()).getY());
+                    } else {
+                        path.moveTo(aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(0)).getV2Idx()).getX(), aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(0)).getV2Idx()).getY());
+                        path.lineTo(aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(0)).getV1Idx()).getX(), aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(0)).getV1Idx()).getY());
+                        path.lineTo(aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(2)).getV1Idx()).getX(), aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(2)).getV1Idx()).getY());
+                        path.lineTo(aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(2)).getV2Idx()).getX(), aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(2)).getV2Idx()).getY());
+                    }
+                    path.closePath();
+                    canvas.fill(path);
+                    canvas.setColor(old);
+
                 }
-                path.closePath();
-                canvas.fill(path);
-                canvas.setColor(old);
             }
         }else{
 
+            if(regularGrid){
+                Double yTemp = aMesh.getVerticesList().get(aMesh.getPolygonsList().get(0).getCentroidIdx()).getY();
+                for (Structs.Polygon p : aMesh.getPolygonsList()) {
+                    Color old = canvas.getColor();
+                    canvas.setColor(Color.pink);
+                    Path2D path = new Path2D.Double();
 
+                    if (aMesh.getVerticesList().get(p.getCentroidIdx()).getY() == yTemp) {
+                        path.moveTo(aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(0)).getV1Idx()).getX(), aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(0)).getV1Idx()).getY());
+                        path.lineTo(aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(0)).getV2Idx()).getX(), aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(0)).getV2Idx()).getY());
+                        path.lineTo(aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(2)).getV1Idx()).getX(), aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(2)).getV1Idx()).getY());
+                        path.lineTo(aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(2)).getV2Idx()).getX(), aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(2)).getV2Idx()).getY());
 
-            Double yTemp = aMesh.getVerticesList().get(aMesh.getPolygonsList().get(0).getCentroidIdx()).getY();
-            for (Structs.Polygon p : aMesh.getPolygonsList()) {
-                Color old = canvas.getColor();
-                canvas.setColor(Color.pink);
-                Path2D path = new Path2D.Double();
-
-                if (aMesh.getVerticesList().get(p.getCentroidIdx()).getY() == yTemp) {
-                    path.moveTo(aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(0)).getV1Idx()).getX(), aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(0)).getV1Idx()).getY());
-                    path.lineTo(aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(0)).getV2Idx()).getX(), aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(0)).getV2Idx()).getY());
-                    path.lineTo(aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(2)).getV1Idx()).getX(), aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(2)).getV1Idx()).getY());
-                    path.lineTo(aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(2)).getV2Idx()).getX(), aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(2)).getV2Idx()).getY());
-
-                } else {
-                    path.moveTo(aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(0)).getV2Idx()).getX(), aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(0)).getV2Idx()).getY());
-                    path.lineTo(aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(0)).getV1Idx()).getX(), aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(0)).getV1Idx()).getY());
-                    path.lineTo(aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(2)).getV1Idx()).getX(), aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(2)).getV1Idx()).getY());
-                    path.lineTo(aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(2)).getV2Idx()).getX(), aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(2)).getV2Idx()).getY());
+                    } else {
+                        path.moveTo(aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(0)).getV2Idx()).getX(), aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(0)).getV2Idx()).getY());
+                        path.lineTo(aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(0)).getV1Idx()).getX(), aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(0)).getV1Idx()).getY());
+                        path.lineTo(aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(2)).getV1Idx()).getX(), aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(2)).getV1Idx()).getY());
+                        path.lineTo(aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(2)).getV2Idx()).getX(), aMesh.getVerticesList().get(aMesh.getSegmentsList().get(p.getSegmentIdxs(2)).getV2Idx()).getY());
+                    }
+                    path.closePath();
+                    canvas.fill(path);
+                    canvas.setColor(Color.pink);
                 }
-                path.closePath();
-                canvas.fill(path);
-                canvas.setColor(Color.pink);
+
             }
 
-        }
             ArrayList<Line2D> addNeighbours = new ArrayList<>() ;
             for (Structs.Polygon p : aMesh.getPolygonsList()) {
-            Vertex v = aMesh.getVertices(p.getCentroidIdx());
-            for(int i =0; i<p.getNeighborIdxsList().size();i++){
-                Vertex v2 = aMesh.getVerticesList().get(aMesh.getPolygonsList().get(p.getNeighborIdxs(i)).getCentroidIdx());
-                Line2D line = new Line2D.Double(v.getX(),v.getY(),v2.getX(),v2.getY());
-                canvas.setStroke(new BasicStroke(NEIGHBOUR_THICKNESS));
+                Vertex v = aMesh.getVertices(p.getCentroidIdx());
+                for(int i =0; i<p.getNeighborIdxsList().size();i++){
+                    Vertex v2 = aMesh.getVerticesList().get(aMesh.getPolygonsList().get(p.getNeighborIdxs(i)).getCentroidIdx());
+                    Line2D line = new Line2D.Double(v.getX(),v.getY(),v2.getX(),v2.getY());
+                    canvas.setStroke(new BasicStroke(NEIGHBOUR_THICKNESS));
 
-                addNeighbours.add(line);
+                    addNeighbours.add(line);
+                    canvas.draw(line);
+                    canvas.setColor(Color.DARK_GRAY);
+                }
+            }
+            for (int i =0, j = 0 ; i<aMesh.getVerticesList().size(); i++) {
+                Vertex v = aMesh.getVertices(i);
+                double centre_x = v.getX() - (VERTEX_THICKNESS / 2.0d);
+                double centre_y = v.getY() - (VERTEX_THICKNESS / 2.0d);
+                Ellipse2D point = new Ellipse2D.Double(centre_x, centre_y, VERTEX_THICKNESS, VERTEX_THICKNESS);
+                canvas.fill(point);
+
+                if(v == aMesh.getVertices(i)){
+                    canvas.setColor(Color.RED);
+                }
+                else{
+                    canvas.setColor(Color.BLACK);
+                }
+            }
+            for (Segment s : aMesh.getSegmentsList()) {
+                canvas.setColor(Color.BLACK);
+                Line2D line = new Line2D.Double(aMesh.getVerticesList().get(s.getV1Idx()).getX(), aMesh.getVerticesList().get(s.getV1Idx()).getY(), aMesh.getVerticesList().get(s.getV2Idx()).getX(), aMesh.getVerticesList().get(s.getV2Idx()).getY());
+                canvas.setStroke(new BasicStroke(SEGMENT_THICKNESS));
                 canvas.draw(line);
-                canvas.setColor(Color.DARK_GRAY);
-            }
-        }
-        for (int i =0, j = 0 ; i<aMesh.getVerticesList().size(); i++) {
-            Vertex v = aMesh.getVertices(i);
-            double centre_x = v.getX() - (VERTEX_THICKNESS / 2.0d);
-            double centre_y = v.getY() - (VERTEX_THICKNESS / 2.0d);
-            Ellipse2D point = new Ellipse2D.Double(centre_x, centre_y, VERTEX_THICKNESS, VERTEX_THICKNESS);
-            canvas.fill(point);
-
-            if(v == aMesh.getVertices(i)){
-                canvas.setColor(Color.RED);
-            }
-            else{
                 canvas.setColor(Color.BLACK);
             }
+
         }
-        for (Segment s : aMesh.getSegmentsList()) {
-            canvas.setColor(Color.BLACK);
-            Line2D line = new Line2D.Double(aMesh.getVerticesList().get(s.getV1Idx()).getX(), aMesh.getVerticesList().get(s.getV1Idx()).getY(), aMesh.getVerticesList().get(s.getV2Idx()).getX(), aMesh.getVerticesList().get(s.getV2Idx()).getY());
-            canvas.setStroke(new BasicStroke(SEGMENT_THICKNESS));
-            canvas.draw(line);
-            canvas.setColor(Color.BLACK);
-        }
+
     }
     private Color extractColor(List<Property> properties) {
         String val = null;

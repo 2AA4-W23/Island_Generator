@@ -74,6 +74,7 @@ A feature is considered done when it is tested
 |  F07  |  Generated and displayed voronoi diagram  |  Hamzah, Sarim | Feb 28th  | March 1st  |    D    |
 |  F08  |  Applied Lloyd relaxation, and visualized the relaxed mesh  |  Hamzah,Sarim | March 1st  | March 1st  |    D    |
 |  F09  | Cropped the mesh to adjust visualization to fit within the grid dimensions  |  Fiza | March 1st | March 1st  |    D    |
-|  F10  |             |  Fiza | March 1st | March 1st  |    D    |
-
-
+|  F10  | Compute neighbourhood relationship using delauney triangulation  and displayed it | Sarim, Fiza | March 1st | March 2nd  |    D    |
+|  F11  |  reorderd segments using convex hull and displayed them | Fiza | March 2nd | March 2nd  |    D    |
+|  F12  |  Added command line arguments customizations | Fiza | March 2nd | March 3rd  |    D    |
+|  F13 |  Atempted bonus and created an obj file | Hamzah | March 2nd | March 2nd  |    D    |
