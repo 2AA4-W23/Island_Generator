@@ -132,9 +132,7 @@ public class GraphicRenderer {
                 canvas.draw(line);
                 canvas.setColor(Color.BLACK);
             }
-
         }
-
     }
     private Color extractColor(List<Property> properties) {
         String val = null;

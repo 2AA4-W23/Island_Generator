@@ -20,7 +20,7 @@ public class Main {
         options.addOption("d", false, "debug");
         options.addOption("p", true, "polygon");
         options.addOption("r", true, "relaxation");
-        options.addOption("dim", true, "dimension");
+        options.addOption("help", false, "help");
 
         CommandLineParser cml = new DefaultParser();
         CommandLine parser = cml.parse(options, args);
@@ -60,6 +60,14 @@ public class Main {
             DotGen generator = new DotGen(debug,defDimen);
             myMesh = generator.generate();
         }
+
+        if(parser.hasOption("help")){
+            System.out.println("-t irregular grid" );
+            System.out.println("-p the number of polygons ");
+            System.out.println("-r the number of relaxation");
+            System.out.println("-dim the dimensions");
+        }
+
         MeshFactory factory = new MeshFactory();
         factory.write(myMesh, args[0]);
 

@@ -62,10 +62,8 @@ public class CustomMesh extends MeshADT{
             String colorCode = red + "," + green + "," + blue + "," + alpha;
             Vertex coloured = Vertex.newBuilder(v).addProperties(Structs.Property.newBuilder().setKey("rgba_color").setValue(colorCode).build()).build();
             finalVertices.add(coloured);
-    //    System.out.println(coloured.getPropertiesList().toString());
         }
         addAllVertices(finalVertices);
-        //System.out.println(this.vertexList.toString());
     }
 
 
@@ -141,34 +139,6 @@ public class CustomMesh extends MeshADT{
 
         addSegmentColour();
         addAllPolygons();
-//        addNeighbours();
-//        addPolygonColour();
-//        int polygonCounter = 0;
-//        ArrayList<ArrayList<Integer>> neighboursList = addNeighbours();
-//        ArrayList<Polygon> temp = new ArrayList<>();
-//
-//        for(Polygon p: polygonList){
-//           temp.add(Polygon.newBuilder(p).addAllNeighborIdxs(neighboursList.get(polygonCounter)).build());
-//            polygonCounter++;
-//        }
-//
-//
-//        polygonList = temp;
-//        ArrayList<Polygon> temp1 = new ArrayList<>();
-//
-//        ArrayList<Integer> currentSegments = new ArrayList<>();
-//
-//        for(Polygon p: polygonList){
-//            for(int i =0; i < p.getSegmentIdxsCount(); i++){
-//                currentSegments.add(p.getSegmentIdxs(i));
-//            }
-//            vertexList.add(setCentroid(currentSegments));
-//            temp1.add(Polygon.newBuilder(p).setCentroidIdx(vertexList.size()-1).build());
-//            currentSegments.clear();
-//        }
-//        polygonList = temp1;
-        System.out.println(polygonList.get(24) + "KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK");
-        //System.out.println(vertexList.get(polygonList.get(24).getCentroidIdx()).getX() +", " + vertexList.get(polygonList.get(24).getCentroidIdx()).getY() + "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM");
     }
 
     @Override
@@ -249,35 +219,25 @@ public class CustomMesh extends MeshADT{
         ArrayList<ArrayList<Integer>> list = new ArrayList<>();
         int squareCounter = 0;
         int rowCounter = 0;
-        ArrayList<Integer> neighbours;
         for(int i = 0; i < (polygonList.size()); i++){
             list.add(new ArrayList<>());
-            neighbours = new ArrayList<>();
-
 
             if(rowCounter == 0){
 
                 if(squareCounter == 0){
                     list.get(i).add(i+1);
-                    neighbours.add(i+1);
                     list.get(i).add(i+((width/square_size)));
-                    neighbours.add(i+((width/square_size)));
                     squareCounter++;
                 }
                 else if (squareCounter < (width/square_size)-1){
                     list.get(i).add(i-1);
-                    neighbours.add(i-1);
                     list.get(i).add(i+1);
-                    neighbours.add(i+1);
                     list.get(i).add(i+((width/square_size)));
-                    neighbours.add(i+ ((width/square_size)));
                     squareCounter++;
                 }
                 else if(squareCounter == ((width/square_size)-1)){
                     list.get(i).add(i-1);
-                    neighbours.add(i - 1);
                     list.get(i).add(i+((width/square_size)));
-                    neighbours.add(i+ ((width/square_size)));
                     rowCounter++;
                     squareCounter = 0;
 
@@ -286,31 +246,21 @@ public class CustomMesh extends MeshADT{
             else if(rowCounter != ((width/square_size)-1)){
                 if(squareCounter == 0){
                     list.get(i).add(i- ((width/square_size)));
-                    neighbours.add(i- ((width/square_size)));
                     list.get(i).add(i+1);
-                    neighbours.add(i+1);
                     list.get(i).add(i+((width/square_size)));
-                    neighbours.add(i+ ((width/square_size)));
                     squareCounter++;
                 }
                 else if(squareCounter < (width/square_size)-1){
                     list.get(i).add(i- ((width/square_size)));
-                    neighbours.add(i- (width/square_size));
                     list.get(i).add(i-1);
-                    neighbours.add(i-1);
                     list.get(i).add(i+1);
-                    neighbours.add(i+1);
                     list.get(i).add(i+((width/square_size)));
-                    neighbours.add(i+ ((width/square_size)));
                     squareCounter++;
                 }
                 else{
                     list.get(i).add(i- ((width/square_size)));
-                    neighbours.add(i- ((width/square_size)));
                     list.get(i).add(i-1);
-                    neighbours.add(i-1);
                     list.get(i).add(i+((width/square_size)));
-                    neighbours.add(i+ ((width/square_size)));
 
                     squareCounter = 0;
                     rowCounter++;
@@ -319,31 +269,23 @@ public class CustomMesh extends MeshADT{
             else{
                 if(squareCounter == 0){
                     list.get(i).add(i- ((width/square_size)));
-                    neighbours.add(i- ((width/square_size)));
                     list.get(i).add(i+1);
-                    neighbours.add(i+1);
                     squareCounter++;
                 }
                 else if(squareCounter < ((width/square_size)-1)){
                     list.get(i).add(i- ((width/square_size)));
-                    neighbours.add(i- ((width/square_size)));
                     list.get(i).add(i-1);
-                    neighbours.add(i-1);
                     list.get(i).add(i+1);
-                    neighbours.add(i+1);
                     squareCounter++;
                 }
                 else{
                     list.get(i).add(i- ((width/square_size)));
-                    neighbours.add(i- ((width/square_size)));
                     list.get(i).add(i-1);
-                    neighbours.add(i-1);
                     squareCounter = 0;
                 }
 
             }
 
-            neighbours.clear();
         }
         return list;
     }

@@ -52,14 +52,12 @@ public class Main {
         Structs.Mesh myMesh;
         if(parser.hasOption("t")) {
             grid = Boolean.parseBoolean(parser.getOptionValue("t"));
-            if (parser.hasOption("d")) {
-                debugMode = true;
-            }
-            GraphicRenderer renderer = new GraphicRenderer();
-            renderer.render(aMesh, canvas, debugMode,grid );
-
-
         }
+        if (parser.hasOption("d")) {
+            debugMode = true;
+        }
+        GraphicRenderer renderer = new GraphicRenderer();
+        renderer.render(aMesh, canvas, debugMode,grid );
 
         // Storing the result in an SVG file
         SVGCanvas.write(canvas, output);
