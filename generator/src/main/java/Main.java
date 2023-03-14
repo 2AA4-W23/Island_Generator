@@ -1,4 +1,4 @@
-import ca.mcmaster.cas.se2aa4.a3.MeshADT.adt.Mesh;
+import ca.mcmaster.cas.se2aa4.a2.generator.adt.Mesh;
 import ca.mcmaster.cas.se2aa4.a2.generator.configuration.Configuration;
 import ca.mcmaster.cas.se2aa4.a2.generator.export.enricher.RandomEnricher;
 import ca.mcmaster.cas.se2aa4.a2.generator.export.Exporter;

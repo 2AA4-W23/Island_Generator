@@ -1,5 +1,6 @@
 package ca.mcmaster.cas.se2aa4.a3.MeshADT.adt;
 
+import ca.mcmaster.cas.se2aa4.a3.MeshADT.adt.neighborhoud.*;
 import ca.mcmaster.cas.se2aa4.a3.MeshADT.neighborhoud.Neighborhood;
 
 import java.util.HashSet;
@@ -34,6 +35,7 @@ public class Mesh implements Iterable<Polygon> {
             }
         }
     }
+
     @Override
     public String toString() {
         return "Mesh(" +width+"x"+height+","+polygons+")";
