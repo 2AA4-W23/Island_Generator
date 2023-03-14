@@ -1,9 +1,8 @@
-package ca.mcmaster.cas.se2aa4.a3.MeshADT.neighborhoud;
+package ca.mcmaster.cas.se2aa4.a2.generator.neighborhoud;
 
-
-
-import ca.mcmaster.cas.se2aa4.a3.MeshADT.adt.Polygon;
-import ca.mcmaster.cas.se2aa4.a3.MeshADT.adt.Vertex;
+import ca.mcmaster.cas.se2aa4.a2.generator.adt.Mesh;
+import ca.mcmaster.cas.se2aa4.a2.generator.adt.Polygon;
+import ca.mcmaster.cas.se2aa4.a2.generator.adt.Vertex;
 
 import java.util.HashMap;
 import java.util.HashSet;

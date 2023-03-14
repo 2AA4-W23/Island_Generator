@@ -1,7 +1,7 @@
-package ca.mcmaster.cas.se2aa4.a3.MeshADT.adt;
+package ca.mcmaster.cas.se2aa4.a2.generator.adt;
 
-import ca.mcmaster.cas.se2aa4.a3.MeshADT.adt.neighborhoud.*;
-import ca.mcmaster.cas.se2aa4.a3.MeshADT.neighborhoud.Neighborhood;
+import ca.mcmaster.cas.se2aa4.a2.generator.neighborhoud.DelaunayNeighbourhood;
+import ca.mcmaster.cas.se2aa4.a2.generator.neighborhoud.Neighborhood;
 
 import java.util.HashSet;
 import java.util.Iterator;
