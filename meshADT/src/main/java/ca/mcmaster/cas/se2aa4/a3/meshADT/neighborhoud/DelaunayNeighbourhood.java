@@ -1,4 +1,4 @@
-package ca.mcmaster.cas.se2aa4.a2.generator.neighborhoud;
+package ca.mcmaster.cas.se2aa4.a3.meshADT.neighborhoud;
 
 import ca.mcmaster.cas.se2aa4.a2.generator.PrecisionModel;
 import ca.mcmaster.cas.se2aa4.a2.generator.adt.Polygon;
@@ -7,7 +7,10 @@ import ca.mcmaster.cas.se2aa4.a2.generator.geomfilters.ExtractTriangles;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.triangulate.DelaunayTriangulationBuilder;
-import java.util.*;
+
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class DelaunayNeighbourhood extends Neighborhood {

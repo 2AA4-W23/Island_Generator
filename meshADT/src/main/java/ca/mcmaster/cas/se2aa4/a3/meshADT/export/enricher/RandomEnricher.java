@@ -1,6 +1,7 @@
-package ca.mcmaster.cas.se2aa4.a2.generator.export.enricher;
+package ca.mcmaster.cas.se2aa4.a3.meshADT.export.enricher;
 
 import ca.mcmaster.cas.se2aa4.a2.io.Structs;
+
 import java.util.Random;
 
 public class RandomEnricher implements Enricher {

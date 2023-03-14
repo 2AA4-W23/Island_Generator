@@ -1,28 +1,25 @@
-package ca.mcmaster.cas.se2aa4.a2.generator.specification;
+package ca.mcmaster.cas.se2aa4.a3.meshADT.specification;
 
 import ca.mcmaster.cas.se2aa4.a2.generator.adt.Mesh;
 import ca.mcmaster.cas.se2aa4.a2.generator.adt.Polygon;
 import ca.mcmaster.cas.se2aa4.a2.generator.adt.Vertex;
 import ca.mcmaster.cas.se2aa4.a2.generator.configuration.Configuration;
-import ca.mcmaster.cas.se2aa4.a2.generator.neighborhoud.DelaunayNeighbourhood;
 import ca.mcmaster.cas.se2aa4.a2.generator.neighborhoud.GridNeighborhood;
-
-import  ca.mcmaster.cas.se2aa4.a3.meshADT.adt.Mesh;
 
 import java.util.Map;
 
-public class GridSpecification implements Buildable {
+public class GridSpecificationLogic implements Buildable {
 
     private final int width, height, squareSize;
 
-    public GridSpecification(int width, int height, int squareSize) {
+    public GridSpecificationLogic(int width, int height, int squareSize) {
         checkSizeConstraint(width, height, squareSize);
         this.width = width;
         this.height = height;
         this.squareSize = squareSize;
     }
 
-    GridSpecification(Map<String, String> params) {
+    GridSpecificationLogic(Map<String, String> params) {
         this(Integer.parseInt(params.get(Configuration.WIDTH)),
                 Integer.parseInt(params.get(Configuration.HEIGHT)),
                 Integer.parseInt(params.get(Configuration.SIZE_SQUARES)));

@@ -1,4 +1,4 @@
-package ca.mcmaster.cas.se2aa4.a2.generator.geomfilters;
+package ca.mcmaster.cas.se2aa4.a3.meshADT.geomfilters;
 
 import ca.mcmaster.cas.se2aa4.a2.generator.adt.Vertex;
 import org.locationtech.jts.geom.Coordinate;

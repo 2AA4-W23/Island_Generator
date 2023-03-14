@@ -1,9 +1,8 @@
-package ca.mcmaster.cas.se2aa4.a2.generator.geomfilters;
+package ca.mcmaster.cas.se2aa4.a3.meshADT.geomfilters;
 
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.GeometryFilter;
-import ca.mcmaster.cas.se2aa4.a2.generator.adt.*;
 
 import java.util.Arrays;
 import java.util.HashSet;

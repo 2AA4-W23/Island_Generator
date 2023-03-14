@@ -1,4 +1,4 @@
-package ca.mcmaster.cas.se2aa4.a2.generator.adt;
+package ca.mcmaster.cas.se2aa4.a3.meshADT.adt;
 
 public interface Cropable<T> {
 
