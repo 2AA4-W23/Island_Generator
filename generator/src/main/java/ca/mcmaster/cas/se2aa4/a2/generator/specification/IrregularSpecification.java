@@ -9,7 +9,7 @@ import ca.mcmaster.cas.se2aa4.a2.generator.configuration.Configuration;
 import ca.mcmaster.cas.se2aa4.a2.generator.geomfilters.BoundingBox;
 import ca.mcmaster.cas.se2aa4.a2.generator.geomfilters.ExtractCentroids;
 import ca.mcmaster.cas.se2aa4.a2.generator.geomfilters.ToPolygons;
-import ca.mcmaster.cas.se2aa4.a3.MeshADT.neighborhoud.DelaunayNeighbourhood;
+import ca.mcmaster.cas.se2aa4.a2.generator.neighborhoud.DelaunayNeighbourhood;
 import org.locationtech.jts.geom.*;
 import org.locationtech.jts.triangulate.VoronoiDiagramBuilder;
 
