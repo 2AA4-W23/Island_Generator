@@ -1,7 +1,6 @@
-package ca.mcmaster.cas.se2aa4.a2.generator.adt;
+package ca.mcmaster.cas.se2aa4.a3.MeshADT.adt;
 
 import java.util.*;
-import java.util.Objects;
 
 public class Polygon implements Cropable<Polygon>, Iterable<Vertex> {
     private final List<Vertex> hull;
