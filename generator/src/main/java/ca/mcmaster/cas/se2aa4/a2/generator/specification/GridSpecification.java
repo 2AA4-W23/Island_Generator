@@ -7,8 +7,6 @@ import ca.mcmaster.cas.se2aa4.a2.generator.configuration.Configuration;
 import ca.mcmaster.cas.se2aa4.a2.generator.neighborhoud.DelaunayNeighbourhood;
 import ca.mcmaster.cas.se2aa4.a2.generator.neighborhoud.GridNeighborhood;
 
-import  ca.mcmaster.cas.se2aa4.a3.meshADT.adt.Mesh;
-
 import java.util.Map;
 
 public class GridSpecification implements Buildable {

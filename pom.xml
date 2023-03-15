@@ -17,7 +17,6 @@
         <module>io</module>
         <module>visualizer</module>
 		<module>island</module>
-        <module>meshADT</module>
 	</modules>
 
     <properties>

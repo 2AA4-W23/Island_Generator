@@ -1,4 +1,4 @@
-package ca.mcmaster.cas.se2aa4.a3.meshADT.neighborhoud;
+package ca.mcmaster.cas.se2aa4.a2.generator.neighborhoud;
 
 import ca.mcmaster.cas.se2aa4.a2.generator.adt.Polygon;
 import ca.mcmaster.cas.se2aa4.a2.generator.adt.Vertex;

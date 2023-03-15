@@ -1,4 +1,4 @@
-package ca.mcmaster.cas.se2aa4.a3.meshADT.adt;
+package ca.mcmaster.cas.se2aa4.a2.generator.adt;
 
 import java.util.Objects;
 
