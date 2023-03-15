@@ -30,6 +30,7 @@ public class GraphicRenderer implements Renderer {
     }
 
     private void drawAPolygon(Structs.Polygon p, Mesh aMesh, Graphics2D canvas) {
+        System.out.println(aMesh.getPolygonsList() +"mmmmm");
         Hull hull = new Hull();
         for(Integer segmentIdx: p.getSegmentIdxsList()) {
             hull.add(aMesh.getSegments(segmentIdx), aMesh);
