@@ -1,17 +1,14 @@
 package ca.mcmaster.cas.se2aa4.a3.meshADT.specification;
 
-import ca.mcmaster.cas.se2aa4.a3.meshADT.PrecisionModel;
-import ca.mcmaster.cas.se2aa4.a3.meshADT.adt.Mesh;
-import ca.mcmaster.cas.se2aa4.a3.meshADT.adt.Polygon;
-import ca.mcmaster.cas.se2aa4.a3.meshADT.configuration.Configuration;
-import ca.mcmaster.cas.se2aa4.a3.meshADT.geomfilters.BoundingBox;
-import ca.mcmaster.cas.se2aa4.a3.meshADT.geomfilters.ExtractCentroids;
-import ca.mcmaster.cas.se2aa4.a3.meshADT.geomfilters.ToPolygons;
-import ca.mcmaster.cas.se2aa4.a3.meshADT.neighborhoud.DelaunayNeighbourhood;
-import org.locationtech.jts.geom.Coordinate;
-import org.locationtech.jts.geom.Geometry;
-import org.locationtech.jts.geom.GeometryCollection;
+import ca.mcmaster.cas.se2aa4.a2.generator.PrecisionModel;
+import ca.mcmaster.cas.se2aa4.a2.generator.adt.Polygon;
+import ca.mcmaster.cas.se2aa4.a2.generator.configuration.Configuration;
+import ca.mcmaster.cas.se2aa4.a2.generator.geomfilters.BoundingBox;
+import ca.mcmaster.cas.se2aa4.a2.generator.geomfilters.ExtractCentroids;
+import ca.mcmaster.cas.se2aa4.a2.generator.geomfilters.ToPolygons;
+import ca.mcmaster.cas.se2aa4.a2.generator.neighborhoud.DelaunayNeighbourhood;
 import org.locationtech.jts.triangulate.VoronoiDiagramBuilder;
+
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Random;

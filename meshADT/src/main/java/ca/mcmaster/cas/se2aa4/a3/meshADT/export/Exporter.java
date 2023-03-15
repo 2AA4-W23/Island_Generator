@@ -1,11 +1,5 @@
 package ca.mcmaster.cas.se2aa4.a3.meshADT.export;
 
-import ca.mcmaster.cas.se2aa4.a2.io.Structs;
-import ca.mcmaster.cas.se2aa4.a3.meshADT.adt.Mesh;
-import ca.mcmaster.cas.se2aa4.a3.meshADT.adt.PairOfVertex;
-import ca.mcmaster.cas.se2aa4.a3.meshADT.adt.Polygon;
-import ca.mcmaster.cas.se2aa4.a3.meshADT.adt.Vertex;
-
 import java.util.*;
 
 public class Exporter {

@@ -1,7 +1,7 @@
 package ca.mcmaster.cas.se2aa4.a3.meshADT.specification;
 
 
-import ca.mcmaster.cas.se2aa4.a3.meshADT.configuration.Configuration;
+import ca.mcmaster.cas.se2aa4.a2.generator.configuration.Configuration;
 
 import java.util.HashMap;
 import java.util.Map;
