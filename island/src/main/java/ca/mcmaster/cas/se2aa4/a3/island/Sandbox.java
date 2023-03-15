@@ -20,6 +20,7 @@ public class Sandbox {
         List vertices = new List();
 
         Mesh tempMesh = mesh;
+        int counter = 0;
 
         for(Vertex v: mesh.getVerticesList()){
             xcenter += v.getX();
@@ -33,30 +34,68 @@ public class Sandbox {
         double distance = 0;
 
         ArrayList<Polygon> temp = new ArrayList<>();
+        ArrayList<String> type = new ArrayList<>();
+
+
+
 
         for(Polygon p: mesh.getPolygonsList()){
+
            pCenterx = mesh.getVerticesList().get(p.getCentroidIdx()).getX();
            pCentery = mesh.getVerticesList().get(p.getCentroidIdx()).getY();
 
            distance = Math.sqrt(Math.pow(pCenterx - xcenter, 2) + Math.pow(pCentery - ycenter, 2));
 
-           if(distance < 250.0){
+            //LAND (GREEN)
+           if(distance < 500.0 && distance > 300){
                int red = 51;
                int green = 153;
                int blue = 51;
+               type.add("land");
                String colorCode = red + "," + green + "," + blue;
-               Structs.Property color = Structs.Property.newBuilder().setKey("rgba_color").setValue(colorCode).build();
-               temp.add(Polygon.newBuilder(p).addProperties(color).build());
+               Structs.Property color = Structs.Property.newBuilder().setKey("rgb_color").setValue(colorCode).build();
+
+               temp.add(Polygon.newBuilder(p).clearProperties().addProperties(color).build());
            }
+           //LAGOON (LIGHT BLUE)
+           else if(distance < 300){
+               int red = 70;
+               int green = 160;
+               int blue = 180;
+               type.add("lagoon");
+               String colorCode = red + "," + green + "," + blue;
+               Structs.Property color = Structs.Property.newBuilder().setKey("rgb_color").setValue(colorCode).build();
+               temp.add(Polygon.newBuilder(p).clearProperties().addProperties(color).build());
+           }
+           //OCEAN (DARK BLUE)
            else{
                int red = 70;
-               int green = 130;
+               int green = 90;
                int blue = 180;
+               type.add("ocean");
                String colorCode = red + "," + green + "," + blue;
-               Structs.Property color = Structs.Property.newBuilder().setKey("rgba_color").setValue(colorCode).build();
-               temp.add(Polygon.newBuilder(p).addProperties(color).build());
+               Structs.Property color = Structs.Property.newBuilder().setKey("rgb_color").setValue(colorCode).build();
+               temp.add(Polygon.newBuilder(p).clearProperties().addProperties(color).build());
+
            }
 
+        }
+        for(Polygon p: mesh.getPolygonsList()){
+            if(!(type.get(mesh.getPolygonsList().indexOf(p)).equals("lagoon") || type.get(mesh.getPolygonsList().indexOf(p)).equals("ocean"))){
+                for(int i: p.getNeighborIdxsList()){
+                    if(type.get(i).equals("lagoon") || type.get(i).equals("ocean")){
+                        System.out.println(type);
+                        int red = 180;
+                        int green = 156;
+                        int blue = 70;
+                        type.set(mesh.getPolygonsList().indexOf(p), "beach");
+                        String colorCode = red + "," + green + "," + blue;
+                        Structs.Property color = Structs.Property.newBuilder().setKey("rgb_color").setValue(colorCode).build();
+                        temp.set(mesh.getPolygonsList().indexOf(p), Polygon.newBuilder(p).clearProperties().addProperties(color).build());
+                        break;
+                    }
+                }
+            }
         }
        return finalizeMesh(tempMesh, temp);
     }
