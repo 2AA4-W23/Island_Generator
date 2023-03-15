@@ -1,10 +1,11 @@
 package ca.mcmaster.cas.se2aa4.a3.meshADT.specification;
 
-import ca.mcmaster.cas.se2aa4.a2.generator.adt.Mesh;
-import ca.mcmaster.cas.se2aa4.a2.generator.adt.Polygon;
-import ca.mcmaster.cas.se2aa4.a2.generator.adt.Vertex;
-import ca.mcmaster.cas.se2aa4.a2.generator.configuration.Configuration;
-import ca.mcmaster.cas.se2aa4.a2.generator.neighborhoud.GridNeighborhood;
+
+import ca.mcmaster.cas.se2aa4.a3.meshADT.adt.Mesh;
+import ca.mcmaster.cas.se2aa4.a3.meshADT.adt.Polygon;
+import ca.mcmaster.cas.se2aa4.a3.meshADT.adt.Vertex;
+import ca.mcmaster.cas.se2aa4.a3.meshADT.configuration.Configuration;
+import ca.mcmaster.cas.se2aa4.a3.meshADT.neighborhoud.GridNeighborhood;
 
 import java.util.Map;
 

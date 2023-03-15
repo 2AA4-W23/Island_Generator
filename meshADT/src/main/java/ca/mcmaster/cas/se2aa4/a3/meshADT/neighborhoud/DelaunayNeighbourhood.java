@@ -1,9 +1,10 @@
 package ca.mcmaster.cas.se2aa4.a3.meshADT.neighborhoud;
 
-import ca.mcmaster.cas.se2aa4.a2.generator.PrecisionModel;
-import ca.mcmaster.cas.se2aa4.a2.generator.adt.Polygon;
-import ca.mcmaster.cas.se2aa4.a2.generator.adt.Vertex;
-import ca.mcmaster.cas.se2aa4.a2.generator.geomfilters.ExtractTriangles;
+
+import ca.mcmaster.cas.se2aa4.a3.meshADT.PrecisionModel;
+import ca.mcmaster.cas.se2aa4.a3.meshADT.adt.Polygon;
+import ca.mcmaster.cas.se2aa4.a3.meshADT.adt.Vertex;
+import ca.mcmaster.cas.se2aa4.a3.meshADT.geomfilters.ExtractTriangles;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.triangulate.DelaunayTriangulationBuilder;
