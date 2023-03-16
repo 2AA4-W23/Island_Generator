@@ -107,6 +107,7 @@ public class IslandGenerator {
 
 
 
+/*
 
 
 public Mesh generateSquareIsland(Mesh mesh){
@@ -169,6 +170,7 @@ public Mesh generateSquareIsland(Mesh mesh){
             }
         }
     }
+*/
 
         return finalizeMesh(tempMesh, temp);
     }
