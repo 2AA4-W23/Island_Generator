@@ -9,6 +9,7 @@ public class Configuration {
 
     public static final String INPUT = "i";
     public static final String OUTPUT = "o";
+    public static final String SHAPE = "s";
     public static final String HELP = "help";
 
     private CommandLine cli;
@@ -48,12 +49,16 @@ public class Configuration {
     public String input() {
         return this.cli.getOptionValue(INPUT);
     }
+    public String shape() {
+        return this.cli.getOptionValue(SHAPE);
+    }
 
 
     private Options options() {
         Options options = new Options();
         options.addOption(new Option(INPUT, true, "Input file (SVG)"));
         options.addOption(new Option(OUTPUT, true, "Output file name"));
+        options.addOption(new Option(SHAPE, true, "Shape of island to be generated"));
         // Global help
         options.addOption(new Option(HELP, false, "print help message"));
         return options;
