@@ -1,21 +1,14 @@
 package ca.mcmaster.cas.se2aa4.a3.island.shapes;
 
 import ca.mcmaster.cas.se2aa4.a2.io.Structs;
+import ca.mcmaster.cas.se2aa4.a3.island.IslandGenerator;
+import ca.mcmaster.cas.se2aa4.a3.island.tiles.Land;
 
 import java.util.ArrayList;
 
 public class CircleIsland {
 
-    public static ArrayList<Structs.Polygon> generateCircleIsland(Structs.Mesh mesh) {
-        double xcenter = 0;
-        double ycenter = 0;
-
-        for (Structs.Vertex v : mesh.getVerticesList()) {
-            xcenter += v.getX();
-            ycenter += v.getY();
-        }
-        xcenter = xcenter / mesh.getVerticesCount();
-        ycenter = ycenter / mesh.getVerticesCount();
+    public static ArrayList<Structs.Polygon> generateCircleIsland(Structs.Mesh mesh, double xcenter, double ycenter) {
 
         double pCenterx = 0;
         double pCentery = 0;
@@ -33,32 +26,21 @@ public class CircleIsland {
 
             //LAND (GREEN)
             if (distance < 500.0 && distance > 300) {
-                int red = 51;
-                int green = 153;
-                int blue = 51;
                 type.add("land");
-                String colorCode = red + "," + green + "," + blue;
-                Structs.Property color = Structs.Property.newBuilder().setKey("rgb_color").setValue(colorCode).build();
-
-                temp.add(Structs.Polygon.newBuilder(p).clearProperties().addProperties(color).build());
+                Land land = new Land();
+                temp.add(Structs.Polygon.newBuilder(p).clearProperties().addProperties(land.setColourCode()).build());
             }
             //LAGOON (LIGHT BLUE)
             else if (distance < 300) {
-                int red = 70;
-                int green = 160;
-                int blue = 180;
                 type.add("lagoon");
-                String colorCode = red + "," + green + "," + blue;
+                String colorCode = IslandGenerator.setColourProperties("lagoon");
                 Structs.Property color = Structs.Property.newBuilder().setKey("rgb_color").setValue(colorCode).build();
                 temp.add(Structs.Polygon.newBuilder(p).clearProperties().addProperties(color).build());
             }
             //OCEAN (DARK BLUE)
             else {
-                int red = 70;
-                int green = 90;
-                int blue = 180;
                 type.add("ocean");
-                String colorCode = red + "," + green + "," + blue;
+                String colorCode = IslandGenerator.setColourProperties("ocean");
                 Structs.Property color = Structs.Property.newBuilder().setKey("rgb_color").setValue(colorCode).build();
                 temp.add(Structs.Polygon.newBuilder(p).clearProperties().addProperties(color).build());
 
@@ -69,12 +51,8 @@ public class CircleIsland {
             if (!(type.get(mesh.getPolygonsList().indexOf(p)).equals("lagoon") || type.get(mesh.getPolygonsList().indexOf(p)).equals("ocean"))) {
                 for (int i : p.getNeighborIdxsList()) {
                     if (type.get(i).equals("lagoon") || type.get(i).equals("ocean")) {
-                        System.out.println(type);
-                        int red = 180;
-                        int green = 156;
-                        int blue = 70;
                         type.set(mesh.getPolygonsList().indexOf(p), "beach");
-                        String colorCode = red + "," + green + "," + blue;
+                        String colorCode = IslandGenerator.setColourProperties("beach");
                         Structs.Property color = Structs.Property.newBuilder().setKey("rgb_color").setValue(colorCode).build();
                         temp.set(mesh.getPolygonsList().indexOf(p), Structs.Polygon.newBuilder(p).clearProperties().addProperties(color).build());
                         break;

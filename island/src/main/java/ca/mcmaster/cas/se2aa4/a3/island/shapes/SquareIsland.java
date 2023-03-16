@@ -7,19 +7,7 @@ import java.util.ArrayList;
 public class SquareIsland {
 
 
-    public Structs.Mesh generateSquareIsland(Structs.Mesh mesh) {
-        System.out.println("hellooooo");
-        double xcenter = 0;
-        double ycenter = 0;
-
-        Structs.Mesh tempMesh = mesh;
-
-        for (Structs.Vertex v : mesh.getVerticesList()) {
-            xcenter += v.getX();
-            ycenter += v.getY();
-        }
-        xcenter = xcenter / mesh.getVerticesCount();
-        ycenter = ycenter / mesh.getVerticesCount();
+    public static ArrayList<Structs.Polygon> generateSquareIsland(Structs.Mesh mesh, double xcenter, double ycenter) {
 
         ArrayList<Structs.Polygon> temp = new ArrayList<>();
         ArrayList<String> type = new ArrayList<>();
@@ -68,6 +56,6 @@ public class SquareIsland {
             }
         }
 
-
+        return temp;
     }
 }
