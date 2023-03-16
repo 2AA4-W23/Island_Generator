@@ -14,7 +14,6 @@ public class SpecificationFactory {
         bindings.put("grid", GridSpecification.class);
         bindings.put("irregular", IrregularSpecification.class);
     }
-
     public static Buildable create(Configuration configuration) {
         Map<String, String> options = configuration.export();
         // This code can be simplified with a switch case over the kind of mesh
@@ -25,5 +24,4 @@ public class SpecificationFactory {
             throw new IllegalArgumentException(e);
         }
     }
-
 }
