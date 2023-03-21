@@ -2,7 +2,10 @@ package ca.mcmaster.cas.se2aa4.a3.island.shapes;
 
 import ca.mcmaster.cas.se2aa4.a2.io.Structs;
 import ca.mcmaster.cas.se2aa4.a3.island.IslandGenerator;
+import ca.mcmaster.cas.se2aa4.a3.island.tiles.Beach;
+import ca.mcmaster.cas.se2aa4.a3.island.tiles.Lagoon;
 import ca.mcmaster.cas.se2aa4.a3.island.tiles.Land;
+import ca.mcmaster.cas.se2aa4.a3.island.tiles.Ocean;
 
 import java.util.ArrayList;
 
@@ -33,16 +36,14 @@ public class CircleIsland {
             //LAGOON (LIGHT BLUE)
             else if (distance < 300) {
                 type.add("lagoon");
-                String colorCode = IslandGenerator.setColourProperties("lagoon");
-                Structs.Property color = Structs.Property.newBuilder().setKey("rgb_color").setValue(colorCode).build();
-                temp.add(Structs.Polygon.newBuilder(p).clearProperties().addProperties(color).build());
+                Lagoon lagoon = new Lagoon();
+                temp.add(Structs.Polygon.newBuilder(p).clearProperties().addProperties(lagoon.setColourCode()).build());
             }
             //OCEAN (DARK BLUE)
             else {
                 type.add("ocean");
-                String colorCode = IslandGenerator.setColourProperties("ocean");
-                Structs.Property color = Structs.Property.newBuilder().setKey("rgb_color").setValue(colorCode).build();
-                temp.add(Structs.Polygon.newBuilder(p).clearProperties().addProperties(color).build());
+                Ocean ocean = new Ocean();
+                temp.add(Structs.Polygon.newBuilder(p).clearProperties().addProperties(ocean.setColourCode()).build());
 
             }
 
@@ -52,9 +53,8 @@ public class CircleIsland {
                 for (int i : p.getNeighborIdxsList()) {
                     if (type.get(i).equals("lagoon") || type.get(i).equals("ocean")) {
                         type.set(mesh.getPolygonsList().indexOf(p), "beach");
-                        String colorCode = IslandGenerator.setColourProperties("beach");
-                        Structs.Property color = Structs.Property.newBuilder().setKey("rgb_color").setValue(colorCode).build();
-                        temp.set(mesh.getPolygonsList().indexOf(p), Structs.Polygon.newBuilder(p).clearProperties().addProperties(color).build());
+                        Beach beach = new Beach();
+                        temp.set(mesh.getPolygonsList().indexOf(p), Structs.Polygon.newBuilder(p).clearProperties().addProperties(beach.setColourCode()).build());
                         break;
                     }
                 }
