@@ -2,6 +2,7 @@ package ca.mcmaster.cas.se2aa4.a3.island.shapes;
 
 import ca.mcmaster.cas.se2aa4.a2.io.Structs;
 import ca.mcmaster.cas.se2aa4.a3.island.IslandGenerator;
+import ca.mcmaster.cas.se2aa4.a3.island.extentionpoints.Lakes;
 import ca.mcmaster.cas.se2aa4.a3.island.tiles.Beach;
 import ca.mcmaster.cas.se2aa4.a3.island.tiles.Lagoon;
 import ca.mcmaster.cas.se2aa4.a3.island.tiles.Land;
@@ -75,6 +76,7 @@ public class CircleIsland {
                 }
             }
         }
+        temp = Lakes.generateLakes(mesh,temp,type,5);
         return temp;
     }
 }
