@@ -9,9 +9,10 @@ public class Main {
         Configuration config = new Configuration(args);
         Structs.Mesh aMesh = new MeshFactory().read(config.input());
         String shape = config.shape();
+        Boolean lagoon = config.lagoon();
        // System.out.println(aMesh.getPolygonsList() + " oooooooooooo");
         IslandGenerator islandGenerator = new IslandGenerator();
-        Structs.Mesh islandMesh = islandGenerator.generateIsland(aMesh, shape);
+        Structs.Mesh islandMesh = islandGenerator.generateIsland(aMesh, shape, lagoon);
       //  System.out.println(islandMesh.getPolygonsList() + "iiiiiiiiiii");
         new MeshFactory().write(islandMesh, config.export(Configuration.OUTPUT));
     }

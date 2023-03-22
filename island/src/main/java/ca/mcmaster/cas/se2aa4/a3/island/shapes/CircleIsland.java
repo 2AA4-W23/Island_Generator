@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class CircleIsland {
 
-    public static ArrayList<Structs.Polygon> generateCircleIsland(Structs.Mesh mesh, double xcenter, double ycenter) {
+    public static ArrayList<Structs.Polygon> generateCircleIsland(Structs.Mesh mesh, double xcenter, double ycenter, boolean isLagoon) {
 
         double pCenterx = 0;
         double pCentery = 0;
@@ -26,25 +26,40 @@ public class CircleIsland {
             pCentery = mesh.getVerticesList().get(p.getCentroidIdx()).getY();
 
             distance = Math.sqrt(Math.pow(pCenterx - xcenter, 2) + Math.pow(pCentery - ycenter, 2));
+            if(isLagoon) {
+                //LAND (GREEN)
+                if (distance < 500.0 && distance > 300) {
+                    type.add("land");
+                    Land land = new Land();
+                    temp.add(Structs.Polygon.newBuilder(p).clearProperties().addProperties(land.setColourCode()).build());
+                }
+                //LAGOON (LIGHT BLUE)
+                else if (distance < 300) {
+                    type.add("lagoon");
+                    Lagoon lagoon = new Lagoon();
+                    temp.add(Structs.Polygon.newBuilder(p).clearProperties().addProperties(lagoon.setColourCode()).build());
+                }
+                //OCEAN (DARK BLUE)
+                else {
+                    type.add("ocean");
+                    Ocean ocean = new Ocean();
+                    temp.add(Structs.Polygon.newBuilder(p).clearProperties().addProperties(ocean.setColourCode()).build());
 
-            //LAND (GREEN)
-            if (distance < 500.0 && distance > 300) {
-                type.add("land");
-                Land land = new Land();
-                temp.add(Structs.Polygon.newBuilder(p).clearProperties().addProperties(land.setColourCode()).build());
+                }
             }
-            //LAGOON (LIGHT BLUE)
-            else if (distance < 300) {
-                type.add("lagoon");
-                Lagoon lagoon = new Lagoon();
-                temp.add(Structs.Polygon.newBuilder(p).clearProperties().addProperties(lagoon.setColourCode()).build());
-            }
-            //OCEAN (DARK BLUE)
-            else {
-                type.add("ocean");
-                Ocean ocean = new Ocean();
-                temp.add(Structs.Polygon.newBuilder(p).clearProperties().addProperties(ocean.setColourCode()).build());
+            else{
+                if (distance < 500.0) {
+                    type.add("land");
+                    Land land = new Land();
+                    temp.add(Structs.Polygon.newBuilder(p).clearProperties().addProperties(land.setColourCode()).build());
+                }
+                //OCEAN (DARK BLUE)
+                else {
+                    type.add("ocean");
+                    Ocean ocean = new Ocean();
+                    temp.add(Structs.Polygon.newBuilder(p).clearProperties().addProperties(ocean.setColourCode()).build());
 
+                }
             }
 
         }

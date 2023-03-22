@@ -11,6 +11,7 @@ public class Configuration {
     public static final String OUTPUT = "o";
     public static final String SHAPE = "s";
     public static final String RIVERS = "rivers";
+    public static final String LAGOON = "lagoon";
     public static final String HELP = "help";
 
     private CommandLine cli;
@@ -53,6 +54,12 @@ public class Configuration {
     public String shape() {
         return this.cli.getOptionValue(SHAPE);
     }
+    public boolean lagoon(){
+        return this.cli.hasOption(LAGOON);
+    }
+    public int rivers() {
+        return Integer.valueOf(this.cli.getOptionValue(RIVERS));
+    }
 
 
     private Options options() {
@@ -61,6 +68,7 @@ public class Configuration {
         options.addOption(new Option(OUTPUT, true, "Output file name"));
         options.addOption(new Option(SHAPE, true, "Shape of island to be generated"));
         options.addOption(new Option(RIVERS, true, "Amount of rivers to ve generated"));
+        options.addOption(new Option(LAGOON, false, "Whether or not island should be a lagoon island"));
         // Global help
         options.addOption(new Option(HELP, false, "print help message"));
         return options;
