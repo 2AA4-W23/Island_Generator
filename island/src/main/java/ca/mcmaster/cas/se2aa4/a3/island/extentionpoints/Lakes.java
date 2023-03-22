@@ -21,10 +21,10 @@ public class Lakes {
                 }
             }
 
-            Polygon p = temp.get(rand);
-         //   type.set(mesh.getPolygonsList().indexOf(p), "lake");
-          //  Lake lake = new Lake();
-          //  temp.set(mesh.getPolygonsList().indexOf(p), Structs.Polygon.newBuilder(p).clearProperties().addProperties(lake.setColourCode()).build());
+            Polygon p = mesh.getPolygonsList().get(rand);
+            type.set(mesh.getPolygonsList().indexOf(p), "lake");
+            Lake lake = new Lake();
+            temp.set(mesh.getPolygonsList().indexOf(p), Structs.Polygon.newBuilder(p).clearProperties().addProperties(lake.setColourCode()).build());
             int lakeSize = (int) (Math.random() * p.getNeighborIdxsCount());
             int lakeCounter = 0;
             do {

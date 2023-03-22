@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class CircleIsland {
 
-    public static ArrayList<Structs.Polygon> generateCircleIsland(Structs.Mesh mesh, double xcenter, double ycenter, boolean isLagoon) {
+    public static ArrayList<Structs.Polygon> generateCircleIsland(Structs.Mesh mesh, double xcenter, double ycenter, boolean isLagoon, int lakes) {
 
         double pCenterx = 0;
         double pCentery = 0;
@@ -76,7 +76,7 @@ public class CircleIsland {
                 }
             }
         }
-        temp = Lakes.generateLakes(mesh,temp,type,5);
+        temp = Lakes.generateLakes(mesh,temp,type,lakes);
         return temp;
     }
 }

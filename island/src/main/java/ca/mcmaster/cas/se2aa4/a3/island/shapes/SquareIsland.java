@@ -1,13 +1,14 @@
 package ca.mcmaster.cas.se2aa4.a3.island.shapes;
 
 import ca.mcmaster.cas.se2aa4.a2.io.Structs;
+import ca.mcmaster.cas.se2aa4.a3.island.extentionpoints.Lakes;
 
 import java.util.ArrayList;
 
 public class SquareIsland {
 
 
-    public static ArrayList<Structs.Polygon> generateSquareIsland(Structs.Mesh mesh, double xcenter, double ycenter) {
+    public static ArrayList<Structs.Polygon> generateSquareIsland(Structs.Mesh mesh, double xcenter, double ycenter, int lakes) {
 
         ArrayList<Structs.Polygon> temp = new ArrayList<>();
         ArrayList<String> type = new ArrayList<>();
@@ -55,7 +56,7 @@ public class SquareIsland {
                 }
             }
         }
-
+        temp = Lakes.generateLakes(mesh,temp,type,lakes);
         return temp;
     }
 }

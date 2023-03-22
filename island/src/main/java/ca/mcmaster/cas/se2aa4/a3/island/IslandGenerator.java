@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class IslandGenerator {
 
-    public Mesh generateIsland(Mesh mesh, String shape, boolean lagoon){
+    public Mesh generateIsland(Mesh mesh, String shape, boolean lagoon, int lakes){
         Mesh tempMesh = mesh;
         double xcenter = 0;
         double ycenter = 0;
@@ -24,10 +24,10 @@ public class IslandGenerator {
         ycenter = ycenter / mesh.getVerticesCount();
 
         if(shape.equals("Circle") || shape.equals("circle")){
-            return(finalizeMesh(mesh, CircleIsland.generateCircleIsland(mesh, xcenter, ycenter, lagoon)));
+            return(finalizeMesh(mesh, CircleIsland.generateCircleIsland(mesh, xcenter, ycenter, lagoon, lakes)));
         }
         else{
-            return(finalizeMesh(mesh, SquareIsland.generateSquareIsland(mesh, xcenter, ycenter)));
+            return(finalizeMesh(mesh, SquareIsland.generateSquareIsland(mesh, xcenter, ycenter, lakes)));
         }
     }
     public Mesh finalizeMesh(Mesh tempMesh, ArrayList<Polygon> temp) {
