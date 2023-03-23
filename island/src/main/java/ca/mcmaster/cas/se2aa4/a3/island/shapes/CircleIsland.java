@@ -25,11 +25,13 @@ public class CircleIsland {
         this.tempSeg = new ArrayList<>();
     }
 
-    public void generateCircleIsland(Structs.Mesh mesh, double xcenter, double ycenter, boolean isLagoon, int numLakes, int numRivers) {
+    public void generateCircleIsland(Structs.Mesh mesh, double xcenter, double ycenter, boolean isLagoon, int numLakes, int numRivers, double minDimension) {
 
         double pCenterx = 0;
         double pCentery = 0;
         double distance = 0;
+
+        System.out.println(minDimension + " <<<<<<<<<<<<<<<<<<");
 
         for (Structs.Polygon p : mesh.getPolygonsList()) {
 
@@ -39,13 +41,13 @@ public class CircleIsland {
             distance = Math.sqrt(Math.pow(pCenterx - xcenter, 2) + Math.pow(pCentery - ycenter, 2));
             if(isLagoon) {
                 //LAND (GREEN)
-                if (distance < 500.0 && distance > 300) {
+                if (distance < (minDimension * 0.38) && distance > (minDimension * 0.13)) {
                     type.add("land");
                     Land land = new Land();
                     temp.add(Structs.Polygon.newBuilder(p).clearProperties().addProperties(land.setColourCode()).build());
                 }
                 //LAGOON (LIGHT BLUE)
-                else if (distance < 300) {
+                else if (distance < (minDimension * 0.13)) {
                     type.add("lagoon");
                     Lagoon lagoon = new Lagoon();
                     temp.add(Structs.Polygon.newBuilder(p).clearProperties().addProperties(lagoon.setColourCode()).build());
@@ -59,7 +61,7 @@ public class CircleIsland {
                 }
             }
             else{
-                if (distance < 500.0) {
+                if (distance < (minDimension * 0.38)) {
                     type.add("land");
                     Land land = new Land();
                     temp.add(Structs.Polygon.newBuilder(p).clearProperties().addProperties(land.setColourCode()).build());

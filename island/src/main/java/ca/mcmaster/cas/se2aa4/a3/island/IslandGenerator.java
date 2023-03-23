@@ -25,21 +25,28 @@ public class IslandGenerator {
         xcenter = xcenter / mesh.getVerticesCount();
         ycenter = ycenter / mesh.getVerticesCount();
 
+        double max_x = Double.MIN_VALUE;
+        double max_y = Double.MIN_VALUE;
+
+
+        for (Structs.Vertex v: mesh.getVerticesList()) {
+            max_x = (Double.compare(max_x, v.getX()) < 0? v.getX(): max_x);
+            max_y = (Double.compare(max_y, v.getY()) < 0? v.getY(): max_y);
+        }
+        double minDimension = Math.min(max_x, max_y);
+
         if(shape.equals("Circle") || shape.equals("circle")){
             CircleIsland circleIsland = new CircleIsland();
-            circleIsland.generateCircleIsland(mesh, xcenter, ycenter, lagoon, lakes, rivers);
+            circleIsland.generateCircleIsland(mesh, xcenter, ycenter, lagoon, lakes, rivers, minDimension);
             return(finalizeMesh(mesh, circleIsland.getTempMeshProperties(), circleIsland.getTempSeg()));
         }
         else{
             SquareIsland squareIsland = new SquareIsland();
-            squareIsland.generateSquareIsland(mesh, xcenter, ycenter, lakes, rivers);
+            squareIsland.generateSquareIsland(mesh, xcenter, ycenter, lakes, rivers, minDimension);
             return(finalizeMesh(mesh, squareIsland.getTempMeshProperties(), squareIsland.getTempSeg()));
         }
     }
     public Mesh finalizeMesh(Mesh tempMesh, ArrayList<Polygon> temp, ArrayList<Segment> tempSeg) {
-        System.out.println(tempSeg);
-        System.out.println("______________");
-        System.out.println(temp);
         return Mesh.newBuilder().addAllVertices(tempMesh.getVerticesList()).addAllSegments(tempSeg).addAllPolygons(temp).build();
     }
 }
