@@ -8,16 +8,18 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class SquareIsland {
+    private ArrayList<Structs.Polygon> temp;
+    private ArrayList<String> type;
+    private ArrayList<Structs.Segment> tempSeg;
+
+    public SquareIsland(){
+        this.temp = new ArrayList<>();
+        this.type = new ArrayList<>();
+        this.tempSeg = new ArrayList<>();
+    }
 
 
-    public static HashMap<ArrayList<Structs.Polygon>,ArrayList<Structs.Segment>>  generateSquareIsland(Structs.Mesh mesh, double xcenter, double ycenter, int lakes, int rivers) {
-
-        ArrayList<Structs.Polygon> temp = new ArrayList<>();
-        ArrayList<Structs.Segment> tempSeg = new ArrayList<>();
-        ArrayList<String> type = new ArrayList<>();
-
-        HashMap<ArrayList<Structs.Polygon>,ArrayList<Structs.Segment>> values = new HashMap<>();
-
+    public void  generateSquareIsland(Structs.Mesh mesh, double xcenter, double ycenter, int numLakes, int numRivers) {
 
         for (Structs.Polygon p : mesh.getPolygonsList()) {
 
@@ -66,13 +68,26 @@ public class SquareIsland {
             tempSeg.add(s);
         }
 
-        if(lakes != 0) {
-            temp = Lakes.generateLakes(mesh, temp, type, lakes);
+        if(numLakes != 0) {
+            Lakes lakes = new Lakes(temp, type, numLakes);
+            lakes.generateLakes(mesh);
+            temp = lakes.getTempMeshProperties();
         }
-        if (rivers != 0){
-            tempSeg = Rivers.generateRivers(mesh, temp, type, rivers, tempSeg);
+        if (numRivers != 0){
+            Rivers rivers = new Rivers(temp,type,numRivers, tempSeg);
+            rivers.generateRivers(mesh);
+            temp = rivers.getTempMeshProperties();
+            tempSeg = rivers.getTempSeg();
+            type = rivers.getType();
         }
-        values.put(temp, tempSeg);
-        return values;
+    }
+    public ArrayList<Structs.Polygon> getTempMeshProperties(){
+        return this.temp;
+    }
+    public ArrayList<String> getType(){
+        return this.type;
+    }
+    public ArrayList<Structs.Segment> getTempSeg(){
+        return this.tempSeg;
     }
 }

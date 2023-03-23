@@ -26,12 +26,14 @@ public class IslandGenerator {
         ycenter = ycenter / mesh.getVerticesCount();
 
         if(shape.equals("Circle") || shape.equals("circle")){
-            HashMap<ArrayList<Polygon>,ArrayList<Segment>> circle = CircleIsland.generateCircleIsland(mesh, xcenter, ycenter, lagoon, lakes, rivers);
-            return(finalizeMesh(mesh, circle.keySet().stream().toList().get(0), circle.get(circle.keySet().stream().toList().get(0))));
+            CircleIsland circleIsland = new CircleIsland();
+            circleIsland.generateCircleIsland(mesh, xcenter, ycenter, lagoon, lakes, rivers);
+            return(finalizeMesh(mesh, circleIsland.getTempMeshProperties(), circleIsland.getTempSeg()));
         }
         else{
-            HashMap<ArrayList<Polygon>,ArrayList<Segment>> square = SquareIsland.generateSquareIsland(mesh, xcenter, ycenter, lakes, rivers);
-            return(finalizeMesh(mesh,square.keySet().stream().toList().get(0), square.get(square.keySet().stream().toList().get(0))));
+            SquareIsland squareIsland = new SquareIsland();
+            squareIsland.generateSquareIsland(mesh, xcenter, ycenter, lakes, rivers);
+            return(finalizeMesh(mesh, squareIsland.getTempMeshProperties(), squareIsland.getTempSeg()));
         }
     }
     public Mesh finalizeMesh(Mesh tempMesh, ArrayList<Polygon> temp, ArrayList<Segment> tempSeg) {

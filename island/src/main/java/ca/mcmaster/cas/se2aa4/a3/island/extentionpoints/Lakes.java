@@ -8,8 +8,17 @@ import ca.mcmaster.cas.se2aa4.a3.island.tiles.Lake;
 import java.util.ArrayList;
 
 public class Lakes {
+    private ArrayList<Structs.Polygon> temp;
+    private ArrayList<String> type;
+    private int numLakes;
 
-    public static ArrayList<Structs.Polygon> generateLakes(Structs.Mesh mesh, ArrayList<Structs.Polygon> temp, ArrayList<String> type, int numLakes){
+    public Lakes(ArrayList<Structs.Polygon> temp, ArrayList<String> type, int numLakes){
+        this.temp = temp;
+        this.type = type;
+        this.numLakes = numLakes;
+    }
+
+    public ArrayList<Structs.Polygon> generateLakes(Structs.Mesh mesh){
         for(int l = 0; l < numLakes; l++) {
             String tileType;
             int rand = 0;
@@ -39,5 +48,12 @@ public class Lakes {
             } while (lakeCounter < lakeSize);
         }
         return temp;
+    }
+
+    public ArrayList<Structs.Polygon> getTempMeshProperties(){
+        return this.temp;
+    }
+    public ArrayList<String> getType(){
+        return this.type;
     }
 }

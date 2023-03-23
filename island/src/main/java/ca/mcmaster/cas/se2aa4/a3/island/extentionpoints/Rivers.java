@@ -7,9 +7,19 @@ import ca.mcmaster.cas.se2aa4.a3.island.tiles.River;
 import java.util.ArrayList;
 
 public class Rivers {
-    public static ArrayList<Structs.Segment> generateRivers(Structs.Mesh mesh, ArrayList<Structs.Polygon> temp, ArrayList<String> type, int numRivers, ArrayList<Structs.Segment> tempSeg){
-        for(int l = 0; l < numRivers; l++) {
+    private ArrayList<Structs.Polygon> temp;
+    private ArrayList<String> type;
+    private int numRivers;
+    private ArrayList<Structs.Segment> tempSeg;
 
+    public Rivers(ArrayList<Structs.Polygon> temp, ArrayList<String> type, int numRivers, ArrayList<Structs.Segment> tempSeg){
+        this.temp = temp;
+        this.type = type;
+        this.numRivers = numRivers;
+        this.tempSeg = tempSeg;
+    }
+    public ArrayList<Structs.Segment> generateRivers(Structs.Mesh mesh){
+        for(int l = 0; l < numRivers; l++) {
             String tileType;
             int rand = 0;
             for(int r = 0; r < temp.size(); r++){
@@ -44,5 +54,14 @@ public class Rivers {
             tempSeg.set(mesh.getSegmentsList().indexOf(s), Structs.Segment.newBuilder(s).clearProperties().addProperties(newRiver.setColourCode()).build());
         }
         return tempSeg;
+    }
+    public ArrayList<Structs.Polygon> getTempMeshProperties(){
+        return this.temp;
+    }
+    public ArrayList<String> getType(){
+        return this.type;
+    }
+    public ArrayList<Structs.Segment> getTempSeg(){
+        return this.tempSeg;
     }
 }

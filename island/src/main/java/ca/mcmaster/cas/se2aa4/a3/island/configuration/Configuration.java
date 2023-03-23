@@ -59,7 +59,10 @@ public class Configuration {
         return this.cli.hasOption(LAGOON);
     }
     public int rivers() {
-        return Integer.valueOf(this.cli.getOptionValue(RIVERS));
+        if(cli.hasOption(RIVERS)) {
+            return Integer.valueOf(this.cli.getOptionValue(RIVERS));
+        }
+        return 0;
     }
     public int lakes() {
         if(cli.hasOption(LAKES)) {
