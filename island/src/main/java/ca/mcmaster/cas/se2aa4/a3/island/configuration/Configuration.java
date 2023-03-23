@@ -62,7 +62,10 @@ public class Configuration {
         return Integer.valueOf(this.cli.getOptionValue(RIVERS));
     }
     public int lakes() {
-        return Integer.valueOf(this.cli.getOptionValue(LAKES));
+        if(cli.hasOption(LAKES)) {
+            return Integer.valueOf(this.cli.getOptionValue(LAKES));
+        }
+        return 0;
     }
 
 

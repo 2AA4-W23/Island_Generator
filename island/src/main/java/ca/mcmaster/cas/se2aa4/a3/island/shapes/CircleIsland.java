@@ -76,7 +76,9 @@ public class CircleIsland {
                 }
             }
         }
-        temp = Lakes.generateLakes(mesh,temp,type,lakes);
+        if(lakes != 0) {
+            temp = Lakes.generateLakes(mesh, temp, type, lakes);
+        }
         return temp;
     }
 }
