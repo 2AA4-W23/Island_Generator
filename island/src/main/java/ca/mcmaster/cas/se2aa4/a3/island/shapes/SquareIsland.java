@@ -2,16 +2,22 @@ package ca.mcmaster.cas.se2aa4.a3.island.shapes;
 
 import ca.mcmaster.cas.se2aa4.a2.io.Structs;
 import ca.mcmaster.cas.se2aa4.a3.island.extentionpoints.Lakes;
+import ca.mcmaster.cas.se2aa4.a3.island.extentionpoints.Rivers;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class SquareIsland {
 
 
-    public static ArrayList<Structs.Polygon> generateSquareIsland(Structs.Mesh mesh, double xcenter, double ycenter, int lakes) {
+    public static HashMap<ArrayList<Structs.Polygon>,ArrayList<Structs.Segment>>  generateSquareIsland(Structs.Mesh mesh, double xcenter, double ycenter, int lakes, int rivers) {
 
         ArrayList<Structs.Polygon> temp = new ArrayList<>();
+        ArrayList<Structs.Segment> tempSeg = new ArrayList<>();
         ArrayList<String> type = new ArrayList<>();
+
+        HashMap<ArrayList<Structs.Polygon>,ArrayList<Structs.Segment>> values = new HashMap<>();
+
 
         for (Structs.Polygon p : mesh.getPolygonsList()) {
 
@@ -56,9 +62,17 @@ public class SquareIsland {
                 }
             }
         }
+        for(Structs.Segment s: mesh.getSegmentsList()){
+            tempSeg.add(s);
+        }
+
         if(lakes != 0) {
             temp = Lakes.generateLakes(mesh, temp, type, lakes);
         }
-        return temp;
+        if (rivers != 0){
+            tempSeg = Rivers.generateRivers(mesh, temp, type, rivers, tempSeg);
+        }
+        values.put(temp, tempSeg);
+        return values;
     }
 }

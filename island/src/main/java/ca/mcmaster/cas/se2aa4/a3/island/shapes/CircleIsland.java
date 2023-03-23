@@ -3,22 +3,28 @@ package ca.mcmaster.cas.se2aa4.a3.island.shapes;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs;
 import ca.mcmaster.cas.se2aa4.a3.island.IslandGenerator;
 import ca.mcmaster.cas.se2aa4.a3.island.extentionpoints.Lakes;
+import ca.mcmaster.cas.se2aa4.a3.island.extentionpoints.Rivers;
 import ca.mcmaster.cas.se2aa4.a3.island.tiles.Beach;
 import ca.mcmaster.cas.se2aa4.a3.island.tiles.Lagoon;
 import ca.mcmaster.cas.se2aa4.a3.island.tiles.Land;
 import ca.mcmaster.cas.se2aa4.a3.island.tiles.Ocean;
 
+import java.sql.Struct;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class CircleIsland {
 
-    public static ArrayList<Structs.Polygon> generateCircleIsland(Structs.Mesh mesh, double xcenter, double ycenter, boolean isLagoon, int lakes) {
+    public static HashMap<ArrayList<Structs.Polygon>,ArrayList<Structs.Segment>> generateCircleIsland(Structs.Mesh mesh, double xcenter, double ycenter, boolean isLagoon, int lakes, int rivers) {
 
         double pCenterx = 0;
         double pCentery = 0;
         double distance = 0;
 
+        HashMap<ArrayList<Structs.Polygon>,ArrayList<Structs.Segment>> values = new HashMap<>();
+
         ArrayList<Structs.Polygon> temp = new ArrayList<>();
+        ArrayList<Structs.Segment> tempSeg = new ArrayList<>();
         ArrayList<String> type = new ArrayList<>();
 
         for (Structs.Polygon p : mesh.getPolygonsList()) {
@@ -76,9 +82,17 @@ public class CircleIsland {
                 }
             }
         }
+       for(Structs.Segment s: mesh.getSegmentsList()){
+           tempSeg.add(s);
+       }
+
         if(lakes != 0) {
             temp = Lakes.generateLakes(mesh, temp, type, lakes);
         }
-        return temp;
+        if (rivers != 0){
+            tempSeg = Rivers.generateRivers(mesh, temp, type, rivers, tempSeg);
+        }
+        values.put(temp, tempSeg);
+        return values;
     }
 }
