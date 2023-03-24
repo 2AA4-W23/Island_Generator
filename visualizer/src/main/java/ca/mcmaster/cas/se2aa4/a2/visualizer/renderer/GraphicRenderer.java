@@ -60,12 +60,12 @@ public class GraphicRenderer implements Renderer {
             line = new Line2D.Double(aMesh.getVerticesList().get(s.getV1Idx()).getX(),aMesh.getVerticesList().get(s.getV1Idx()).getY(), aMesh.getVerticesList().get(s.getV2Idx()).getX(), aMesh.getVerticesList().get(s.getV2Idx()).getY());
             canvas.draw(line);
             Optional<Color> fill = new ColorProperty().extract(s.getPropertiesList());
+            Color old = canvas.getColor();
             if(fill.isPresent()) {
-                Color old = canvas.getColor();
                 canvas.setColor(fill.get());
-                canvas.fill(line);
-                canvas.setColor(old);
             }
+            canvas.draw(line);
+            canvas.setColor(old);
         }
     }
 
