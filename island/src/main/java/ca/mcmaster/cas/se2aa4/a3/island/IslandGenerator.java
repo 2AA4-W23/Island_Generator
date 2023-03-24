@@ -47,6 +47,7 @@ public class IslandGenerator {
         }
     }
     public Mesh finalizeMesh(Mesh tempMesh, ArrayList<Polygon> temp, ArrayList<Segment> tempSeg) {
+        System.out.println(tempSeg);
         return Mesh.newBuilder().addAllVertices(tempMesh.getVerticesList()).addAllSegments(tempSeg).addAllPolygons(temp).build();
     }
 }
