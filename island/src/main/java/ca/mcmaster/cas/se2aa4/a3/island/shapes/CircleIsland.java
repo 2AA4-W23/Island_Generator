@@ -2,8 +2,10 @@ package ca.mcmaster.cas.se2aa4.a3.island.shapes;
 
 import ca.mcmaster.cas.se2aa4.a2.io.Structs;
 import ca.mcmaster.cas.se2aa4.a3.island.IslandGenerator;
+import ca.mcmaster.cas.se2aa4.a3.island.elevationprofiles.MountainElevation;
 import ca.mcmaster.cas.se2aa4.a3.island.extentionpoints.Lakes;
 import ca.mcmaster.cas.se2aa4.a3.island.extentionpoints.Rivers;
+import ca.mcmaster.cas.se2aa4.a3.island.moisture.LandHumidity;
 import ca.mcmaster.cas.se2aa4.a3.island.tiles.Beach;
 import ca.mcmaster.cas.se2aa4.a3.island.tiles.Lagoon;
 import ca.mcmaster.cas.se2aa4.a3.island.tiles.Land;
@@ -18,6 +20,9 @@ public class CircleIsland {
     private ArrayList<Structs.Polygon> temp;
     private ArrayList<String> type;
     private ArrayList<Structs.Segment> tempSeg;
+    private ArrayList<Double> elevations;
+    private ArrayList<Double> humidity;
+
 
     public CircleIsland(){
         this.temp = new ArrayList<>();
@@ -105,6 +110,13 @@ public class CircleIsland {
             tempSeg = rivers.getTempSeg();
             type = rivers.getType();
         }
+        MountainElevation me = new MountainElevation();
+        me.computeElevations(mesh,type,xcenter,ycenter,minDimension);
+        this.elevations = me.getElevations();
+
+        LandHumidity lh = new LandHumidity(mesh);
+        lh.computeHumidity(mesh,type,minDimension);
+        this.humidity = lh.getHumidity();
     }
     public ArrayList<Structs.Polygon> getTempMeshProperties(){
         return this.temp;

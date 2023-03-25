@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class MountainElevation {
 
-    private ArrayList<Double> elevations ;
+    private ArrayList<Double> elevations;
 
     public MountainElevation(){
         this.elevations = new ArrayList<>();
@@ -24,25 +24,37 @@ public class MountainElevation {
                 distance = Math.sqrt(Math.pow(xCurrent - xcenter, 2) + Math.pow(yCurrent - ycenter, 2));
 
                 if(distance < (minDimension * 0.03)){
-                    elevations.set(count, 100.0);
+                    elevations.add(100.0);
                 }
-                else if(distance < (minDimension * 0.09)){
-                    elevations.set(count, 90.0);
+                else if(distance < (minDimension * 0.07)){
+                    elevations.add(90.0);
+                }
+                else if(distance < (minDimension * 0.11)){
+                    elevations.add(80.0);
                 }
                 else if(distance < (minDimension * 0.15)){
-                    elevations.set(count, 80.0);
+                    elevations.add(65.0);
                 }
-                else if(distance < (minDimension * 0.23)){
-                    elevations.set(count, 70.0);
+                else if(distance < (minDimension * 0.19)){
+                    elevations.add(50.0);
+                }
+                else if(distance < (minDimension * 0.24)){
+                    elevations.add(35.0);
                 }
                 else if(distance < (minDimension * 0.30)){
-                    elevations.set(count, 60.0);
+                    elevations.add(20.0);
+                }
+                else if(distance < (minDimension * 0.4)){
+                    elevations.add(10.0);
+                }
+                else{
+                    elevations.add(5.0);
                 }
 
-
             }
+            // ocean level elevation, which will always be 0
             else{
-                elevations.set(count, 0.0);
+                elevations.add(0.0);
             }
             count++;
         }
