@@ -15,4 +15,9 @@ public class River {
         Structs.Property color = Structs.Property.newBuilder().setKey("rgb_color").setValue(colorCode).build();
         return color;
     }
+
+    public Structs.Property addWeight(){
+        Structs.Property weight = Structs.Property.newBuilder().setKey("hasWeight").setValue("true").build();
+        return weight;
+    }
 }

@@ -20,7 +20,9 @@ public class Rivers {
     }
     public ArrayList<Structs.Segment> generateRivers(Structs.Mesh mesh){
         for(int l = 0; l < numRivers; l++) {
+
             String tileType;
+
             int rand = 0;
             for(int r = 0; r < temp.size(); r++){
                 rand = (int) (Math.random() * temp.size());
@@ -29,29 +31,40 @@ public class Rivers {
                     break;
                 }
             }
-            Structs.Polygon p = mesh.getPolygonsList().get(rand);
 
-            Structs.Segment s = mesh.getSegmentsList().get(p.getNeighborIdxsList().get( (int) (Math.random() * p.getNeighborIdxsCount())));
+            Structs.Polygon p = mesh.getPolygonsList().get(rand);
+            int seg = (int) (Math.random() * p.getNeighborIdxsCount());
+            Structs.Segment s = mesh.getSegmentsList().get(p.getSegmentIdxs(seg));
 
             River river = new River();
+            tempSeg.set(mesh.getSegmentsList().indexOf(s), Structs.Segment.newBuilder(s).clearProperties().addProperties(river.setColourCode()).build());
 
-           // tempSeg.set(mesh.getSegmentsList().indexOf(s), Structs.Segment.newBuilder(s).clearProperties().addProperties(river.setColourCode()).build());
+       //     int riverSize = (int) (Math.random() * 14);
 
-//            int riverSize = (int) (Math.random() * p.getNeighborIdxsCount());
-//            int riverCounter = 0;
-//            do {
-//                for (int i : p.getNeighborIdxsList()) {
-//                    if (type.get(i).equals("land")) {
-//                        River riverN = new River();
-//                        tempSeg.set(i, Structs.Segment.newBuilder(s).clearProperties().addProperties(riverN.setColourCode()).build());
-//                    }
-//                    riverCounter++;
-//                }
-//            } while (riverCounter < riverSize);
-        }
-        River newRiver = new River();
-        for(Structs.Segment s: tempSeg){
-            tempSeg.set(mesh.getSegmentsList().indexOf(s), Structs.Segment.newBuilder(s).clearProperties().addProperties(newRiver.setColourCode()).build());
+            Boolean land = true;
+       //     int riverCounter = 0;
+           Structs.Segment currentSegment = s;
+            int counter = 0;
+            do {
+                for (Structs.Segment segment : mesh.getSegmentsList()) {
+                    if (currentSegment.getV2Idx() == segment.getV1Idx() && land == true) {
+                        tempSeg.set(mesh.getSegmentsList().indexOf(segment), Structs.Segment.newBuilder(segment).clearProperties().addProperties(river.setColourCode()).build());
+                        currentSegment = segment;
+                        for(Structs.Polygon t: mesh.getPolygonsList() ){
+                            if(t.getSegmentIdxsList().contains(mesh.getSegmentsList().indexOf(currentSegment))){
+                                System.out.println(type.get(mesh.getPolygonsList().indexOf(t)));
+                                if(type.get(mesh.getPolygonsList().indexOf(t)).equals("ocean") || type.get(mesh.getPolygonsList().indexOf(t)).equals("lake") ||type.get(mesh.getPolygonsList().indexOf(t)).equals("lagoon") ){
+                                    System.out.println("hi");
+                                    land = false;
+                                }
+                            }
+                        }
+                    }
+
+                }
+
+                counter++;
+            }while(counter < 100);
         }
         return tempSeg;
     }
