@@ -140,12 +140,12 @@ public class CircleIsland {
         }
         if(soil.equals("wet")){
             WetSoil wetSoil = new WetSoil();
-            wetSoil.computeHumidity(mesh, type, minDimension);
+            wetSoil.computeHumidity(mesh, type, isAquifer, minDimension);
             this.humidity = wetSoil.getHumidity();
         }
        else if(soil.equals("dry")){
             DrySoil drySoil = new DrySoil();
-            drySoil.computeHumidity(mesh, type, minDimension);
+            drySoil.computeHumidity(mesh, type, isAquifer, minDimension);
             this.humidity = drySoil.getHumidity();
         }
         System.out.println(humidity);

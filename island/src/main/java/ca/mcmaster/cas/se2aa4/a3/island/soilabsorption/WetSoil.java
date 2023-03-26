@@ -11,13 +11,13 @@ public class WetSoil implements Soil{
         this.humidity = new ArrayList<>();
     }
 
-    public void computeHumidity(Structs.Mesh mesh, ArrayList<String> type, double minDimension){
+    public void computeHumidity(Structs.Mesh mesh, ArrayList<String> type, ArrayList<Boolean> isAquifer, double minDimension){
         double xCurrentWater, yCurrentWater, xCurrentLand, yCurrentLand, distance;
         for(int s = 0; s < mesh.getPolygonsList().size(); s++){
             humidity.add(0,0.0);
         }
         for (Structs.Polygon p : mesh.getPolygonsList()) {
-            if (type.get(mesh.getPolygonsList().indexOf(p)).equals("lake")) {
+            if (type.get(mesh.getPolygonsList().indexOf(p)).equals("lake") || isAquifer.get(mesh.getPolygonsList().indexOf(p)).equals(true)) {
                 xCurrentWater = mesh.getVerticesList().get(p.getCentroidIdx()).getX();
                 yCurrentWater = mesh.getVerticesList().get(p.getCentroidIdx()).getY();
                 for (Structs.Polygon i : mesh.getPolygonsList()) {
