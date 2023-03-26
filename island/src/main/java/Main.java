@@ -14,10 +14,9 @@ public class Main {
         int rivers = config.rivers();
         int aquifers = config.aquifers();
         String altitude = config.altitude();
-       // System.out.println(aMesh.getPolygonsList() + " oooooooooooo");
+        String soil = config.soil();
         IslandGenerator islandGenerator = new IslandGenerator();
-        Structs.Mesh islandMesh = islandGenerator.generateIsland(aMesh, shape, lagoon, lakes, rivers, aquifers, altitude);
-      //  System.out.println(islandMesh.getPolygonsList() + "iiiiiiiiiii");
+        Structs.Mesh islandMesh = islandGenerator.generateIsland(aMesh, shape, lagoon, lakes, rivers, aquifers, altitude, soil);
         new MeshFactory().write(islandMesh, config.export(Configuration.OUTPUT));
     }
 }

@@ -1,11 +1,14 @@
 package ca.mcmaster.cas.se2aa4.a3.island.shapes;
 
 import ca.mcmaster.cas.se2aa4.a2.io.Structs;
+import ca.mcmaster.cas.se2aa4.a3.island.elevationprofiles.HillsElevation;
 import ca.mcmaster.cas.se2aa4.a3.island.elevationprofiles.MountainElevation;
 import ca.mcmaster.cas.se2aa4.a3.island.extentionpoints.Lakes;
 import ca.mcmaster.cas.se2aa4.a3.island.extentionpoints.Aquifers;
 import ca.mcmaster.cas.se2aa4.a3.island.extentionpoints.Rivers;
 import ca.mcmaster.cas.se2aa4.a3.island.moisture.LandHumidity;
+import ca.mcmaster.cas.se2aa4.a3.island.soilabsorption.DrySoil;
+import ca.mcmaster.cas.se2aa4.a3.island.soilabsorption.WetSoil;
 import ca.mcmaster.cas.se2aa4.a3.island.tiles.Beach;
 import ca.mcmaster.cas.se2aa4.a3.island.tiles.Land;
 import ca.mcmaster.cas.se2aa4.a3.island.tiles.Ocean;
@@ -28,7 +31,7 @@ public class SquareIsland {
     }
 
 
-    public void  generateSquareIsland(Structs.Mesh mesh, double xcenter, double ycenter, int numLakes, int numRivers, int numAquifers, String altitude, double minDimension) {
+    public void  generateSquareIsland(Structs.Mesh mesh, double xcenter, double ycenter, int numLakes, int numRivers, int numAquifers, String altitude, String soil, double minDimension) {
 
         for (Structs.Polygon p : mesh.getPolygonsList()) {
 
@@ -85,13 +88,27 @@ public class SquareIsland {
             tempSeg = rivers.getTempSeg();
             type = rivers.getType();
         }
-        MountainElevation me = new MountainElevation();
-        me.computeElevations(mesh,type,xcenter,ycenter,minDimension);
-        this.elevations = me.getElevations();
+        if(altitude.equals("mountain")) {
+            MountainElevation me = new MountainElevation();
+            me.computeElevations(mesh, type, xcenter, ycenter, minDimension);
+            this.elevations = me.getElevations();
+        }
+        else if(altitude.equals("hills")) {
+            HillsElevation he = new HillsElevation();
+            he.computeElevations(mesh, type, xcenter, ycenter, minDimension);
+            this.elevations = he.getElevations();
+        }
 
-        LandHumidity lh = new LandHumidity(mesh);
-        lh.computeHumidity(mesh,type,minDimension);
-        this.humidity = lh.getHumidity();
+        if(soil.equals("wet")){
+            WetSoil wetSoil = new WetSoil();
+            wetSoil.computeHumidity(mesh, type, minDimension);
+            this.humidity = wetSoil.getHumidity();
+        }
+        else if(soil.equals("dry")){
+            DrySoil drySoil = new DrySoil();
+            drySoil.computeHumidity(mesh, type, minDimension);
+            this.humidity = drySoil.getHumidity();
+        }
     }
     public ArrayList<Structs.Polygon> getTempMeshProperties(){
         return this.temp;
