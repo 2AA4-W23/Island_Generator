@@ -61,9 +61,15 @@ public class GraphicRenderer implements Renderer {
             canvas.draw(line);
             Optional<Color> fill = new ColorProperty().extract(s.getPropertiesList());
             Color old = canvas.getColor();
-            if(fill.isPresent()) {
+            if(fill.isPresent() && s.getPropertiesList().size() > 1){
                 canvas.setColor(fill.get());
-                Stroke strokeSegments = new BasicStroke(3f);
+                Stroke strokeSegments = new BasicStroke(5f);
+                canvas.setStroke(strokeSegments);
+                canvas.draw(line);
+            }
+            else if(fill.isPresent()) {
+                canvas.setColor(fill.get());
+                Stroke strokeSegments = new BasicStroke(2f);
                 canvas.setStroke(strokeSegments);
                 canvas.draw(line);
             }
