@@ -13,7 +13,7 @@ import java.util.HashMap;
 
 public class IslandGenerator {
 
-    public Mesh generateIsland(Mesh mesh, String shape, boolean lagoon, int lakes, int rivers, int aquifers){
+    public Mesh generateIsland(Mesh mesh, String shape, boolean lagoon, int lakes, int rivers, int aquifers, String altitude){
         Mesh tempMesh = mesh;
         double xcenter = 0;
         double ycenter = 0;
@@ -37,12 +37,12 @@ public class IslandGenerator {
 
         if(shape.equals("Circle") || shape.equals("circle")){
             CircleIsland circleIsland = new CircleIsland();
-            circleIsland.generateCircleIsland(mesh, xcenter, ycenter, lagoon, lakes, rivers, aquifers, minDimension);
+            circleIsland.generateCircleIsland(mesh, xcenter, ycenter, lagoon, lakes, rivers, aquifers, altitude, minDimension);
             return(finalizeMesh(mesh, circleIsland.getTempMeshProperties(), circleIsland.getTempSeg()));
         }
         else{
             SquareIsland squareIsland = new SquareIsland();
-            squareIsland.generateSquareIsland(mesh, xcenter, ycenter, lakes, rivers, aquifers, minDimension);
+            squareIsland.generateSquareIsland(mesh, xcenter, ycenter, lakes, rivers, aquifers, altitude, minDimension);
             return(finalizeMesh(mesh, squareIsland.getTempMeshProperties(), squareIsland.getTempSeg()));
         }
     }

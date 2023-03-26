@@ -28,7 +28,7 @@ public class SquareIsland {
     }
 
 
-    public void  generateSquareIsland(Structs.Mesh mesh, double xcenter, double ycenter, int numLakes, int numRivers, int numAquifers, double minDimension) {
+    public void  generateSquareIsland(Structs.Mesh mesh, double xcenter, double ycenter, int numLakes, int numRivers, int numAquifers, String altitude, double minDimension) {
 
         for (Structs.Polygon p : mesh.getPolygonsList()) {
 

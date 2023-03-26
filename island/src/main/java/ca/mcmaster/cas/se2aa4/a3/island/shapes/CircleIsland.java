@@ -2,6 +2,7 @@ package ca.mcmaster.cas.se2aa4.a3.island.shapes;
 
 import ca.mcmaster.cas.se2aa4.a2.io.Structs;
 import ca.mcmaster.cas.se2aa4.a3.island.IslandGenerator;
+import ca.mcmaster.cas.se2aa4.a3.island.elevationprofiles.HillsElevation;
 import ca.mcmaster.cas.se2aa4.a3.island.elevationprofiles.MountainElevation;
 import ca.mcmaster.cas.se2aa4.a3.island.extentionpoints.Lakes;
 import ca.mcmaster.cas.se2aa4.a3.island.extentionpoints.Aquifers;
@@ -32,7 +33,7 @@ public class CircleIsland {
         this.tempSeg = new ArrayList<>();
     }
 
-    public void generateCircleIsland(Structs.Mesh mesh, double xcenter, double ycenter, boolean isLagoon, int numLakes, int numRivers, int numAquifers, double minDimension) {
+    public void generateCircleIsland(Structs.Mesh mesh, double xcenter, double ycenter, boolean isLagoon, int numLakes, int numRivers, int numAquifers, String altitude, double minDimension) {
 
         double pCenterx = 0;
         double pCentery = 0;
@@ -124,9 +125,17 @@ public class CircleIsland {
             tempSeg = rivers.getTempSeg();
             type = rivers.getType();
         }
-        MountainElevation me = new MountainElevation();
-        me.computeElevations(mesh,type,xcenter,ycenter,minDimension);
-        this.elevations = me.getElevations();
+
+        if(altitude.equals("mountain")) {
+            MountainElevation me = new MountainElevation();
+            me.computeElevations(mesh, type, xcenter, ycenter, minDimension);
+            this.elevations = me.getElevations();
+        }
+        else if(altitude.equals("hills")) {
+            HillsElevation he = new HillsElevation();
+            he.computeElevations(mesh, type, xcenter, ycenter, minDimension);
+            this.elevations = he.getElevations();
+        }
 
         LandHumidity lh = new LandHumidity(mesh);
         lh.computeHumidity(mesh,type,minDimension);
