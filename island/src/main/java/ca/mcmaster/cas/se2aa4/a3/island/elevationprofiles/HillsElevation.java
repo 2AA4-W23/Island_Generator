@@ -5,7 +5,7 @@ import ca.mcmaster.cas.se2aa4.a3.island.tiles.Lake;
 
 import java.util.ArrayList;
 
-public class HillsElevation {
+public class HillsElevation implements Elevations{
     private ArrayList<Double> elevations;
 
     public HillsElevation(){
@@ -16,7 +16,6 @@ public class HillsElevation {
         double xCurrentHillPeak, yCurrentHillPeak, xCurrentHillLand, yCurrentHillLand, distance;
 
         ArrayList<Structs.Polygon> visited = new ArrayList<>();
-        int count = 0;
 
         for(int s = 0; s < mesh.getPolygonsList().size(); s++){
             elevations.add(0,0.0);
@@ -69,11 +68,6 @@ public class HillsElevation {
                     }while (hillCounter < hillSize);
                 }
             }
-
-
-
-
-
 
     public ArrayList<Double> getElevations(){
         return this.elevations;

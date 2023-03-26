@@ -5,7 +5,7 @@ import ca.mcmaster.cas.se2aa4.a3.island.tiles.Beach;
 
 import java.util.ArrayList;
 
-public class MountainElevation {
+public class MountainElevation implements Elevations{
 
     private ArrayList<Double> elevations;
 
