@@ -13,6 +13,7 @@ public class Configuration {
     public static final String RIVERS = "rivers";
     public static final String LAKES = "lakes";
     public static final String LAGOON = "lagoon";
+    public static final String AQUIFERS = "aquifers";
     public static final String HELP = "help";
 
     private CommandLine cli;
@@ -70,6 +71,12 @@ public class Configuration {
         }
         return 0;
     }
+    public int aquifers() {
+        if(cli.hasOption(AQUIFERS)) {
+            return Integer.valueOf(this.cli.getOptionValue(AQUIFERS));
+        }
+        return 0;
+    }
 
 
     private Options options() {
@@ -79,6 +86,7 @@ public class Configuration {
         options.addOption(new Option(SHAPE, true, "Shape of island to be generated"));
         options.addOption(new Option(RIVERS, true, "Amount of rivers to be generated"));
         options.addOption(new Option(LAKES, true, "Amount of lakes to be generated"));
+        options.addOption(new Option(AQUIFERS, true, "Amount of aquifers to be generated"));
 
         options.addOption(new Option(LAGOON, false, "Whether or not island should be a lagoon island"));
         // Global help

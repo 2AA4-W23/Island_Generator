@@ -4,6 +4,7 @@ import ca.mcmaster.cas.se2aa4.a2.io.Structs;
 import ca.mcmaster.cas.se2aa4.a3.island.IslandGenerator;
 import ca.mcmaster.cas.se2aa4.a3.island.elevationprofiles.MountainElevation;
 import ca.mcmaster.cas.se2aa4.a3.island.extentionpoints.Lakes;
+import ca.mcmaster.cas.se2aa4.a3.island.extentionpoints.Aquifers;
 import ca.mcmaster.cas.se2aa4.a3.island.extentionpoints.Rivers;
 import ca.mcmaster.cas.se2aa4.a3.island.moisture.LandHumidity;
 import ca.mcmaster.cas.se2aa4.a3.island.tiles.Beach;
@@ -19,6 +20,7 @@ public class CircleIsland {
 
     private ArrayList<Structs.Polygon> temp;
     private ArrayList<String> type;
+    private ArrayList<Boolean> isAquifer = new ArrayList<>();
     private ArrayList<Structs.Segment> tempSeg;
     private ArrayList<Double> elevations;
     private ArrayList<Double> humidity;
@@ -30,7 +32,7 @@ public class CircleIsland {
         this.tempSeg = new ArrayList<>();
     }
 
-    public void generateCircleIsland(Structs.Mesh mesh, double xcenter, double ycenter, boolean isLagoon, int numLakes, int numRivers, double minDimension) {
+    public void generateCircleIsland(Structs.Mesh mesh, double xcenter, double ycenter, boolean isLagoon, int numLakes, int numRivers, int numAquifers, double minDimension) {
 
         double pCenterx = 0;
         double pCentery = 0;
@@ -97,11 +99,23 @@ public class CircleIsland {
            tempSeg.add(s);
        }
 
+       for(int i = 0; i < mesh.getPolygonsCount(); i++){
+           isAquifer.add(false);
+       }
+
         if(numLakes != 0) {
             Lakes lakes = new Lakes(temp, type, numLakes);
             lakes.generateLakes(mesh);
             temp = lakes.getTempMeshProperties();
             type = lakes.getType();
+        }
+
+
+        if(numAquifers != 0){
+            Aquifers aquifers = new Aquifers(temp, type, isAquifer, numAquifers);
+            aquifers.generateAquifers(mesh);
+            isAquifer = aquifers.getIsAquifer();
+            temp = aquifers.getTempMeshProperties();
         }
         if (numRivers != 0){
             Rivers rivers = new Rivers(temp,type,numRivers, tempSeg);

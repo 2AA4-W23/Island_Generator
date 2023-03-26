@@ -12,9 +12,10 @@ public class Main {
         Boolean lagoon = config.lagoon();
         int lakes = config.lakes();
         int rivers = config.rivers();
+        int aquifers = config.aquifers();
        // System.out.println(aMesh.getPolygonsList() + " oooooooooooo");
         IslandGenerator islandGenerator = new IslandGenerator();
-        Structs.Mesh islandMesh = islandGenerator.generateIsland(aMesh, shape, lagoon, lakes, rivers);
+        Structs.Mesh islandMesh = islandGenerator.generateIsland(aMesh, shape, lagoon, lakes, rivers, aquifers );
       //  System.out.println(islandMesh.getPolygonsList() + "iiiiiiiiiii");
         new MeshFactory().write(islandMesh, config.export(Configuration.OUTPUT));
     }
