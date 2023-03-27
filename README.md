@@ -83,16 +83,18 @@ A feature is considered done when it is tested
 
 | Id | Feature title | Who? | Start | End | Status |
 |:--:|---------------|------|-------|-----|--------|
-|  F01  |  Created segments, connected verticies and displayed them |  Hamzah,Sarim,Fiza     | 16th Feb  |  19th Feb   |    D    |
-|  F02  |  Used mesh adt to display polygon grid  |  Hamzah,Sarim,Fiza     | 19th Feb  |  19th Feb   |    D    |
-|  F03  |  Displayed mesh with colors, thickness and transparency information |  Fiza     | 21th Feb  | 25th Feb  |    D    |
-|  F04  |  Added and displayed centroid location for polygon  |  Hamzah,Sarim     | 24th Feb  |  24th Feb   |    D    |
-|  F05  |  Added debug mode to change display  |  Fiza     | 24th Feb  | 28th Feb  |    D    |
-|  F06  |  Add irregular mesh class, and generate and display random points  |  Hamzah | 26th Feb  | 27th Feb  |    D    |
-|  F07  |  Generated and displayed voronoi diagram  |  Hamzah, Sarim | Feb 28th  | March 1st  |    D    |
-|  F08  |  Applied Lloyd relaxation, and visualized the relaxed mesh  |  Hamzah,Sarim | March 1st  | March 1st  |    D    |
-|  F09  | Cropped the mesh to adjust visualization to fit within the grid dimensions  |  Fiza | March 1st | March 1st  |    D    |
-|  F10  | Compute neighbourhood relationship using delauney triangulation  and displayed it | Sarim, Fiza | March 1st | March 2nd  |    D    |
-|  F11  |  Reorderd segments using convex hull and displayed them | Fiza | March 2nd | March 2nd  |    D    |
-|  F12  |  Added command line arguments customizations | Fiza | March 2nd | March 3rd  |    D    |
-|  F13 |  Atempted bonus and created an obj file | Hamzah | March 2nd | March 2nd  |    D    |
+|  F01  |  Create a circular island composed of land only, and visualize the mesh |  Hamzah    | 21th Feb  |  21th Feb   |    D    |
+|  F02  |  Introduce the inner circle, as well as oceans and lagoonsh |  sarim    | 21th Feb  |  21th Feb   |    D    |
+|  F03  |  Mark land tiles which touch the water as beaches and visualize this change |  sarim    | 21th Feb  |  21th Feb   |    D    |
+|  F04  |  Allow a user to choose the shape of the island to be generated, and visualize these islands |  Fiza    | 21th Feb  |  21th Feb   |    D    |
+|  F05  |  Provide the option to define altimetric profiles to visualize peaks, plateaus, fields, valleys, etc. |  sarim    | 21th Feb  |  21th Feb   |    D    |
+|  F06  |  Generate and visualize lakes in the island, which can cover one or more tilese |  sarim    | 21th Feb  |  21th Feb   |    D    |
+|  F07  |  Visualize the changes to vegetation as a result of the nearby lakes |  sarim    | 21th Feb  |  21th Feb   |    D    |
+|  F08  |  Introduce rivers which can be visualized, and bring humidity to lands around them |  sarim    | 21th Feb  |  21th Feb   |    D    |
+|  F09  |  Allow the user to choose how many rivers will be displayed in the island using a command line argument |  sarim    | 21th Feb  |  21th Feb   |    D    |
+|  F10  | Accumulate the discharge of rivers that merge and display the rivers as one combined river that is thicker. Account for the moisture the river brings based on the thickness of the river |  sarim    | 21th Feb  |  21th Feb   |    D    |
+|  F11  |  Provide the option to randomly generate the amount of aquifer. Based on this generate the aquifers and generate the moisture to the surrounding tiles. |  sarim    | 21th Feb  |  21th Feb   |    D    |
+|  F12  |  Provide the option to choose the absorption profile. Based on that generate the ability for the soil to absorb humidity from lakes, rivers, and aquifers. |  sarim    | 21th Feb  |  21th Feb   |    D    |
+|  F13 |  Assign biomes to each tile and represent it with different colours based on the level of humidity and temperature. |  sarim    | 21th Feb  |  21th Feb   |    D    |
+|  F14 |  Provide the option to select a Whitaker diagram, and then to generate the biome based on the Whitaker diagram. |  sarim    | 21th Feb  |  21th Feb   |    D    |
+|  F15  |  Provide the option to provide the seed of the random generator that will control randomness so that all the decisions taken are the same when regenerating. |  sarim    | 21th Feb  |  21th Feb   |    D    |

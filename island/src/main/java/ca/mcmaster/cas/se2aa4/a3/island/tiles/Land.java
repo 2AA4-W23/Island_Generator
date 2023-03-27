@@ -4,8 +4,6 @@ import ca.mcmaster.cas.se2aa4.a2.io.Structs;
 
 public class Land {
     private final int red, green, blue;
-
-
     public Land(){
         this.red = 51;
         this.green = 153;

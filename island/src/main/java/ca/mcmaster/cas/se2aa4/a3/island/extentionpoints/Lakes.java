@@ -49,7 +49,6 @@ public class Lakes {
         }
         return temp;
     }
-
     public ArrayList<Structs.Polygon> getTempMeshProperties(){
         return this.temp;
     }

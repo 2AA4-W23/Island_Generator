@@ -4,6 +4,7 @@ import ca.mcmaster.cas.se2aa4.a2.io.Structs.Vertex;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Mesh;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Polygon;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Segment;
+import ca.mcmaster.cas.se2aa4.a3.island.biomes.Biomes;
 import ca.mcmaster.cas.se2aa4.a3.island.shapes.CircleIsland;
 import ca.mcmaster.cas.se2aa4.a3.island.shapes.SquareIsland;
 
@@ -34,6 +35,7 @@ public class IslandGenerator {
             max_y = (Double.compare(max_y, v.getY()) < 0? v.getY(): max_y);
         }
         double minDimension = Math.min(max_x, max_y);
+
 
         if(shape.equals("Circle") || shape.equals("circle")){
             CircleIsland circleIsland = new CircleIsland();
