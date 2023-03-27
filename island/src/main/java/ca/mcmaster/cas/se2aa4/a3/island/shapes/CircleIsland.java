@@ -155,6 +155,7 @@ public class CircleIsland {
        Biomes biome = new Biomes();
        biome.FindBiomes(mesh, elevations, humidity, type);
        biomes = biome.getBiomes();
+       temp = biome.assignColor(temp, type);
     }
 
     public ArrayList<Structs.Polygon> getTempMeshProperties(){
