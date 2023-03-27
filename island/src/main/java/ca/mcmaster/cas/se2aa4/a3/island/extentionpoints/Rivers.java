@@ -54,33 +54,42 @@ public class Rivers {
        //     int riverCounter = 0;
            Structs.Segment currentSegment = s;
            Structs.Polygon currentPolygon = p;
+           int currentSegmentValue = 0;
             int counter = 0;
+            System.out.println("hi");
             do{
-                for(Structs.Segment segment : mesh.getSegmentsList()){
-                    if(Integer.valueOf(currentSegment.getV2Idx()).equals(Integer.valueOf(segment.getV1Idx()))){
-                        System.out.println("troll");
-                        for(int t: p.getNeighborIdxsList()) {
-                            System.out.println(t);
-                            if (mesh.getPolygonsList().get(t).getSegmentIdxsList().contains(mesh.getSegmentsList().indexOf(segment))) {
-                                System.out.println("HELOOOOO");
-                                currentPolygon = mesh.getPolygonsList().get(t);
+                for(int t: p.getNeighborIdxsList()) {
+                    System.out.println(t);
+                    if (mesh.getPolygonsList().get(t).getSegmentIdxsList().contains(mesh.getSegmentsList().indexOf(currentSegment))) {
+                        System.out.println("HELOOOOO");
+                        currentPolygon = mesh.getPolygonsList().get(t);
 
-                            }
-                        }
-
-                        for(int i = 0; i < currentPolygon.getNeighborIdxsCount(); i++){
-                            if(mesh.getPolygonsList().get(currentPolygon.getNeighborIdxsList().get(i)).getSegmentIdxsList().contains(segment)){
-                                if(type.get(currentPolygon.getNeighborIdxsList().get(i)).equals("land")){
-                                    tempSeg.set(mesh.getSegmentsList().indexOf(segment), Structs.Segment.newBuilder(segment).clearProperties().addProperties(river.setColourCode()).build());
+                    }
+                }
+                for(int c = 0; c < currentPolygon.getSegmentIdxsCount(); c++){
+                    if(currentPolygon.getSegmentIdxsList().get(c) == mesh.getSegmentsList().indexOf(currentSegment)){
+                        System.out.println("YOLO");
+                        currentSegmentValue = c;
+                    }
+                }
+                for(int i = 0; i < currentPolygon.getSegmentIdxsCount(); i++) {
+                    if (i != currentSegmentValue) {
+                        if (Integer.valueOf(currentSegment.getV2Idx()).equals(Integer.valueOf(mesh.getSegmentsList().get(currentPolygon.getSegmentIdxsList().get(i)).getV1Idx())) || Integer.valueOf(currentSegment.getV2Idx()).equals(Integer.valueOf(mesh.getSegmentsList().get(currentPolygon.getSegmentIdxsList().get(i)).getV2Idx()))) {
+                            System.out.println("HEHE");
+                            Structs.Segment segment = mesh.getSegmentsList().get(currentPolygon.getSegmentIdxsList().get(i));
+                            for (int f = 0; f < currentPolygon.getNeighborIdxsCount(); f++) {
+                                if (mesh.getPolygonsList().get(currentPolygon.getNeighborIdxsList().get(f)).getSegmentIdxsList().contains(segment)) {
+                                    System.out.println("HOHOHOHOH");
+                                    if (type.get(currentPolygon.getNeighborIdxsList().get(f)).equals("land")) {
+                                        tempSeg.set(mesh.getSegmentsList().indexOf(segment), Structs.Segment.newBuilder(segment).clearProperties().addProperties(river.setColourCode()).build());
                                         currentSegment = segment;
-                                }
-                                else{
-                                    land=false;
+                                    } else {
+                                        land = false;
+                                    }
                                 }
                             }
                         }
                     }
-
                 }
 
             }while(land);
