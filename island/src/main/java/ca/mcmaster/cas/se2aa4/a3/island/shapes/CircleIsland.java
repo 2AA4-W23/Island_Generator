@@ -2,6 +2,7 @@ package ca.mcmaster.cas.se2aa4.a3.island.shapes;
 
 import ca.mcmaster.cas.se2aa4.a2.io.Structs;
 import ca.mcmaster.cas.se2aa4.a3.island.IslandGenerator;
+import ca.mcmaster.cas.se2aa4.a3.island.biomes.Biomes;
 import ca.mcmaster.cas.se2aa4.a3.island.elevationprofiles.HillsElevation;
 import ca.mcmaster.cas.se2aa4.a3.island.elevationprofiles.MountainElevation;
 import ca.mcmaster.cas.se2aa4.a3.island.extentionpoints.Lakes;
@@ -27,6 +28,7 @@ public class CircleIsland {
     private ArrayList<Structs.Segment> tempSeg;
     private ArrayList<Double> elevations;
     private ArrayList<Double> humidity;
+    private ArrayList<String> biomes;
 
 
     public CircleIsland(){
@@ -150,7 +152,11 @@ public class CircleIsland {
         }
         System.out.println(humidity);
 
+       Biomes biome = new Biomes();
+       biome.FindBiomes(mesh, elevations, humidity, type);
+       biomes = biome.getBiomes();
     }
+
     public ArrayList<Structs.Polygon> getTempMeshProperties(){
         return this.temp;
     }

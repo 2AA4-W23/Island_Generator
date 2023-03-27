@@ -68,10 +68,7 @@ public class HillsElevation implements Elevations{
                     }while (hillCounter < hillSize);
                 }
             }
-<<<<<<< Updated upstream
 
-=======
->>>>>>> Stashed changes
     public ArrayList<Double> getElevations(){
         return this.elevations;
     }

@@ -1,13 +1,14 @@
 package ca.mcmaster.cas.se2aa4.a3.island.tiles;
 
 import ca.mcmaster.cas.se2aa4.a2.io.Structs;
-public class Forest {
+
+public class Swamp {
     private final int red, green, blue;
 
-    public Forest(){
-        this.red = 34;
-        this.green = 139;
-        this.blue = 34;
+    public Swamp(){
+        this.red = 71;
+        this.green = 65;
+        this.blue = 62;
     }
 
     public Structs.Property setColourCode(){
