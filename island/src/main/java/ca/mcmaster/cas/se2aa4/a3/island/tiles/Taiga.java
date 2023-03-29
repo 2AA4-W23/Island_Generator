@@ -2,10 +2,10 @@ package ca.mcmaster.cas.se2aa4.a3.island.tiles;
 
 import ca.mcmaster.cas.se2aa4.a2.io.Structs;
 
-public class Iceland {
+public class Taiga {
     private final int red, green, blue;
 
-    public Iceland(){
+    public Taiga(){
         this.red = 167;
         this.green = 241;
         this.blue = 242;

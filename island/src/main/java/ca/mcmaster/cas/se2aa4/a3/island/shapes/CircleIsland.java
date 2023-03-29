@@ -1,14 +1,12 @@
 package ca.mcmaster.cas.se2aa4.a3.island.shapes;
 
 import ca.mcmaster.cas.se2aa4.a2.io.Structs;
-import ca.mcmaster.cas.se2aa4.a3.island.IslandGenerator;
 import ca.mcmaster.cas.se2aa4.a3.island.biomes.Biomes;
 import ca.mcmaster.cas.se2aa4.a3.island.elevationprofiles.HillsElevation;
 import ca.mcmaster.cas.se2aa4.a3.island.elevationprofiles.MountainElevation;
 import ca.mcmaster.cas.se2aa4.a3.island.extentionpoints.Lakes;
 import ca.mcmaster.cas.se2aa4.a3.island.extentionpoints.Aquifers;
 import ca.mcmaster.cas.se2aa4.a3.island.extentionpoints.Rivers;
-import ca.mcmaster.cas.se2aa4.a3.island.moisture.LandHumidity;
 import ca.mcmaster.cas.se2aa4.a3.island.soilabsorption.DrySoil;
 import ca.mcmaster.cas.se2aa4.a3.island.soilabsorption.WetSoil;
 import ca.mcmaster.cas.se2aa4.a3.island.tiles.Beach;
@@ -16,9 +14,7 @@ import ca.mcmaster.cas.se2aa4.a3.island.tiles.Lagoon;
 import ca.mcmaster.cas.se2aa4.a3.island.tiles.Land;
 import ca.mcmaster.cas.se2aa4.a3.island.tiles.Ocean;
 
-import java.sql.Struct;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class CircleIsland {
 
@@ -37,7 +33,7 @@ public class CircleIsland {
         this.tempSeg = new ArrayList<>();
     }
 
-    public void generateCircleIsland(Structs.Mesh mesh, double xcenter, double ycenter, boolean isLagoon, int numLakes, int numRivers, int numAquifers, String altitude, String soil, double minDimension) {
+    public void generateCircleIsland(Structs.Mesh mesh, double xcenter, double ycenter, boolean isLagoon, int numLakes, int numRivers, int numAquifers, String altitude, String soil, double minDimension, String biomes) {
 
         double pCenterx = 0;
         double pCentery = 0;
@@ -124,7 +120,7 @@ public class CircleIsland {
         }
         if (numRivers != 0){
             Rivers rivers = new Rivers(temp,type,numRivers, tempSeg);
-            rivers.generateRivers(mesh);
+            rivers.generateRivers(mesh,xcenter ,  ycenter);
             temp = rivers.getTempMeshProperties();
             tempSeg = rivers.getTempSeg();
             type = rivers.getType();
@@ -154,7 +150,7 @@ public class CircleIsland {
 
        Biomes biome = new Biomes();
        biome.FindBiomes(mesh, elevations, humidity, type);
-       biomes = biome.getBiomes();
+       this.biomes = biome.getBiomes();
        temp = biome.assignColor(temp, type);
     }
 

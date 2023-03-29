@@ -6,9 +6,9 @@ public class River {
     private final int red, green, blue;
 
     public River(){
-        this.red = 0;
-        this.green = 190;
-        this.blue = 247;
+        this.red = 70;
+        this.green = 90;
+        this.blue = 180;
     }
     public Structs.Property setColourCode(){
         String colorCode = red + "," + green + "," + blue;

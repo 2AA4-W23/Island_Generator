@@ -6,7 +6,6 @@ import ca.mcmaster.cas.se2aa4.a3.island.elevationprofiles.MountainElevation;
 import ca.mcmaster.cas.se2aa4.a3.island.extentionpoints.Lakes;
 import ca.mcmaster.cas.se2aa4.a3.island.extentionpoints.Aquifers;
 import ca.mcmaster.cas.se2aa4.a3.island.extentionpoints.Rivers;
-import ca.mcmaster.cas.se2aa4.a3.island.moisture.LandHumidity;
 import ca.mcmaster.cas.se2aa4.a3.island.soilabsorption.DrySoil;
 import ca.mcmaster.cas.se2aa4.a3.island.soilabsorption.WetSoil;
 import ca.mcmaster.cas.se2aa4.a3.island.tiles.Beach;
@@ -14,7 +13,6 @@ import ca.mcmaster.cas.se2aa4.a3.island.tiles.Land;
 import ca.mcmaster.cas.se2aa4.a3.island.tiles.Ocean;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class SquareIsland {
     private ArrayList<Structs.Polygon> temp;
@@ -31,7 +29,7 @@ public class SquareIsland {
     }
 
 
-    public void  generateSquareIsland(Structs.Mesh mesh, double xcenter, double ycenter, int numLakes, int numRivers, int numAquifers, String altitude, String soil, double minDimension) {
+    public void  generateSquareIsland(Structs.Mesh mesh, double xcenter, double ycenter, int numLakes, int numRivers, int numAquifers, String altitude, String soil, double minDimension, String biomes) {
 
         for (Structs.Polygon p : mesh.getPolygonsList()) {
 
@@ -83,7 +81,7 @@ public class SquareIsland {
         }
         if (numRivers != 0){
             Rivers rivers = new Rivers(temp,type,numRivers, tempSeg);
-            rivers.generateRivers(mesh);
+            rivers.generateRivers(mesh,xcenter,ycenter);
             temp = rivers.getTempMeshProperties();
             tempSeg = rivers.getTempSeg();
             type = rivers.getType();

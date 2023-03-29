@@ -6,11 +6,10 @@ public class Lake {
     private final int red, green, blue;
 
     public Lake(){
-        this.red = 152;
-        this.green = 198;
-        this.blue = 237;
+        this.red = 70;
+        this.green = 90;
+        this.blue = 180;
     }
-
     public Structs.Property setColourCode(){
         String colorCode = red + "," + green + "," + blue;
         Structs.Property color = Structs.Property.newBuilder().setKey("rgb_color").setValue(colorCode).build();

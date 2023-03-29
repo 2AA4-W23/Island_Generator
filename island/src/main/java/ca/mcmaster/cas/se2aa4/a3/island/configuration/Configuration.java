@@ -16,6 +16,8 @@ public class Configuration {
     public static final String AQUIFERS = "aquifers";
     public static final String ALTITUDE = "altitude";
     public static final String SOIL = "soil";
+    public static final String BIOME = "biome";
+
 
     public static final String HELP = "help";
 
@@ -93,6 +95,13 @@ public class Configuration {
         return "";
     }
 
+    public String biomes() {
+        if(cli.hasOption(BIOME)) {
+            return this.cli.getOptionValue(BIOME);
+        }
+        return "";
+    }
+
 
     private Options options() {
         Options options = new Options();
@@ -104,6 +113,7 @@ public class Configuration {
         options.addOption(new Option(AQUIFERS, true, "Amount of aquifers to be generated"));
         options.addOption(new Option(ALTITUDE, true, "Altitude of island"));
         options.addOption(new Option(SOIL, true, "Type of soil on the island for absorption"));
+        options.addOption(new Option(BIOME, true, "Type of biome thats on the island to be generatec "));
 
 
         options.addOption(new Option(LAGOON, false, "Whether or not island should be a lagoon island"));
