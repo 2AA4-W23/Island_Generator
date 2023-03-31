@@ -2,13 +2,13 @@ package ca.mcmaster.cas.se2aa4.a3.island.tiles;
 
 import ca.mcmaster.cas.se2aa4.a2.io.Structs;
 
-public class Snow {
+public class RainForest {
     private final int red, green, blue;
 
-    public Snow(){
-        this.red = 255;
-        this.green = 255;
-        this.blue = 255;
+    public RainForest(){
+        this.red = 41;
+        this.green = 74;
+        this.blue = 32;
     }
 
     public Structs.Property setColourCode(){

@@ -10,7 +10,7 @@ import ca.mcmaster.cas.se2aa4.a3.island.extentionpoints.Rivers;
 import ca.mcmaster.cas.se2aa4.a3.island.soilabsorption.DrySoil;
 import ca.mcmaster.cas.se2aa4.a3.island.soilabsorption.WetSoil;
 import ca.mcmaster.cas.se2aa4.a3.island.tiles.Beach;
-import ca.mcmaster.cas.se2aa4.a3.island.tiles.Lagoon;
+import ca.mcmaster.cas.se2aa4.a3.island.tiles.TemperateRainforest;
 import ca.mcmaster.cas.se2aa4.a3.island.tiles.Land;
 import ca.mcmaster.cas.se2aa4.a3.island.tiles.Ocean;
 
@@ -25,6 +25,7 @@ public class CircleIsland {
     private ArrayList<Double> elevations;
     private ArrayList<Double> humidity;
     private ArrayList<String> biomes;
+    private String userInput;
 
 
     public CircleIsland(){
@@ -33,7 +34,7 @@ public class CircleIsland {
         this.tempSeg = new ArrayList<>();
     }
 
-    public void generateCircleIsland(Structs.Mesh mesh, double xcenter, double ycenter, boolean isLagoon, int numLakes, int numRivers, int numAquifers, String altitude, String soil, double minDimension, String biomes) {
+    public void generateCircleIsland(Structs.Mesh mesh, double xcenter, double ycenter, boolean isLagoon, int numLakes, int numRivers, int numAquifers, String altitude, String soil, double minDimension, String userInput) {
 
         double pCenterx = 0;
         double pCentery = 0;
@@ -57,7 +58,7 @@ public class CircleIsland {
                 //LAGOON (LIGHT BLUE)
                 else if (distance < (minDimension * 0.13)) {
                     type.add("lagoon");
-                    Lagoon lagoon = new Lagoon();
+                    TemperateRainforest lagoon = new TemperateRainforest();
                     temp.add(Structs.Polygon.newBuilder(p).clearProperties().addProperties(lagoon.setColourCode()).build());
                 }
                 //OCEAN (DARK BLUE)
@@ -149,7 +150,7 @@ public class CircleIsland {
         System.out.println(humidity);
 
        Biomes biome = new Biomes();
-       biome.FindBiomes(mesh, elevations, humidity, type);
+       biome.FindBiomes(mesh, elevations, humidity, type,userInput);
        this.biomes = biome.getBiomes();
        temp = biome.assignColor(temp, type);
     }

@@ -11,7 +11,8 @@ public class Biomes {
     public Biomes() {
         this.biomes = new ArrayList<>();
     }
-    public void FindBiomes(Structs.Mesh mesh, ArrayList<Double> elevations, ArrayList<Double> humidity, ArrayList<String> type) {
+
+    public void FindBiomes(Structs.Mesh mesh, ArrayList<Double> elevations, ArrayList<Double> humidity, ArrayList<String> type, String userInput) {
 
         for (int i = 0; i < mesh.getPolygonsList().size(); i++) {
             Structs.Polygon p = mesh.getPolygonsList().get(i);
@@ -20,49 +21,52 @@ public class Biomes {
 
 
             // Determine biome based on elevation and humidity
-            if (biomes.equals("Arctic")) {
+            if (userInput.equals("Arctic")) {
                 if (type.get(i).equals("land")) {
                     if (elevation < 10 && humid < 2) {
-                        biomes.set(i, Arctic.ArcticTundra.toString());
-                        biomes.add("snow");
+                        biomes.add(Arctic.ArcticTundra.toString());
                     } else if (elevation < 20 && humid < 15 || humid > 0.2) {
-                        biomes.set(i, Arctic.Taiga.toString());
-                        biomes.add("snow");
+                        biomes.add(Arctic.Taiga.toString());
 
                     } else if (elevation < 30 && humid > 1 || humid < 10) {
-                        biomes.set(i, Arctic.TemperateRainforest.toString());
-                        biomes.add("snow");
+                        biomes.add(Arctic.TemperateRainforest.toString());
 
                     } else if (elevation < 10 && humid < 0.2 || humid > 2) {
-                        biomes.set(i, Arctic.ArcticDesert.toString());
-                        biomes.add("snow");
+                        biomes.add(Arctic.ArcticDesert.toString());
 
                     } else {
-                        biomes.set(i, Arctic.BorealForest.toString());
+                        biomes.add(Arctic.BorealForest.toString());
                     }
+                } else {
+                    biomes.add("water");
                 }
-            } else if (biomes.equals("Tropical")) {
+            } else if (userInput.equals("Tropical")) {
                 if (type.get(i).equals("land")) {
                     if (elevation < 40 && humid < 10 || humid > 5) {
-                        biomes.set(i, Tropical.TropicalRainforest.toString());
-                    } else if (humid < 4) {
-                        biomes.add("field");
-                    } else if (humid < 10) {
-                        biomes.add("wetlands");
+                        biomes.add(Tropical.TropicalRainforest.toString());
+                    } else if (elevation < 40|| elevation>10 && humid < 15 || humid > 10) {
+                        biomes.add(Tropical.TropicalSeasonalForest.toString());
+                    } else if (elevation < 10 && humid < 15 || humid > 10) {
+                        biomes.add(Tropical.Desert.toString());
                     } else {
-                        biomes.add("swamp");
+                        biomes.add(Tropical.MangroveSwamp.toString());
                     }
-                }
-            } else if (biomes.equals("Grassland")) {
-                if (humid < 1) {
-                    biomes.add("tundra");
-                } else if (humid < 5.0) {
-                    biomes.add("snow");
                 } else {
-                    biomes.add("iceland");
+                    biomes.add("Land");
                 }
-            } else {
-                biomes.add("water");
+            } else if (userInput.equals("Grassland")) {
+                if (elevation < 20 && humid < 10 || humid > 0.2) {
+                    biomes.add(Grassland.GrasslandPrairie.toString());
+                } else if (elevation < 30 && humid < 15 || humid > 5) {
+                    biomes.add(Grassland.GrasslandSavanna.toString());
+                } else if (elevation < 10 && humid < 15 || humid > 10) {
+                    biomes.add(Grassland.GrasslandPampas.toString());
+                } else  {
+                    biomes.add(Grassland.GrasslandVeld.toString());
+                }
+            }
+                else {
+                    biomes.add("Land");
             }
         }
     }
@@ -71,43 +75,40 @@ public class Biomes {
         return this.biomes;
     }
 
-    public ArrayList<Structs.Polygon> assignColor(ArrayList<Structs.Polygon> temp, ArrayList<String> type ){
+    public ArrayList<Structs.Polygon> assignColor(ArrayList<Structs.Polygon> temp, ArrayList<String> type) {
 
-        for(int f = 0; f < temp.size(); f++){
-            if(type.get(f).equals("land")){
-                if(biomes.get(f).equals("desert")){
+        for (int f = 0; f < temp.size(); f++) {
+            if (type.get(f).equals("land")) {
+                if (biomes.get(f).equals(Tropical.Desert.toString())) {
                     Desert desert = new Desert();
                     temp.set(f, Structs.Polygon.newBuilder(temp.get(f)).clearProperties().addProperties(desert.setColourCode()).build());
                 }
-                if(biomes.get(f).equals("field")){
-                    Field field = new Field();
-                    temp.set(f, Structs.Polygon.newBuilder(temp.get(f)).clearProperties().addProperties(field.setColourCode()).build());
-                }
-                if(biomes.get(f).equals("forest")){
+                if (biomes.get(f).equals(Tropical.TropicalRainforest.toString())) {
                     Forest forest = new Forest();
                     temp.set(f, Structs.Polygon.newBuilder(temp.get(f)).clearProperties().addProperties(forest.setColourCode()).build());
                 }
-                if(biomes.get(f).equals( Arctic.Taiga.toString())){
+                if (biomes.get(f).equals(Arctic.Taiga.toString())) {
                     Taiga taiga = new Taiga();
                     temp.set(f, Structs.Polygon.newBuilder(temp.get(f)).clearProperties().addProperties(taiga.setColourCode()).build());
                 }
-                if(biomes.get(f).equals(Arctic.TemperateRainforest.toString())){
-                    Snow snow = new Snow();
-                    temp.set(f, Structs.Polygon.newBuilder(temp.get(f)).clearProperties().addProperties(snow.setColourCode()).build());
+                if (biomes.get(f).equals(Arctic.TemperateRainforest.toString())) {
+                    TemperateRainforest temperateRainforest = new TemperateRainforest();
+                    temp.set(f, Structs.Polygon.newBuilder(temp.get(f)).clearProperties().addProperties(temperateRainforest.setColourCode()).build());
                 }
-                if(biomes.get(f).equals("swamp")){
+                if (biomes.get(f).equals(Tropical.MangroveSwamp.toString())) {
                     Swamp swamp = new Swamp();
                     temp.set(f, Structs.Polygon.newBuilder(temp.get(f)).clearProperties().addProperties(swamp.setColourCode()).build());
                 }
-                if(biomes.get(f).equals(Arctic.ArcticTundra.toString())){
+                if (biomes.get(f).equals(Arctic.ArcticTundra.toString())) {
                     Tundra tundra = new Tundra();
                     temp.set(f, Structs.Polygon.newBuilder(temp.get(f)).clearProperties().addProperties(tundra.setColourCode()).build());
                 }
-                if(biomes.get(f).equals("wetlands")){
-                    Wetlands wetlands= new Wetlands();
+                if (biomes.get(f).equals(Tropical.TropicalSeasonalForest.toString())) {
+                    Wetlands wetlands = new Wetlands();
                     temp.set(f, Structs.Polygon.newBuilder(temp.get(f)).clearProperties().addProperties(wetlands.setColourCode()).build());
                 }
             }
+
         }
         return temp;
     }
