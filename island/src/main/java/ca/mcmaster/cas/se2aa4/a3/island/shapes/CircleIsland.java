@@ -119,8 +119,9 @@ public class CircleIsland {
             isAquifer = aquifers.getIsAquifer();
             temp = aquifers.getTempMeshProperties();
         }
+        Rivers rivers = new Rivers(temp,type,numRivers, tempSeg);
+
         if (numRivers != 0){
-            Rivers rivers = new Rivers(temp,type,numRivers, tempSeg);
             rivers.generateRivers(mesh,xcenter ,  ycenter);
             temp = rivers.getTempMeshProperties();
             tempSeg = rivers.getTempSeg();
@@ -139,12 +140,12 @@ public class CircleIsland {
         }
         if(soil.equals("wet")){
             WetSoil wetSoil = new WetSoil();
-            wetSoil.computeHumidity(mesh, type, isAquifer, minDimension);
+            wetSoil.computeHumidity(mesh, type, isAquifer, minDimension, rivers);
             this.humidity = wetSoil.getHumidity();
         }
        else if(soil.equals("dry")){
             DrySoil drySoil = new DrySoil();
-            drySoil.computeHumidity(mesh, type, isAquifer, minDimension);
+            drySoil.computeHumidity(mesh, type, isAquifer, minDimension, rivers);
             this.humidity = drySoil.getHumidity();
         }
         System.out.println(humidity);
