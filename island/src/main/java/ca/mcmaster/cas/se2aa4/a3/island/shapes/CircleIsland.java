@@ -9,10 +9,7 @@ import ca.mcmaster.cas.se2aa4.a3.island.extentionpoints.Aquifers;
 import ca.mcmaster.cas.se2aa4.a3.island.extentionpoints.Rivers;
 import ca.mcmaster.cas.se2aa4.a3.island.soilabsorption.DrySoil;
 import ca.mcmaster.cas.se2aa4.a3.island.soilabsorption.WetSoil;
-import ca.mcmaster.cas.se2aa4.a3.island.tiles.Beach;
-import ca.mcmaster.cas.se2aa4.a3.island.tiles.TemperateRainforest;
-import ca.mcmaster.cas.se2aa4.a3.island.tiles.Land;
-import ca.mcmaster.cas.se2aa4.a3.island.tiles.Ocean;
+import ca.mcmaster.cas.se2aa4.a3.island.tiles.*;
 
 import java.util.ArrayList;
 
@@ -34,7 +31,7 @@ public class CircleIsland {
         this.tempSeg = new ArrayList<>();
     }
 
-    public void generateCircleIsland(Structs.Mesh mesh, double xcenter, double ycenter, boolean isLagoon, int numLakes, int numRivers, int numAquifers, String altitude, String soil, double minDimension, String userInput) {
+    public void generateCircleIsland(Structs.Mesh mesh, double xcenter, double ycenter, boolean isLagoon, int numLakes, int numRivers, int numAquifers, String altitude, String soil, double minDimension, String biomeInput) {
 
         double pCenterx = 0;
         double pCentery = 0;
@@ -89,10 +86,21 @@ public class CircleIsland {
             if (!(type.get(mesh.getPolygonsList().indexOf(p)).equals("lagoon") || type.get(mesh.getPolygonsList().indexOf(p)).equals("ocean"))) {
                 for (int i : p.getNeighborIdxsList()) {
                     if (type.get(i).equals("lagoon") || type.get(i).equals("ocean")) {
-                        type.set(mesh.getPolygonsList().indexOf(p), "beach");
-                        Beach beach = new Beach();
-                        temp.set(mesh.getPolygonsList().indexOf(p), Structs.Polygon.newBuilder(p).clearProperties().addProperties(beach.setColourCode()).build());
-                        break;
+                        if(biomeInput.equals("Arctic")){
+                            type.set(mesh.getPolygonsList().indexOf(p), "Ice");
+                            Ice ice = new Ice();
+                            temp.set(mesh.getPolygonsList().indexOf(p), Structs.Polygon.newBuilder(p).clearProperties().addProperties(ice.setColourCode()).build());
+                            break;
+
+
+                        }
+                        else{
+                            type.set(mesh.getPolygonsList().indexOf(p), "beach");
+                            Beach beach = new Beach();
+                            temp.set(mesh.getPolygonsList().indexOf(p), Structs.Polygon.newBuilder(p).clearProperties().addProperties(beach.setColourCode()).build());
+                            break;
+                        }
+
                     }
                 }
             }
@@ -151,7 +159,7 @@ public class CircleIsland {
         System.out.println(humidity);
 
        Biomes biome = new Biomes();
-       biome.FindBiomes(mesh, elevations, humidity, type,userInput);
+       biome.FindBiomes(mesh, elevations, humidity, type,biomeInput);
        this.biomes = biome.getBiomes();
        temp = biome.assignColor(temp, type);
     }

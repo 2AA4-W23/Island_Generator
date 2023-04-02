@@ -6,8 +6,8 @@ public class TemperateRainforest {
 
     public TemperateRainforest(){
         this.red = 34;
-        this.green = 139;
-        this.blue = 34;
+        this.green = 83;
+        this.blue = 53;
     }
 
     public Structs.Property setColourCode(){

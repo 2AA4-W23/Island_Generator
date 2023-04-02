@@ -2,13 +2,13 @@ package ca.mcmaster.cas.se2aa4.a3.island.tiles;
 
 import ca.mcmaster.cas.se2aa4.a2.io.Structs;
 
-public class Wetlands {
+public class GrasslandPampas {
     private final int red, green, blue;
 
-    public Wetlands(){
-        this.red = 100;
-        this.green = 122;
-        this.blue = 94;
+    public GrasslandPampas(){
+        this.red = 204;
+        this.green = 204;
+        this.blue = 102;
     }
 
     public Structs.Property setColourCode(){
@@ -16,4 +16,5 @@ public class Wetlands {
         Structs.Property color = Structs.Property.newBuilder().setKey("rgb_color").setValue(colorCode).build();
         return color;
     }
+
 }

@@ -1,6 +1,7 @@
 package ca.mcmaster.cas.se2aa4.a3.island.shapes;
 
 import ca.mcmaster.cas.se2aa4.a2.io.Structs;
+import ca.mcmaster.cas.se2aa4.a3.island.biomes.Biomes;
 import ca.mcmaster.cas.se2aa4.a3.island.elevationprofiles.HillsElevation;
 import ca.mcmaster.cas.se2aa4.a3.island.elevationprofiles.MountainElevation;
 import ca.mcmaster.cas.se2aa4.a3.island.extentionpoints.Lakes;
@@ -22,6 +23,9 @@ public class SquareIsland {
     private ArrayList<Double> elevations;
     private ArrayList<Double> humidity;
 
+    private ArrayList<String> biomes;
+
+
     public SquareIsland(){
         this.temp = new ArrayList<>();
         this.type = new ArrayList<>();
@@ -29,7 +33,7 @@ public class SquareIsland {
     }
 
 
-    public void  generateSquareIsland(Structs.Mesh mesh, double xcenter, double ycenter, int numLakes, int numRivers, int numAquifers, String altitude, String soil, double minDimension, String biomes) {
+    public void  generateSquareIsland(Structs.Mesh mesh, double xcenter, double ycenter, int numLakes, int numRivers, int numAquifers, String altitude, String soil, double minDimension, String biomeInput) {
 
         for (Structs.Polygon p : mesh.getPolygonsList()) {
 
@@ -108,6 +112,13 @@ public class SquareIsland {
             drySoil.computeHumidity(mesh, type, isAquifer, minDimension, rivers);
             this.humidity = drySoil.getHumidity();
         }
+
+        Biomes biome = new Biomes();
+        biome.FindBiomes(mesh, elevations, humidity, type,biomeInput);
+        this.biomes = biome.getBiomes();
+        temp = biome.assignColor(temp, type);
+
+
     }
     public ArrayList<Structs.Polygon> getTempMeshProperties(){
         return this.temp;
