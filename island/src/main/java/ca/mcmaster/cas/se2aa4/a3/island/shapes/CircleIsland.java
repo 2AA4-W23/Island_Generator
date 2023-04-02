@@ -31,7 +31,7 @@ public class CircleIsland {
         this.tempSeg = new ArrayList<>();
     }
 
-    public void generateCircleIsland(Structs.Mesh mesh, double xcenter, double ycenter, boolean isLagoon, int numLakes, int numRivers, int numAquifers, String altitude, String soil, double minDimension, String biomeInput) {
+    public void generateCircleIsland(Structs.Mesh mesh, double xcenter, double ycenter, boolean isLagoon, int numLakes, int numRivers, int numAquifers, String altitude, String soil, double minDimension, String biomeInput, long seed) {
 
         double pCenterx = 0;
         double pCentery = 0;
@@ -115,7 +115,7 @@ public class CircleIsland {
 
         if(numLakes != 0) {
             Lakes lakes = new Lakes(temp, type, numLakes);
-            lakes.generateLakes(mesh);
+            lakes.generateLakes(mesh, seed);
             temp = lakes.getTempMeshProperties();
             type = lakes.getType();
         }
@@ -123,14 +123,14 @@ public class CircleIsland {
 
         if(numAquifers != 0){
             Aquifers aquifers = new Aquifers(temp, type, isAquifer, numAquifers);
-            aquifers.generateAquifers(mesh);
+            aquifers.generateAquifers(mesh, seed);
             isAquifer = aquifers.getIsAquifer();
             temp = aquifers.getTempMeshProperties();
         }
         Rivers rivers = new Rivers(temp,type,numRivers, tempSeg);
 
         if (numRivers != 0){
-            rivers.generateRivers(mesh,xcenter ,  ycenter);
+            rivers.generateRivers(mesh,xcenter ,  ycenter, seed);
             temp = rivers.getTempMeshProperties();
             tempSeg = rivers.getTempSeg();
             type = rivers.getType();
@@ -138,12 +138,12 @@ public class CircleIsland {
 
         if(altitude.equals("mountain")) {
             MountainElevation me = new MountainElevation();
-            me.computeElevations(mesh, type, xcenter, ycenter, minDimension);
+            me.computeElevations(mesh, type, xcenter, ycenter, minDimension, seed);
             this.elevations = me.getElevations();
         }
         else if(altitude.equals("hills")) {
             HillsElevation he = new HillsElevation();
-            he.computeElevations(mesh, type, xcenter, ycenter, minDimension);
+            he.computeElevations(mesh, type, xcenter, ycenter, minDimension, seed);
             this.elevations = he.getElevations();
         }
         if(soil.equals("wet")){

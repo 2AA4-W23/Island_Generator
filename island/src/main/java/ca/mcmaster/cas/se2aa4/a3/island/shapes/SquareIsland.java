@@ -33,7 +33,7 @@ public class SquareIsland {
     }
 
 
-    public void  generateSquareIsland(Structs.Mesh mesh, double xcenter, double ycenter, int numLakes, int numRivers, int numAquifers, String altitude, String soil, double minDimension, String biomeInput) {
+    public void  generateSquareIsland(Structs.Mesh mesh, double xcenter, double ycenter, int numLakes, int numRivers, int numAquifers, String altitude, String soil, double minDimension, String biomeInput, long seed) {
 
         for (Structs.Polygon p : mesh.getPolygonsList()) {
 
@@ -74,31 +74,31 @@ public class SquareIsland {
 
         if(numLakes != 0) {
             Lakes lakes = new Lakes(temp, type, numLakes);
-            lakes.generateLakes(mesh);
+            lakes.generateLakes(mesh, seed);
             temp = lakes.getTempMeshProperties();
         }
         if(numAquifers != 0){
             Aquifers aquifers = new Aquifers(temp, type, isAquifer, numAquifers);
-            aquifers.generateAquifers(mesh);
+            aquifers.generateAquifers(mesh, seed);
             isAquifer = aquifers.getIsAquifer();
 
         }
         Rivers rivers = new Rivers(temp,type,numRivers, tempSeg);
 
         if (numRivers != 0){
-            rivers.generateRivers(mesh,xcenter,ycenter);
+            rivers.generateRivers(mesh,xcenter,ycenter, seed);
             temp = rivers.getTempMeshProperties();
             tempSeg = rivers.getTempSeg();
             type = rivers.getType();
         }
         if(altitude.equals("mountain")) {
             MountainElevation me = new MountainElevation();
-            me.computeElevations(mesh, type, xcenter, ycenter, minDimension);
+            me.computeElevations(mesh, type, xcenter, ycenter, minDimension, seed);
             this.elevations = me.getElevations();
         }
         else if(altitude.equals("hills")) {
             HillsElevation he = new HillsElevation();
-            he.computeElevations(mesh, type, xcenter, ycenter, minDimension);
+            he.computeElevations(mesh, type, xcenter, ycenter, minDimension, seed);
             this.elevations = he.getElevations();
         }
 

@@ -13,7 +13,7 @@ public class MountainElevation implements Elevations{
         this.elevations = new ArrayList<>();
     }
 
-    public void computeElevations(Structs.Mesh mesh, ArrayList<String> type, double xcenter, double ycenter, double minDimension){
+    public void computeElevations(Structs.Mesh mesh, ArrayList<String> type, double xcenter, double ycenter, double minDimension, long seed){
         double xCurrent, yCurrent, distance;
         int count = 0;
         for (Structs.Polygon p : mesh.getPolygonsList()) {

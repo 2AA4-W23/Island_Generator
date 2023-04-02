@@ -16,8 +16,9 @@ public class Main {
         String altitude = config.altitude();
         String soil = config.soil();
         String biome = config.biomes();
+        long seed = config.seed();
         IslandGenerator islandGenerator = new IslandGenerator();
-        Structs.Mesh islandMesh = islandGenerator.generateIsland(aMesh, shape, lagoon, lakes, rivers, aquifers, altitude, soil, biome);
+        Structs.Mesh islandMesh = islandGenerator.generateIsland(aMesh, shape, lagoon, lakes, rivers, aquifers, altitude, soil, biome,seed);
         new MeshFactory().write(islandMesh, config.export(Configuration.OUTPUT));
     }
 }

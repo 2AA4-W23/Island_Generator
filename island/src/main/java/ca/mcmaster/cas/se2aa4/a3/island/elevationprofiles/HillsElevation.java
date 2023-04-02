@@ -4,6 +4,7 @@ import ca.mcmaster.cas.se2aa4.a2.io.Structs;
 import ca.mcmaster.cas.se2aa4.a3.island.tiles.Lake;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class HillsElevation implements Elevations{
     private ArrayList<Double> elevations;
@@ -12,22 +13,25 @@ public class HillsElevation implements Elevations{
         this.elevations = new ArrayList<>();
     }
 
-    public void computeElevations(Structs.Mesh mesh, ArrayList<String> type, double xcenter, double ycenter, double minDimension){
+    public void computeElevations(Structs.Mesh mesh, ArrayList<String> type, double xcenter, double ycenter, double minDimension, long seed){
         double xCurrentHillPeak, yCurrentHillPeak, xCurrentHillLand, yCurrentHillLand, distance;
 
         ArrayList<Structs.Polygon> visited = new ArrayList<>();
+
+
+        Random rand1 = new Random(seed);
 
         for(int s = 0; s < mesh.getPolygonsList().size(); s++){
             elevations.add(0,0.0);
         }
 
-        int numHills = (int)( 5 + Math.random() * (12-5));
+        int numHills =( 5 + rand1.nextInt(7));
 
         for(int l = 0; l < numHills; l++) {
             String tileType;
             int rand = 0;
             for(int r = 0; r < mesh.getPolygonsList().size(); r++) {
-                rand = (int) (Math.random() * mesh.getPolygonsList().size());
+                rand = rand1.nextInt(mesh.getPolygonsList().size());
                 tileType = type.get(rand);
                 if (tileType.equals("land")) {
                     break;
@@ -36,10 +40,10 @@ public class HillsElevation implements Elevations{
                 Structs.Polygon p = mesh.getPolygonsList().get(rand);
                 xCurrentHillPeak = mesh.getVerticesList().get(p.getCentroidIdx()).getX();
                 yCurrentHillPeak = mesh.getVerticesList().get(p.getCentroidIdx()).getY();
-                elevations.set(mesh.getPolygonsList().indexOf(p), 30 + Math.random() * (60-30));
+                elevations.set(mesh.getPolygonsList().indexOf(p), (double)(30 + rand1.nextInt(30)));
                 visited.add(p);
 
-                int hillSize = (int) (Math.random() * p.getNeighborIdxsCount());
+                int hillSize = rand1.nextInt(p.getNeighborIdxsCount());
                 int hillCounter = 0;
 
                 do {

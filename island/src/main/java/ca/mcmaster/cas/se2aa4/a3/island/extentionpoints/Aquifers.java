@@ -4,6 +4,7 @@ import ca.mcmaster.cas.se2aa4.a2.io.Structs;
 import ca.mcmaster.cas.se2aa4.a3.island.tiles.Aquifer;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Aquifers {
     private ArrayList<Structs.Polygon> temp;
@@ -18,12 +19,14 @@ public class Aquifers {
         this.numAquifers = numAquifers;
     }
 
-    public ArrayList<Structs.Polygon> generateAquifers(Structs.Mesh mesh){
+    public ArrayList<Structs.Polygon> generateAquifers(Structs.Mesh mesh, long seed){
+        Random rand1 = new Random(seed);
+
         for(int l = 0; l < numAquifers; l++) {
             String tileType;
             int rand = 0;
             for(int r = 0; r < temp.size(); r++){
-                rand = (int) (Math.random() * temp.size());
+                rand = rand1.nextInt(temp.size());
                 tileType = type.get(rand);
                 if((tileType.equals("land") || tileType.equals("beach")) && isAquifer.get(rand).equals(false)){
                     break;
@@ -34,7 +37,7 @@ public class Aquifers {
             isAquifer.set(mesh.getPolygonsList().indexOf(p), true);
           //  Aquifer aquifer = new Aquifer();
           //  temp.set(mesh.getPolygonsList().indexOf(p), Structs.Polygon.newBuilder(p).clearProperties().addProperties(aquifer.setColourCode()).build());
-            int aquiferSize = (int) (Math.random() * p.getNeighborIdxsCount());
+            int aquiferSize = rand1.nextInt(p.getNeighborIdxsCount());
             int aquiferCounter = 0;
             do {
                 for (int i : p.getNeighborIdxsList()) {

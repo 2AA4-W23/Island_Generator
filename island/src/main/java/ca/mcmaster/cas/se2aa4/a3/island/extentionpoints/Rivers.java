@@ -6,6 +6,7 @@ import ca.mcmaster.cas.se2aa4.a3.island.tiles.River;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Random;
 
 public class Rivers {
     private ArrayList<Structs.Polygon> temp;
@@ -22,10 +23,11 @@ public class Rivers {
         this.discharge = new ArrayList<>();
 
     }
-    public ArrayList<Structs.Segment> generateRivers(Structs.Mesh mesh, double xcenter, double ycenter){
+    public ArrayList<Structs.Segment> generateRivers(Structs.Mesh mesh, double xcenter, double ycenter, long seed){
 
         ArrayList<Structs.Segment> visited = new ArrayList<>();
         HashSet<Structs.Polygon> visitedPolygons = new HashSet<>();
+        Random rand1 = new Random(seed);
 
         for(int d = 0; d < mesh.getSegmentsCount(); d++){
             discharge.add(0);
@@ -35,7 +37,7 @@ public class Rivers {
             String tileType;
             int rand = 0;
             for(int r = 0; r < temp.size(); r++){
-                rand = (int) (Math.random() * temp.size());
+                rand = rand1.nextInt(temp.size());
                 tileType = type.get(rand);
                 if(tileType.equals("land") && !visitedPolygons.contains(mesh.getPolygonsList().get(rand))){
                     break;
@@ -52,7 +54,7 @@ public class Rivers {
             boolean bottomLeft = (xCurrent <= xcenter && yCurrent >= ycenter);
             boolean bottomRight = (xCurrent >= xcenter && yCurrent >= ycenter);
 
-            int currentDischarge = (int)(1 + Math.random() * (3-1));
+            int currentDischarge =rand1.nextInt(3);
 
             boolean check = false;
 

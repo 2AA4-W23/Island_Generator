@@ -10,11 +10,12 @@ import ca.mcmaster.cas.se2aa4.a3.island.shapes.SquareIsland;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 
 public class IslandGenerator {
 
-    public Mesh generateIsland(Mesh mesh, String shape, boolean lagoon, int lakes, int rivers, int aquifers, String altitude, String soil, String biomes){
+    public Mesh generateIsland(Mesh mesh, String shape, boolean lagoon, int lakes, int rivers, int aquifers, String altitude, String soil, String biomes, long seed){
         Mesh tempMesh = mesh;
         double xcenter = 0;
         double ycenter = 0;
@@ -36,15 +37,22 @@ public class IslandGenerator {
         }
         double minDimension = Math.min(max_x, max_y);
 
+        long newSeed = System.currentTimeMillis();
+
+        if((Long.valueOf(seed).equals(Long.valueOf(0)))){
+            seed=newSeed;
+            System.out.println(seed);
+        }
+
 
         if(shape.equals("Circle") || shape.equals("circle")){
             CircleIsland circleIsland = new CircleIsland();
-            circleIsland.generateCircleIsland(mesh, xcenter, ycenter, lagoon, lakes, rivers, aquifers, altitude, soil, minDimension, biomes);
+            circleIsland.generateCircleIsland(mesh, xcenter, ycenter, lagoon, lakes, rivers, aquifers, altitude, soil, minDimension, biomes, seed);
             return(finalizeMesh(mesh, circleIsland.getTempMeshProperties(), circleIsland.getTempSeg()));
         }
         else{
             SquareIsland squareIsland = new SquareIsland();
-            squareIsland.generateSquareIsland(mesh, xcenter, ycenter, lakes, rivers, aquifers, altitude, soil, minDimension, biomes);
+            squareIsland.generateSquareIsland(mesh, xcenter, ycenter, lakes, rivers, aquifers, altitude, soil, minDimension, biomes, seed);
             return(finalizeMesh(mesh, squareIsland.getTempMeshProperties(), squareIsland.getTempSeg()));
         }
     }

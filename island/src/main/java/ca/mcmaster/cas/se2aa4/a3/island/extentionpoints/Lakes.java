@@ -6,6 +6,7 @@ import ca.mcmaster.cas.se2aa4.a3.island.tiles.Beach;
 import ca.mcmaster.cas.se2aa4.a3.island.tiles.Lake;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Lakes {
     private ArrayList<Structs.Polygon> temp;
@@ -18,23 +19,32 @@ public class Lakes {
         this.numLakes = numLakes;
     }
 
-    public ArrayList<Structs.Polygon> generateLakes(Structs.Mesh mesh){
+
+
+
+
+
+
+    public ArrayList<Structs.Polygon> generateLakes(Structs.Mesh mesh, long seed){
+        Random rand1 = new Random(seed);
+
         for(int l = 0; l < numLakes; l++) {
             String tileType;
             int rand = 0;
             for(int r = 0; r < temp.size(); r++){
-                rand = (int) (Math.random() * temp.size());
+                rand = rand1.nextInt(temp.size());
                 tileType = type.get(rand);
                 if(tileType.equals("land")){
                     break;
                 }
             }
 
+
             Polygon p = mesh.getPolygonsList().get(rand);
             type.set(mesh.getPolygonsList().indexOf(p), "lake");
             Lake lake = new Lake();
             temp.set(mesh.getPolygonsList().indexOf(p), Structs.Polygon.newBuilder(p).clearProperties().addProperties(lake.setColourCode()).build());
-            int lakeSize = (int) (Math.random() * p.getNeighborIdxsCount());
+            int lakeSize = (rand1.nextInt(p.getNeighborIdxsCount()));
             int lakeCounter = 0;
             do {
                 for (int i : p.getNeighborIdxsList()) {
