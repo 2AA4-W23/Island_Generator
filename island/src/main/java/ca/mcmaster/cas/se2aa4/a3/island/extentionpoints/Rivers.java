@@ -54,7 +54,7 @@ public class Rivers {
             boolean bottomLeft = (xCurrent <= xcenter && yCurrent >= ycenter);
             boolean bottomRight = (xCurrent >= xcenter && yCurrent >= ycenter);
 
-            int currentDischarge =rand1.nextInt(3);
+            int currentDischarge = 1+rand1.nextInt(3);
 
             boolean check = false;
 

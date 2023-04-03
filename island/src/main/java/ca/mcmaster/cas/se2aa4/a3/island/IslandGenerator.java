@@ -5,6 +5,7 @@ import ca.mcmaster.cas.se2aa4.a2.io.Structs.Mesh;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Polygon;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Segment;
 import ca.mcmaster.cas.se2aa4.a3.island.biomes.Biomes;
+import ca.mcmaster.cas.se2aa4.a3.island.elevationprofiles.Elevations;
 import ca.mcmaster.cas.se2aa4.a3.island.shapes.CircleIsland;
 import ca.mcmaster.cas.se2aa4.a3.island.shapes.SquareIsland;
 

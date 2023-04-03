@@ -94,7 +94,7 @@ A feature is considered done when it is tested
 |  F09  |  Allow the user to choose how many rivers will be displayed in the island using a command line argument |  Hamzah    | March 23th |  March 23th   |    D    |
 |  F10  | Accumulate the discharge of rivers that merge and display the rivers as one combined river that is thicker. Account for the moisture the river brings based on the thickness of the river |  sarim,fiza    | march 25th  |  march 29th   |    D    |
 |  F11  |  Provide the option to randomly generate the amount of aquifer. Based on this generate the aquifers and generate the moisture to the surrounding tiles. |  sarim    | Mar 26th  |  Mar 26th  |    D    |
-|  F12  |  Provide the option to choose the absorption profile. Based on that generate the ability for the soil to absorb humidity from lakes, rivers, and aquifers. |  Hamzah,Fiza    | March 26th  |  April 1ST   |    D    |
+|  F12  |  Provide the option to choose the absorption profile. Based on that generate the ability for the soil to absorb humidity from lakes, rivers, and aquifers. |  Hamzah,Fiza,Sarim    | March 26th  |  April 1ST   |    D    |
 |  F13 |  Assign biomes to each tile and represent it with different colours based on the level of humidity and temperature. |  sarim    | Mar 26th  |  Mar 26th   |    D    |
 |  F14 |  Provide the option to select a Whitaker diagram, and then to generate the biome based on the Whitaker diagram. |  Fiza    | Mar 26th |  April 2nd   |    D    |
 |  F15  |  Provide the option to provide the seed of the random generator that will control randomness so that all the decisions taken are the same when regenerating. |  Fiza    | April 2nd  |  April 2nd   |    D    |
