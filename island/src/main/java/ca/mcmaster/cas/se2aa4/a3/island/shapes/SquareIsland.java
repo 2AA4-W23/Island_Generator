@@ -10,6 +10,7 @@ import ca.mcmaster.cas.se2aa4.a3.island.extentionpoints.Rivers;
 import ca.mcmaster.cas.se2aa4.a3.island.soilabsorption.DrySoil;
 import ca.mcmaster.cas.se2aa4.a3.island.soilabsorption.WetSoil;
 import ca.mcmaster.cas.se2aa4.a3.island.tiles.Beach;
+import ca.mcmaster.cas.se2aa4.a3.island.tiles.Ice;
 import ca.mcmaster.cas.se2aa4.a3.island.tiles.Land;
 import ca.mcmaster.cas.se2aa4.a3.island.tiles.Ocean;
 
@@ -57,10 +58,17 @@ public class SquareIsland {
             if (type.get(mesh.getPolygonsList().indexOf(p)).equals("land")) {
                 for (int i : p.getNeighborIdxsList()) {
                     if (type.get(i).equals("ocean")) {
-                        type.set(mesh.getPolygonsList().indexOf(p), "beach");
-                        Beach beach = new Beach();
-                        temp.set(mesh.getPolygonsList().indexOf(p), Structs.Polygon.newBuilder(p).clearProperties().addProperties(beach.setColourCode()).build());
-                        break;
+                        if(biomeInput.equals("Arctic")) {
+                            type.set(mesh.getPolygonsList().indexOf(p), "Ice");
+                            Ice ice = new Ice();
+                            temp.set(mesh.getPolygonsList().indexOf(p), Structs.Polygon.newBuilder(p).clearProperties().addProperties(ice.setColourCode()).build());
+                            break;
+                        }else{
+                            type.set(mesh.getPolygonsList().indexOf(p), "beach");
+                            Beach beach = new Beach();
+                            temp.set(mesh.getPolygonsList().indexOf(p), Structs.Polygon.newBuilder(p).clearProperties().addProperties(beach.setColourCode()).build());
+                            break;
+                        }
                     }
                 }
             }

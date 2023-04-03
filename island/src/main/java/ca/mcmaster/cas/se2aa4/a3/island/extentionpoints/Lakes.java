@@ -18,13 +18,6 @@ public class Lakes {
         this.type = type;
         this.numLakes = numLakes;
     }
-
-
-
-
-
-
-
     public ArrayList<Structs.Polygon> generateLakes(Structs.Mesh mesh, long seed){
         Random rand1 = new Random(seed);
 
