@@ -17,6 +17,7 @@
         <module>io</module>
         <module>visualizer</module>
 		<module>island</module>
+		<module>pathfinder</module>
 	</modules>
 
     <properties>
@@ -59,6 +60,7 @@
 
 
     <build>
+		<pluginManagement>
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -69,5 +71,6 @@
 				<version>3.0.0-M6</version>
 			</plugin>
 		</plugins>
+		</pluginManagement>
 	</build>
 </project>
