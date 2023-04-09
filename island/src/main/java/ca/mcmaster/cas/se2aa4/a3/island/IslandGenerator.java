@@ -49,15 +49,16 @@ public class IslandGenerator {
         if(shape.equals("Circle") || shape.equals("circle")){
             CircleIsland circleIsland = new CircleIsland();
             circleIsland.generateCircleIsland(mesh, xcenter, ycenter, lagoon, lakes, rivers, aquifers, altitude, soil, minDimension, biomes, seed);
-            return(finalizeMesh(mesh, circleIsland.getTempMeshProperties(), circleIsland.getTempSeg()));
+        //    System.out.println(circleIsland.getTempVertex() + " ^^^^^^^^^^^^^$$$$$$$$$$$$$$$");
+            return(finalizeMesh(mesh, circleIsland.getTempMeshProperties(), circleIsland.getTempSeg(), circleIsland.getTempVertex()));
         }
         else{
             SquareIsland squareIsland = new SquareIsland();
             squareIsland.generateSquareIsland(mesh, xcenter, ycenter, lakes, rivers, aquifers, altitude, soil, minDimension, biomes, seed);
-            return(finalizeMesh(mesh, squareIsland.getTempMeshProperties(), squareIsland.getTempSeg()));
+            return(finalizeMesh(mesh, squareIsland.getTempMeshProperties(), squareIsland.getTempSeg(), squareIsland.getTempVertex()));
         }
     }
-    public Mesh finalizeMesh(Mesh tempMesh, ArrayList<Polygon> temp, ArrayList<Segment> tempSeg) {
-        return Mesh.newBuilder().addAllVertices(tempMesh.getVerticesList()).addAllSegments(tempSeg).addAllPolygons(temp).build();
+    public Mesh finalizeMesh(Mesh tempMesh, ArrayList<Polygon> temp, ArrayList<Segment> tempSeg, ArrayList<Vertex> tempVertex) {
+        return Mesh.newBuilder().addAllVertices(tempVertex).addAllSegments(tempSeg).addAllPolygons(temp).build();
     }
 }
