@@ -56,6 +56,7 @@ public class Cities {
 
         }while(!captialFound);
 
+        paths(capital);
         return tempVertex;
     }
     private void setCity(int id, String cityType){
@@ -76,7 +77,39 @@ public class Cities {
            // System.out.println(graph.getEdges(n) + " sighhhhhhhhhhhhhhhh");
         }
     }
+    private void paths(int capital) {
+        Pathfinder p = new Pathfinder();
+        System.out.println("????????????!!!!!!!");
+        Node current, next;
+        int pathlength = 0;
+        for (Node n : graph.getNodes()) {
+            if(!n.equals(nodes.get(capital)) && n.getAttributes().containsKey("City")) {
+                LinkedList<Node> shortestPath = (LinkedList<Node>) p.findShortestPath(graph,nodes.get(capital),n);
+                pathlength = shortestPath.size();
+                current = shortestPath.removeFirst();
+                next = shortestPath.removeFirst();
+                int counter = 0;
+                System.out.println(current.getId() + " suiiiiiiiiiiiiiiiiiiii " + next.getId());
+                while(counter < pathlength) {
+                    for (Structs.Segment s : tempSeg) {
 
+                        if ((Integer.valueOf(s.getV1Idx()).equals(Integer.valueOf(current.getId())) && (Integer.valueOf(s.getV2Idx()).equals(Integer.valueOf(next.getId())))) || (((Integer.valueOf(s.getV1Idx()).equals(Integer.valueOf(next.getId())))) && (Integer.valueOf(s.getV2Idx()).equals(Integer.valueOf(current.getId()))))) {
+                            Desert desert = new Desert();
+                            tempSeg.set(tempSeg.indexOf(s), Structs.Segment.newBuilder(s).clearProperties().addProperties(desert.setColourCode()).build());
+                            Node temp = next;
+                            current = temp;
+                            if (!shortestPath.isEmpty()) {
+                                next = shortestPath.removeFirst();
+                                break;
+                            }
+                        }
+                    }
+                    counter++;
+                }
+
+            }
+        }
+    }
     public ArrayList<Structs.Segment> getTempSeg(){
         return this.tempSeg;
     }
