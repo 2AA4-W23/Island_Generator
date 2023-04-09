@@ -9,6 +9,7 @@ import java.awt.Graphics2D;
 import java.awt.Stroke;
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Path2D;
 import java.util.Iterator;
@@ -23,6 +24,7 @@ public class GraphicRenderer implements Renderer {
         canvas.setStroke(stroke);
         drawPolygons(aMesh,canvas);
         drawSegments(aMesh, canvas);
+        drawCities(aMesh, canvas);
     }
 
     private void drawPolygons(Mesh aMesh, Graphics2D canvas) {
@@ -77,6 +79,43 @@ public class GraphicRenderer implements Renderer {
             canvas.setColor(old);
             Stroke stroke = new BasicStroke(0.2f);
             canvas.setStroke(stroke);
+        }
+    }
+    private void drawCities(Mesh aMesh, Graphics2D canvas){
+        for(Structs.Vertex v: aMesh.getVerticesList()){
+            int width = 3, height = 3;
+            Optional<Color> fill = new ColorProperty().extract(v.getPropertiesList());
+            if(fill.isPresent() && v.getPropertiesList().size() > 1){
+                if(v.getProperties(1).getValue().equals("City")){
+                    width = 10;
+                    height = 10;
+                }
+                else if(v.getProperties(1).getValue().equals("Town")){
+                    width = 7;
+                    height = 7;
+                }
+                else if(v.getProperties(1).getValue().equals("Hamlet")){
+                    width = 4;
+                    height = 4;
+                }
+
+                Stroke stroke = new BasicStroke(2f);
+                canvas.setStroke(stroke);
+                Ellipse2D circle = new Ellipse2D.Float((float) v.getX() - 1.5f, (float) v.getY() - 1.5f, width, height);
+                Color old = canvas.getColor();
+                canvas.setColor(fill.get());
+                canvas.fill(circle);
+                canvas.setColor(old);
+            }
+            else if(fill.isPresent()) {
+                Stroke stroke = new BasicStroke(2f);
+                canvas.setStroke(stroke);
+                Ellipse2D circle = new Ellipse2D.Float((float) v.getX() - 1.5f, (float) v.getY() - 1.5f, width, height);
+                Color old = canvas.getColor();
+                canvas.setColor(fill.get());
+                canvas.fill(circle);
+                canvas.setColor(old);
+            }
         }
     }
 
