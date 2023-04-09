@@ -9,6 +9,7 @@ import ca.mcmaster.cas.se2aa4.a3.island.extentionpoints.Aquifers;
 import ca.mcmaster.cas.se2aa4.a3.island.extentionpoints.Rivers;
 import ca.mcmaster.cas.se2aa4.a3.island.soilabsorption.DrySoil;
 import ca.mcmaster.cas.se2aa4.a3.island.soilabsorption.WetSoil;
+import ca.mcmaster.cas.se2aa4.a3.island.starnetwork.Cities;
 import ca.mcmaster.cas.se2aa4.a3.island.tiles.*;
 
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ public class CircleIsland {
     private ArrayList<String> type;
     private ArrayList<Boolean> isAquifer = new ArrayList<>();
     private ArrayList<Structs.Segment> tempSeg;
+    private ArrayList<Structs.Vertex> tempVertex;
     private ArrayList<Double> elevations;
     private ArrayList<Double> humidity;
     private ArrayList<String> biomes;
@@ -29,6 +31,7 @@ public class CircleIsland {
         this.temp = new ArrayList<>();
         this.type = new ArrayList<>();
         this.tempSeg = new ArrayList<>();
+        this.tempVertex = new ArrayList<>();
     }
 
     public void generateCircleIsland(Structs.Mesh mesh, double xcenter, double ycenter, boolean isLagoon, int numLakes, int numRivers, int numAquifers, String altitude, String soil, double minDimension, String biomeInput, long seed) {
@@ -36,8 +39,6 @@ public class CircleIsland {
         double pCenterx = 0;
         double pCentery = 0;
         double distance = 0;
-
-        System.out.println(minDimension + " <<<<<<<<<<<<<<<<<<");
 
         for (Structs.Polygon p : mesh.getPolygonsList()) {
 
@@ -162,6 +163,13 @@ public class CircleIsland {
        biome.FindBiomes(mesh, elevations, humidity, type,biomeInput);
        this.biomes = biome.getBiomes();
        temp = biome.assignColor(temp, type);
+
+       for(Structs.Vertex v: mesh.getVerticesList()){
+           tempVertex.add(v);
+       }
+        Cities cities = new Cities(tempVertex,tempSeg);
+       tempVertex = cities.generateCities(type,mesh,tempVertex);
+       this.tempSeg = cities.getTempSeg();
     }
 
     public ArrayList<Structs.Polygon> getTempMeshProperties(){
@@ -172,5 +180,8 @@ public class CircleIsland {
     }
     public ArrayList<Structs.Segment> getTempSeg(){
         return this.tempSeg;
+    }
+    public ArrayList<Structs.Vertex> getTempVertex(){
+        return this.tempVertex;
     }
 }

@@ -9,6 +9,7 @@ import ca.mcmaster.cas.se2aa4.a3.island.extentionpoints.Aquifers;
 import ca.mcmaster.cas.se2aa4.a3.island.extentionpoints.Rivers;
 import ca.mcmaster.cas.se2aa4.a3.island.soilabsorption.DrySoil;
 import ca.mcmaster.cas.se2aa4.a3.island.soilabsorption.WetSoil;
+import ca.mcmaster.cas.se2aa4.a3.island.starnetwork.Cities;
 import ca.mcmaster.cas.se2aa4.a3.island.tiles.Beach;
 import ca.mcmaster.cas.se2aa4.a3.island.tiles.Ice;
 import ca.mcmaster.cas.se2aa4.a3.island.tiles.Land;
@@ -21,6 +22,7 @@ public class SquareIsland {
     private ArrayList<String> type;
     private ArrayList<Boolean> isAquifer = new ArrayList<>();
     private ArrayList<Structs.Segment> tempSeg;
+    private ArrayList<Structs.Vertex> tempVertex;
     private ArrayList<Double> elevations;
     private ArrayList<Double> humidity;
 
@@ -31,6 +33,7 @@ public class SquareIsland {
         this.temp = new ArrayList<>();
         this.type = new ArrayList<>();
         this.tempSeg = new ArrayList<>();
+        this.tempVertex = new ArrayList<>();
     }
 
 
@@ -126,7 +129,12 @@ public class SquareIsland {
         this.biomes = biome.getBiomes();
         temp = biome.assignColor(temp, type);
 
-
+        for(Structs.Vertex v: mesh.getVerticesList()){
+            tempVertex.add(v);
+        }
+        Cities cities = new Cities(tempVertex, tempSeg);
+        tempVertex = cities.generateCities(type,mesh,tempVertex);
+        this.tempSeg = cities.getTempSeg();
     }
     public ArrayList<Structs.Polygon> getTempMeshProperties(){
         return this.temp;
@@ -136,5 +144,8 @@ public class SquareIsland {
     }
     public ArrayList<Structs.Segment> getTempSeg(){
         return this.tempSeg;
+    }
+    public ArrayList<Structs.Vertex> getTempVertex(){
+        return this.tempVertex;
     }
 }
