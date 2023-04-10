@@ -34,7 +34,7 @@ public class CircleIsland {
         this.tempVertex = new ArrayList<>();
     }
 
-    public void generateCircleIsland(Structs.Mesh mesh, double xcenter, double ycenter, boolean isLagoon, int numLakes, int numRivers, int numAquifers, String altitude, String soil, double minDimension, String biomeInput, long seed) {
+    public void generateCircleIsland(Structs.Mesh mesh, double xcenter, double ycenter, boolean isLagoon, int numLakes, int numRivers, int numAquifers, String altitude, String soil, double minDimension, String biomeInput, int numCities, long seed) {
 
         double pCenterx = 0;
         double pCentery = 0;
@@ -167,7 +167,7 @@ public class CircleIsland {
        for(Structs.Vertex v: mesh.getVerticesList()){
            tempVertex.add(v);
        }
-        Cities cities = new Cities(tempVertex,tempSeg);
+        Cities cities = new Cities(tempVertex,tempSeg, numCities);
        tempVertex = cities.generateCities(type,mesh,tempVertex);
        this.tempSeg = cities.getTempSeg();
     }

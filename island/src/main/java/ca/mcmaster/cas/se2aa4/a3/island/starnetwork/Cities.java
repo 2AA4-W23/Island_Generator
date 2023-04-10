@@ -18,14 +18,16 @@ public class Cities {
    private ArrayList<Edge> edges;
    private Graph graph;
    private ArrayList<LinkedList<Node>> paths;
+   private int numCities;
 
-    public Cities(ArrayList<Structs.Vertex> tempVertex, ArrayList<Structs.Segment> tempSeg){
+    public Cities(ArrayList<Structs.Vertex> tempVertex, ArrayList<Structs.Segment> tempSeg, int numCities){
         this.tempVertex = tempVertex;
         this.tempSeg = tempSeg;
         this.nodes = new ArrayList<>();
         this.edges = new ArrayList<>();
         this.graph = new Graph();
         this.paths = new ArrayList<>();
+        this.numCities = numCities;
     }
     public ArrayList<Structs.Vertex> generateCities(ArrayList<String> type, Structs.Mesh mesh, ArrayList<Structs.Vertex> vertices){
         ConfigureCities an = new ConfigureCities();
@@ -37,7 +39,7 @@ public class Cities {
 
         this.nodes = an.initializeCities(type,mesh,vertices);
         this.edges = an.getEdges();
-        for(int i = 0; i < 5; i++) {
+        for(int i = 0; i < numCities; i++) {
             int rand = random.nextInt(nodes.size());
 
             int currentCityID = nodes.get(rand).getId();

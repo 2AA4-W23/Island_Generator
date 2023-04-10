@@ -37,7 +37,7 @@ public class SquareIsland {
     }
 
 
-    public void  generateSquareIsland(Structs.Mesh mesh, double xcenter, double ycenter, int numLakes, int numRivers, int numAquifers, String altitude, String soil, double minDimension, String biomeInput, long seed) {
+    public void  generateSquareIsland(Structs.Mesh mesh, double xcenter, double ycenter, int numLakes, int numRivers, int numAquifers, String altitude, String soil, double minDimension, String biomeInput, int numCities, long seed) {
 
         for (Structs.Polygon p : mesh.getPolygonsList()) {
 
@@ -132,7 +132,7 @@ public class SquareIsland {
         for(Structs.Vertex v: mesh.getVerticesList()){
             tempVertex.add(v);
         }
-        Cities cities = new Cities(tempVertex, tempSeg);
+        Cities cities = new Cities(tempVertex, tempSeg, numCities);
         tempVertex = cities.generateCities(type,mesh,tempVertex);
         this.tempSeg = cities.getTempSeg();
     }
