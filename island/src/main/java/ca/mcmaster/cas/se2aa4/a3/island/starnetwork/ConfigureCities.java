@@ -7,10 +7,10 @@ import ca.mcmaster.cas.se2aa4.a2.io.Structs;
 import java.util.*;
 
 public class ConfigureCities {
-    private static ArrayList<Node> nodes = new ArrayList<>();
+    private ArrayList<Node> nodes = new ArrayList<>();
     private ArrayList<Edge> edges = new ArrayList<>();
 
-    public ArrayList<Node> initializeCities(ArrayList<String> type, Structs.Mesh mesh, ArrayList<Structs.Vertex> vertices){
+    public ArrayList<Node> initializeCities(ArrayList<String> type, Structs.Mesh mesh){
         HashSet<Integer> visited = new HashSet<>();
 
         for(Structs.Polygon p: mesh.getPolygonsList()) {
@@ -26,10 +26,7 @@ public class ConfigureCities {
                         visited.add(mesh.getSegmentsList().get(s).getV2Idx());
                         nodes.add(node2);
                     }
-//                    Edge edge = new Edge(node1,node2, new HashMap<>());
-//                    edges.add(edge);
-//                    Edge edge2 = new Edge(node2,node1, new HashMap<>());
-//                    edges.add(edge2);
+//
                 }
             }
         }
@@ -57,4 +54,8 @@ public class ConfigureCities {
     public ArrayList<Edge> getEdges(){
         return this.edges;
     }
+    public ArrayList<Node> getNodes(){
+        return this.nodes;
+    }
+
 }
