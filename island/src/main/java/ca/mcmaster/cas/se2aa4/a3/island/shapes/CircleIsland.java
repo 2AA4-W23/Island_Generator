@@ -168,7 +168,7 @@ public class CircleIsland {
            tempVertex.add(v);
        }
         Cities cities = new Cities(tempVertex,tempSeg, numCities);
-       tempVertex = cities.generateCities(type,mesh,tempVertex);
+       tempVertex = cities.generateCities(type,mesh,seed);
        this.tempSeg = cities.getTempSeg();
     }
 

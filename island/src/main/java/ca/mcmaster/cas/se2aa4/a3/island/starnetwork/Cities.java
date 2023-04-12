@@ -29,15 +29,15 @@ public class Cities {
         this.paths = new ArrayList<>();
         this.numCities = numCities;
     }
-    public ArrayList<Structs.Vertex> generateCities(ArrayList<String> type, Structs.Mesh mesh, ArrayList<Structs.Vertex> vertices){
+    public ArrayList<Structs.Vertex> generateCities(ArrayList<String> type, Structs.Mesh mesh, long seed){
         ConfigureCities an = new ConfigureCities();
-        Random random = new Random();
+        Random random = new Random(seed);
         HashMap<Integer, String> cityType = new HashMap<>();
         cityType.put(0,"Hamlet");
         cityType.put(1, "Town");
         cityType.put(2, "City");
 
-        this.nodes = an.initializeCities(type,mesh,vertices);
+        this.nodes = an.initializeCities(type,mesh);
         this.edges = an.getEdges();
         for(int i = 0; i < numCities; i++) {
             int rand = random.nextInt(nodes.size());
@@ -75,29 +75,24 @@ public class Cities {
         for(Edge e: edges){
             graph.addEdge(e);
         }
-        for(Node n: graph.getNodes()){
-           // System.out.println(graph.getEdges(n) + " sighhhhhhhhhhhhhhhh");
-        }
     }
     private void paths(int capital) {
         Pathfinder p = new Pathfinder();
-        System.out.println("????????????!!!!!!!");
         Node current, next;
         int pathlength = 0;
         for (Node n : graph.getNodes()) {
             if(!n.equals(nodes.get(capital)) && n.getAttributes().containsKey("City")) {
                 LinkedList<Node> shortestPath = (LinkedList<Node>) p.findShortestPath(graph,nodes.get(capital),n);
+                paths.add(shortestPath);
                 pathlength = shortestPath.size();
                 current = shortestPath.removeFirst();
                 next = shortestPath.removeFirst();
                 int counter = 0;
-                System.out.println(current.getId() + " suiiiiiiiiiiiiiiiiiiii " + next.getId());
                 while(counter < pathlength) {
                     for (Structs.Segment s : tempSeg) {
-
                         if ((Integer.valueOf(s.getV1Idx()).equals(Integer.valueOf(current.getId())) && (Integer.valueOf(s.getV2Idx()).equals(Integer.valueOf(next.getId())))) || (((Integer.valueOf(s.getV1Idx()).equals(Integer.valueOf(next.getId())))) && (Integer.valueOf(s.getV2Idx()).equals(Integer.valueOf(current.getId()))))) {
-                            Desert desert = new Desert();
-                            tempSeg.set(tempSeg.indexOf(s), Structs.Segment.newBuilder(s).clearProperties().addProperties(desert.setColourCode()).build());
+                            Road road = new Road();
+                            tempSeg.set(tempSeg.indexOf(s), Structs.Segment.newBuilder(s).clearProperties().addProperties(road.setColourCode()).build());
                             Node temp = next;
                             current = temp;
                             if (!shortestPath.isEmpty()) {
@@ -114,6 +109,12 @@ public class Cities {
     }
     public ArrayList<Structs.Segment> getTempSeg(){
         return this.tempSeg;
+    }
+    public ArrayList<LinkedList<Node>> getPaths(){
+        return this.paths;
+    }
+    public Graph getGraph(){
+        return this.graph;
     }
 
 }
