@@ -17,6 +17,7 @@ public class Pathfinder implements Path {
                 return buildPath(predecessorMap, endNode);
             }
             List<Edge> edges = graph.getEdges(currentNode);
+
             for (Edge edge : edges) {
                 Node neighborNode = edge.getDestinationNode();
                 if (!visited.contains(neighborNode)) {
