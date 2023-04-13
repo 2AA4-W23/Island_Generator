@@ -51,6 +51,7 @@ public class Cities {
         setGraph();
         boolean captialFound = false;
         int capital;
+        // choose a random node that is a city to be the capital city, which will be the source of the shortest paths
         do {
             capital = random.nextInt(nodes.size());
             if(nodes.get(capital).getAttributes().containsKey("City")) {

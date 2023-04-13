@@ -1,73 +1,21 @@
-# Assignment A2: Mesh Generator
+# Assignment A4: Evolution
 
-  - Fiza Sehar [seharf@mcmaster.ca]
-  - Sarim Zia [zias11@mcmaster.ca]
   - Hamzah Rawasia [rawash1@mcmaster.ca]
 
 ## How to run the product
+COMMANDS
 
-_Command line args:
+NOTE: You may need to run generator first in order to produce an initial mesh, which is needed for the testing
 
 Generator:
--t: Generate Irregular Mesh
--p: Enter Number of Polygons to be made (Only if you have chosen Irregular Mesh)
--r: Choose amount of times to perform relaxation on mesh (Only if you have chosen Irregular Mesh)
--dim: Choose the dimensions of the grid (Only if you have chosen Grid Mesh)
+java -jar generator/generator.jar -k irregular -h 1080 -w 1920 -p 1000 -r 5 -o ireg.mesh -d
 
-Example uses:
-java -jar generator.jar sample.mesh -t -p 25 -r 5    -> Generates an irregular mesh with 25 polygons, and performs 5 relaxations
-java -jar generator.jar sample.mesh -dim 100  -> Generates a grid mesh with grid dimensions of 100x100
+Island:
+java -jar island/island.jar -i ireg.mesh -o ireg2.mesh -s square -lakes 6 -rivers 10 -altitude hills -soil wet -biome Arctic -seed 123 -cities 5
+
 
 Visualizer:
--t: Choose if you are generating an Irregular Mesh
--d: Generate the mesh in debug mode
-
-Example uses:
-java -jar visualizer.jar ../generator/sample.mesh sample.svg  -t   -> Use if you want to visualize an irregular mesh, without debug mode
-java -jar visualizer.jar ../generator/sample.mesh sample.svg -d   -> Use if you want to visualize a grid mesh in debug mode
-
-### Installation instructions
-
-This product is handled by Maven, as a multi-module project. We assume here that you have cloned the project in a directory named `A2`
-
-To install the different tooling on your computer, simply run:
-
-```
-mosser@azrael A2 % mvn install
-```
-
-After installation, you'll find an application named `generator.jar` in the `generator` directory, and a file named `visualizer.jar` in the `visualizer` one. 
-
-### Generator
-
-To run the generator, go to the `generator` directory, and use `java -jar` to run the product. The product takes one single argument (so far), the name of the file where the generated mesh will be stored as binary.
-
-```
-mosser@azrael A2 % cd generator 
-mosser@azrael generator % java -jar generator.jar sample.mesh
-mosser@azrael generator % ls -lh sample.mesh
--rw-r--r--  1 mosser  staff    29K 29 Jan 10:52 sample.mesh
-mosser@azrael generator % 
-```
-
-### Visualizer
-
-To visualize an existing mesh, go the the `visualizer` directory, and use `java -jar` to run the product. The product take two arguments (so far): the file containing the mesh, and the name of the file to store the visualization (as an SVG image).
-
-```
-mosser@azrael A2 % cd visualizer 
-mosser@azrael visualizer % java -jar visualizer.jar ../generator/sample.mesh sample.svg
-
-... (lots of debug information printed to stdout) ...
-
-mosser@azrael visualizer % ls -lh sample.svg
--rw-r--r--  1 mosser  staff    56K 29 Jan 10:53 sample.svg
-mosser@azrael visualizer %
-```
-To viualize the SVG file:
-
-  - Open it with a web browser
-  - Convert it into something else with tool slike `rsvg-convert`
+java -jar visualizer/visualizer.jar -i ireg2.mesh -o ireg_dbg2.svg
 
 ## How to contribute to the project
 
@@ -79,24 +27,11 @@ When you develop features and enrich the product, remember that you have first t
 
 A feature is considered done when it is tested
 
-COMMANDS 
-java -jar generator/generator.jar -k irregular -h 1080 -w 1920 -p 1000 -r 5 -o ireg.mesh -d
-
-Island:
-java -jar island/island.jar -i ireg.mesh -o ireg2.mesh -s square -lakes 6 -rivers 10 -altitude hills -soil wet -biome Arctic
-
-
-
-Visualizer:
-java -jar visualizer/visualizer.jar -i ireg2.mesh -o ireg_dbg2.svg -x
 
 
 
 
-
-
-
-### Product Backlog
+### Product Backlog (OLD)
 
 | Id | Feature title | Who? | Start | End | Status |
 |:--:|---------------|------|-------|-----|--------|
