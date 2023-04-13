@@ -5,6 +5,7 @@ import adt.Graph;
 import adt.Node;
 import adt.Pathfinder;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs;
+import ca.mcmaster.cas.se2aa4.a3.island.tiles.City;
 import ca.mcmaster.cas.se2aa4.a3.island.tiles.Desert;
 import ca.mcmaster.cas.se2aa4.a3.island.tiles.Lake;
 import ca.mcmaster.cas.se2aa4.a3.island.tiles.Road;
@@ -62,9 +63,9 @@ public class Cities {
         return tempVertex;
     }
     private void setCity(int id, String cityType){
-        Road road = new Road();
+        City cityTile = new City();
         Structs.Property city = Structs.Property.newBuilder().setKey("city").setValue(cityType).build();
-        tempVertex.set(id, Structs.Vertex.newBuilder(tempVertex.get(id)).addProperties(road.setColourCode()).addProperties(city).build());
+        tempVertex.set(id, Structs.Vertex.newBuilder(tempVertex.get(id)).addProperties(cityTile.setColourCode()).addProperties(city).build());
     }
     private void setGraph(){
         for(Node n: nodes){
