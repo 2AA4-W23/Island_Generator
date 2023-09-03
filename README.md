@@ -7,9 +7,11 @@ This Project was completed within a team, with contributions from Hamzah Rawasia
 
 Sarim Zia contributed to this project by he;ping introduce the initial lagoon and oceans, determining and assigning which tiles are beaches, 
 introducing rivers and the humidity that they bring to surrounding lands, accumulating the discharge of rivers that merge, introducing randomly generated aquifers,
-and assigning biomes to each tile
+and assigning biomes to each tile.
+
 Fiza Sehar contributed to this project by allowing the user to choose the shape of the island, introducing rivers to the island, as well as the
-accumulation of discharge, providing the option of the absorption profile, the option to select a whittaker diagram, and providing a seed to control randomness
+accumulation of discharge, providing the option of the absorption profile, the option to select a whittaker diagram, and providing a seed to control randomness.
+
 Hamzah Rawasia contributed to this project by creating the initial circular island, providing the option to define altimetric profiles, generating and
 visualizing lakes, allowing the user to choose the number of rivers, the option to choose the absorption profile, as well as all implemetations related
 to graphs, graph algorithms, cities, roads, and shortest paths between cities.
